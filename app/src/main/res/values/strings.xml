@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">BesiLite</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+
+
+
+    <string name="pref_title_base_url">Base URL</string>
+    <string name="pref_default_base_url">http://inertia.ece.virginia.edu/</string>
+    <string name="pref_summary_base_url">Set base url to query</string>
+
+    <string name="pref_title_api_token">API Token</string>
+    <string name="pref_default_api_token">INVALIDTOKEN</string>
+    <string name="pref_summary_api_token">Set API access token</string>
+
+    <string name="pref_title_deploy_id">Deploy ID</string>
+    <string name="pref_default_deploy_id">INVALIDID</string>
+    <string name="pref_summary_deploy_id">Set deployment ID</string>
+
+    <string name="title_activity_get_emotions">Get Emotions</string>
+    <string name="title_activity_get_activities">Get Activities</string>
+    <string name="title_activity_home">BesiLite</string>
+    <string name="title_activity_settings_activity">Settings</string>
+
+</resources>
