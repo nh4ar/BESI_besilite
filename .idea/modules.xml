@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BesiLite.iml" filepath="$PROJECT_DIR$/BesiLite.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/besilite.iml" filepath="$PROJECT_DIR$/besilite.iml" />
     </modules>
   </component>
 </project>
