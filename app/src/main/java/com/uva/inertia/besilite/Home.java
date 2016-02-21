@@ -101,15 +101,10 @@ public class Home extends AppCompatActivity {
         goToActivities.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), GetActivities.class);
+                Intent intent = new Intent(v.getContext(), ScheduleActivity.class);
                 startActivity(intent);
             }
         });
-
-
-
-
-
     }
 
 
@@ -143,7 +138,7 @@ public class Home extends AppCompatActivity {
         deploy_id = sharedPref.getString("pref_key_deploy_id","");
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
-        endpoint ="api/v1/survey/agi/"+deploy_id+"/";
+        endpoint ="/api/v1/survey/agi/"+deploy_id+"/";
 
 
         JsonArrayRequestWithToken agiSurveyRequestArray = new JsonArrayRequestWithToken(base_url+endpoint, api_token, new Response.Listener<JSONArray>() {
@@ -152,12 +147,14 @@ public class Home extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 adapter.clear();
                 try {
+                    //adapter.add(response.getString(response.length()-1));
+
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject o = (JSONObject) response.get(i);
-                        adapter.add(o.getString("timestamp") + " | Level: " + o.getString("level") + " |  Activity: " + o.getString("activity"));
+                        adapter.add(o.getString("timestamp") + " | Level: " + o.getString("level") + " |  Observation: " + o.getString("observations"));
                     }
                 } catch (JSONException e){
-                    adapter.add("Server responded with incorrect JSON");
+                    adapter.add("NOOOOOOOOOOOOOOOOOOOOOOOOO");
                 }
             }
         }, new Response.ErrorListener() {
