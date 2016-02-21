@@ -143,7 +143,7 @@ public class Home extends AppCompatActivity {
         deploy_id = sharedPref.getString("pref_key_deploy_id","");
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
-        endpoint ="api/v1/survey/agi/"+deploy_id+"/";
+        endpoint ="/api/v1/survey/agi/"+deploy_id+"/";
 
 
         JsonArrayRequestWithToken agiSurveyRequestArray = new JsonArrayRequestWithToken(base_url+endpoint, api_token, new Response.Listener<JSONArray>() {
