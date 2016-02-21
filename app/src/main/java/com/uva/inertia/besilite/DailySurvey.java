@@ -1,5 +1,8 @@
 package com.uva.inertia.besilite;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,17 +14,41 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.zip.CheckedInputStream;
 
 
+public class DailySurvey extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
 
-public class DailySurvey extends AppCompatActivity {
+    String base_url;
+    String api_token;
+    String deploy_id;
+    String complete_endpoint;
+    String PWDEmotionSubsurvey_endpoint;
+
+
+    SharedPreferences sharedPref;
+    RequestQueue netQueue;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,6 +77,16 @@ public class DailySurvey extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
+
+        base_url = sharedPref.getString("pref_key_base_url", "");
+        api_token = sharedPref.getString("pref_key_api_token", "");
+        deploy_id = sharedPref.getString("pref_key_deploy_id","");
+        complete_endpoint = "/api/v1/survey/daily/smart";
+        PWDEmotionSubsurvey_endpoint = "/api/v1/survey/emo/create/";
+
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -57,9 +94,41 @@ public class DailySurvey extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+
+    }
+
+    @Override
+    public void OnConfirmClicked() {
+        PWDEmotionsFragment PWDEmoteFrag = (PWDEmotionsFragment)getSupportFragmentManager().findFragmentById(R.id.PWDEmotionsFrag);
+        Log.v("TEST", "got a confirm click");
+        HashMap<String, Boolean> PWDEmotions = PWDEmoteFrag.getEmotions();
+        createPWDEmotionsSubsurvey(PWDEmotions);
+        Log.v("TEST", PWDEmotions.toString());
     }
 
 
+    private void createPWDEmotionsSubsurvey(HashMap<String, Boolean> hm){
+        JSONObject subsurveyObject = new JSONObject(hm);
+        Log.v("TEST",subsurveyObject.toString());
+        JsonObjectRequestWithToken agiSurveyCreateResponse = new JsonObjectRequestWithToken( Request.Method.POST, base_url+PWDEmotionSubsurvey_endpoint,subsurveyObject, api_token, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.v("TEST","woo it worked!");
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String err_msg = new String(error.networkResponse.data);
+                Log.e("ERROR", err_msg);
+                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        this.netQueue.add(agiSurveyCreateResponse);
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -114,35 +183,7 @@ public class DailySurvey extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class ConfirmFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static ConfirmFragment newInstance(int sectionNumber) {
-            ConfirmFragment fragment = new ConfirmFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public ConfirmFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_daily_survey_confirm, container, false);
-            return rootView;
-        }
-    }
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -174,6 +215,23 @@ public class DailySurvey extends AppCompatActivity {
 
     public static class PWDEmotionsFragment extends Fragment {
 
+        CheckBox SadVoice;
+        CheckBox Tearful;
+        CheckBox LackReact;
+        CheckBox VeryWorried;
+        CheckBox Frightened;
+        CheckBox TalkLess;
+        CheckBox AppetiteLoss;
+        CheckBox LessInterestInHobbies;
+        CheckBox SadExpression;
+        CheckBox LackOfInterest;
+        CheckBox TroubleConcentrating;
+        CheckBox BotheredByUsualActivities;
+        CheckBox SlowMove;
+        CheckBox SlowSpeech;
+        CheckBox SlowReaction;
+        HashMap<String, Boolean> hp = new HashMap<>();
+
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -189,13 +247,50 @@ public class DailySurvey extends AppCompatActivity {
         public PWDEmotionsFragment() {
         }
 
+        public HashMap<String, Boolean> getEmotions(){
+            hp.put("SadVoice",SadVoice.isChecked());
+            hp.put("Tearfulness",Tearful.isChecked());
+            hp.put("LackReactionToPleasantEvents",LackReact.isChecked());
+            hp.put("VeryWorried",VeryWorried.isChecked());
+            hp.put("Frightened",Frightened.isChecked());
+            hp.put("TalkLess",TalkLess.isChecked());
+            hp.put("AppetiteLoss",AppetiteLoss.isChecked());
+            hp.put("LessInterestInHobbies",LessInterestInHobbies.isChecked());
+            hp.put("SadExpression",SadExpression.isChecked());
+            hp.put("LackOfInterest",LackOfInterest.isChecked());
+            hp.put("TroubleConcentrating",TroubleConcentrating.isChecked());
+            hp.put("BotheredByUsualActivities",BotheredByUsualActivities.isChecked());
+            hp.put("SlowMovement",SlowMove.isChecked());
+            hp.put("SlowSpeech",SlowSpeech.isChecked());
+            hp.put("SlowReaction",SlowReaction.isChecked());
+            return hp;
+        }
+
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pwd_emotions_survey, container, false);
 
+            SadVoice = (CheckBox)rootView.findViewById(R.id.checkSadVoice);
+            Tearful = (CheckBox)rootView.findViewById(R.id.checkTearfulness);
+            LackReact = (CheckBox)rootView.findViewById(R.id.checkLackOfReact);
+            VeryWorried = (CheckBox)rootView.findViewById(R.id.checkVeryWorried);
+            Frightened = (CheckBox)rootView.findViewById(R.id.checkFrightened);
+            TalkLess = (CheckBox)rootView.findViewById(R.id.checkLessTalk);
+            AppetiteLoss = (CheckBox)rootView.findViewById(R.id.checkAppetiteLoss);
+            LessInterestInHobbies = (CheckBox)rootView.findViewById(R.id.checkLessIntrest);
+            SadExpression = (CheckBox)rootView.findViewById(R.id.checkSadExpression);
+            LackOfInterest = (CheckBox)rootView.findViewById(R.id.checkLackOfInterest);
+            TroubleConcentrating = (CheckBox)rootView.findViewById(R.id.checkTroubleConcen);
+            BotheredByUsualActivities = (CheckBox)rootView.findViewById(R.id.checkBotheredByUsual);
+            SlowMove = (CheckBox)rootView.findViewById(R.id.checkSlowMove);
+            SlowSpeech =(CheckBox)rootView.findViewById(R.id.checkSlowSpeech);
+            SlowReaction =  (CheckBox)rootView.findViewById(R.id.checkSlowReact);
+
             return rootView;
         }
+
     }
 
     public static class PWDSleepFragment extends Fragment {

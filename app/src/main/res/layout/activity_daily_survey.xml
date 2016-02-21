@@ -6,6 +6,13 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:fitsSystemWindows="true" tools:context="com.uva.inertia.besilite.DailySurvey">
 
+    <fragment android:name="com.uva.inertia.besilite.DailySurvey$PWDEmotionsFragment"
+        android:id="@+id/PWDEmotionsFrag"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+
     <android.support.design.widget.AppBarLayout android:id="@+id/appbar"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingTop="@dimen/appbar_padding_top"
