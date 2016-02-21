@@ -34,6 +34,15 @@
         </activity>
         <activity android:name=".AddAgiSurvey" >
         </activity>
+        <activity
+            android:name=".DailySurvey"
+            android:label="@string/title_activity_daily_survey"
+            android:parentActivityName=".Home"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.uva.inertia.besilite.Home" />
+        </activity>
     </application>
 
 </manifest>
