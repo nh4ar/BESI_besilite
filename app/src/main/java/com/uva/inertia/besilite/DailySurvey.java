@@ -1,11 +1,8 @@
 package com.uva.inertia.besilite;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -16,26 +13,22 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.zip.CheckedInputStream;
+import java.util.Map;
 
 
 public class DailySurvey extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
@@ -49,6 +42,10 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
     SharedPreferences sharedPref;
     RequestQueue netQueue;
+
+    HashMap<String, Boolean> pwdEmotions;
+    HashMap<String, Boolean> caregiverEmotions;
+    HashMap<String, Boolean> pwdSleepQal;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -86,6 +83,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         complete_endpoint = "/api/v1/survey/daily/smart";
         PWDEmotionSubsurvey_endpoint = "/api/v1/survey/emo/create/";
 
+        pwdEmotions = new HashMap<>();
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -99,11 +98,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
     @Override
     public void OnConfirmClicked() {
-        PWDEmotionsFragment PWDEmoteFrag = (PWDEmotionsFragment)getSupportFragmentManager().findFragmentById(R.id.PWDEmotionsFrag);
-        Log.v("TEST", "got a confirm click");
-        HashMap<String, Boolean> PWDEmotions = PWDEmoteFrag.getEmotions();
-        createPWDEmotionsSubsurvey(PWDEmotions);
-        Log.v("TEST", PWDEmotions.toString());
+        createPWDEmotionsSubsurvey(pwdEmotions);
     }
 
 
@@ -180,9 +175,17 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+
+    public static View.OnClickListener updateMapOnClick(final HashMap<String, Boolean> hm, final String key){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox c = (CheckBox)v;
+                hm.put(key,c.isChecked());
+                Log.v("DAILYSURVEY","Click handler called from: " + c.toString());
+            }
+        };
+    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -230,8 +233,9 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         CheckBox SlowMove;
         CheckBox SlowSpeech;
         CheckBox SlowReaction;
+        Button getChecks;
         HashMap<String, Boolean> hp = new HashMap<>();
-
+        DailySurvey dailySurvey;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -247,7 +251,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         public PWDEmotionsFragment() {
         }
 
-        public HashMap<String, Boolean> getEmotions(){
+        public void updateHashMap(){
             hp.put("SadVoice",SadVoice.isChecked());
             hp.put("Tearfulness",Tearful.isChecked());
             hp.put("LackReactionToPleasantEvents",LackReact.isChecked());
@@ -262,9 +266,18 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             hp.put("BotheredByUsualActivities",BotheredByUsualActivities.isChecked());
             hp.put("SlowMovement",SlowMove.isChecked());
             hp.put("SlowSpeech",SlowSpeech.isChecked());
-            hp.put("SlowReaction",SlowReaction.isChecked());
-            return hp;
+            hp.put("SlowReaction", SlowReaction.isChecked());
+            dailySurvey.pwdEmotions = hp;
         }
+
+        @Override
+        public void onPause(){
+            updateHashMap();
+            Log.v("PAUSE","paused");
+            super.onPause();
+
+        }
+
 
 
         @Override
@@ -272,23 +285,58 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pwd_emotions_survey, container, false);
 
+            dailySurvey = (DailySurvey) getActivity();
+
             SadVoice = (CheckBox)rootView.findViewById(R.id.checkSadVoice);
+            SadVoice.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"SadVoice"));
+
             Tearful = (CheckBox)rootView.findViewById(R.id.checkTearfulness);
+            Tearful.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"Tearfulness"));
+
             LackReact = (CheckBox)rootView.findViewById(R.id.checkLackOfReact);
+            LackReact.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"LackReactionToPleasantEvents"));
+
             VeryWorried = (CheckBox)rootView.findViewById(R.id.checkVeryWorried);
+            VeryWorried.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"VeryWorried"));
+
             Frightened = (CheckBox)rootView.findViewById(R.id.checkFrightened);
+            Frightened.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"Frightened"));
+
             TalkLess = (CheckBox)rootView.findViewById(R.id.checkLessTalk);
+            TalkLess.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"TalkLess"));
+
             AppetiteLoss = (CheckBox)rootView.findViewById(R.id.checkAppetiteLoss);
+            AppetiteLoss.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"AppetiteLoss"));
+
             LessInterestInHobbies = (CheckBox)rootView.findViewById(R.id.checkLessIntrest);
+            LessInterestInHobbies.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"LessInterestInHobbies"));
+
             SadExpression = (CheckBox)rootView.findViewById(R.id.checkSadExpression);
+            SadExpression.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"SadExpression"));
+
             LackOfInterest = (CheckBox)rootView.findViewById(R.id.checkLackOfInterest);
+            LackOfInterest.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "LackOfInterest"));
+
             TroubleConcentrating = (CheckBox)rootView.findViewById(R.id.checkTroubleConcen);
+            TroubleConcentrating.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "TroubleConcentrating"));
+
             BotheredByUsualActivities = (CheckBox)rootView.findViewById(R.id.checkBotheredByUsual);
+            BotheredByUsualActivities.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "BotheredByUsualActivities"));
+
             SlowMove = (CheckBox)rootView.findViewById(R.id.checkSlowMove);
+            SlowMove.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "SlowMovement"));
+
             SlowSpeech =(CheckBox)rootView.findViewById(R.id.checkSlowSpeech);
+            SlowSpeech.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "SlowSpeech"));
+
             SlowReaction =  (CheckBox)rootView.findViewById(R.id.checkSlowReact);
+            SlowReaction.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "SlowReaction"));
+
+            updateHashMap();
+
 
             return rootView;
+
         }
 
     }
@@ -318,4 +366,6 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             return rootView;
         }
     }
+
+
 }

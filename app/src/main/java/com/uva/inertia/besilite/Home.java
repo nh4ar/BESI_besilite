@@ -36,7 +36,7 @@ public class Home extends AppCompatActivity {
     SharedPreferences sharedPref;
 
     //Holds all activites
-    ArrayList<String> agiSurveyList = new ArrayList<String>();
+    ArrayList<String> agiSurveyList = new ArrayList<>();
 
     //Allows us to add more items
     ArrayAdapter<String> adapter;
@@ -60,13 +60,13 @@ public class Home extends AppCompatActivity {
         netQueue = Volley.newRequestQueue(this);
 
 
-        final ListView mListView = (ListView) findViewById(R.id.agiSurveys);
+//        final ListView mListView = (ListView) findViewById(R.id.agiSurveys);
 
 //      Create our adapter to add items
-        adapter=new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                agiSurveyList);
-        mListView.setAdapter(adapter);
+//        adapter=new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1,
+//                agiSurveyList);
+//        mListView.setAdapter(adapter);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -80,7 +80,7 @@ public class Home extends AppCompatActivity {
 
         final Button goToEmotions = (Button) findViewById(R.id.button);
         final Button goToActivities = (Button) findViewById(R.id.button2);
-        final Button refresh = (Button) findViewById(R.id.refreshBtn);
+        final Button refresh = (Button) findViewById(R.id.button3);
 
 
         goToEmotions.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +105,11 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
+
     }
 
 
@@ -135,39 +140,37 @@ public class Home extends AppCompatActivity {
 
 
     void updateAgiList(){
-        deploy_id = sharedPref.getString("pref_key_deploy_id","");
-        base_url = sharedPref.getString("pref_key_base_url", "");
-        api_token = sharedPref.getString("pref_key_api_token","");
-        endpoint ="/api/v1/survey/agi/"+deploy_id+"/";
-
-
-        JsonArrayRequestWithToken agiSurveyRequestArray = new JsonArrayRequestWithToken(base_url+endpoint, api_token, new Response.Listener<JSONArray>() {
-
-            @Override
-            public void onResponse(JSONArray response) {
-                adapter.clear();
-                try {
-                    //adapter.add(response.getString(response.length()-1));
-
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject o = (JSONObject) response.get(i);
-                        adapter.add(o.getString("timestamp") + " | Level: " + o.getString("level") + " |  Observation: " + o.getString("observations"));
-                    }
-                } catch (JSONException e){
-                    adapter.add("NOOOOOOOOOOOOOOOOOOOOOOOOO");
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                adapter.clear();
-                adapter.add("Server responded with error: " + error.getLocalizedMessage());
-
-            }
-        });
-
-        this.netQueue.add(agiSurveyRequestArray);
+//        deploy_id = sharedPref.getString("pref_key_deploy_id","");
+//        base_url = sharedPref.getString("pref_key_base_url", "");
+//        api_token = sharedPref.getString("pref_key_api_token","");
+//        endpoint ="/api/v1/survey/agi/"+deploy_id+"/";
+//
+//
+//        JsonArrayRequestWithToken agiSurveyRequestArray = new JsonArrayRequestWithToken(base_url+endpoint, api_token, new Response.Listener<JSONArray>() {
+//
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                adapter.clear();
+//                try {
+//                    for (int i = 0; i < response.length(); i++) {
+//                        JSONObject o = (JSONObject) response.get(i);
+//                        adapter.add(o.getString("timestamp") + " | Level: " + o.getString("level") + " |  Activity: " + o.getString("activity"));
+//                    }
+//                } catch (JSONException e){
+//                    adapter.add("Server responded with incorrect JSON");
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                adapter.clear();
+//                adapter.add("Server responded with error: " + error.getLocalizedMessage());
+//
+//            }
+//        });
+//
+//        this.netQueue.add(agiSurveyRequestArray);
 
 
 
