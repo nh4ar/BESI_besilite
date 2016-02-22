@@ -27,8 +27,13 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import java.net.MulticastSocket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 
 public class DailySurvey extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
@@ -38,7 +43,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     String deploy_id;
     String complete_endpoint;
     String PWDEmotionSubsurvey_endpoint;
-
+    String CaregiverEmotionSubsurvey_endpoint;
+    String PWDSleepSubsurvey_endpoint;
 
     SharedPreferences sharedPref;
     RequestQueue netQueue;
@@ -46,6 +52,10 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     HashMap<String, Boolean> pwdEmotions;
     HashMap<String, Boolean> caregiverEmotions;
     HashMap<String, Boolean> pwdSleepQal;
+
+    int pwdEmotionSurveyPK;
+    int pwdSleepSurveyPK;
+    int careEmotionSurveyPK;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -79,11 +89,15 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token", "");
-        deploy_id = sharedPref.getString("pref_key_deploy_id","");
-        complete_endpoint = "/api/v1/survey/daily/smart";
+        deploy_id = sharedPref.getString("pref_key_deploy_id", "");
+        complete_endpoint = "/api/v1/survey/daily/smart/";
         PWDEmotionSubsurvey_endpoint = "/api/v1/survey/emo/create/";
+        CaregiverEmotionSubsurvey_endpoint = "/api/v1/survey/care-emo/create/";
+        PWDSleepSubsurvey_endpoint = "/api/v1/survey/slp/create/";
 
         pwdEmotions = new HashMap<>();
+        pwdSleepQal = new HashMap<>();
+        caregiverEmotions = new HashMap<>();
 
 
         // Set up the ViewPager with the sections adapter.
@@ -98,18 +112,58 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
     @Override
     public void OnConfirmClicked() {
-        createPWDEmotionsSubsurvey(pwdEmotions);
+        createSurveys();
     }
 
+    public void createSurveys(){
+        createSubsurveys_PWDEmotions();
+    }
 
-    private void createPWDEmotionsSubsurvey(HashMap<String, Boolean> hm){
-        JSONObject subsurveyObject = new JSONObject(hm);
+    private void createSubsurveys_PWDEmotions(){
+        JSONObject subsurveyObject = new JSONObject(pwdEmotions);
         Log.v("TEST",subsurveyObject.toString());
-        JsonObjectRequestWithToken agiSurveyCreateResponse = new JsonObjectRequestWithToken( Request.Method.POST, base_url+PWDEmotionSubsurvey_endpoint,subsurveyObject, api_token, new Response.Listener<JSONObject>() {
+        JsonObjectRequestWithToken requestNewPWDEmotionSub = new JsonObjectRequestWithToken( Request.Method.POST, base_url+PWDEmotionSubsurvey_endpoint,subsurveyObject, api_token, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.v("TEST","woo it worked!");
+                try{
+                    pwdEmotionSurveyPK = response.getInt("id");
+                    Log.v("TEST","woo created pwd emotions!");
+                    createSubsurveys_CaregiverEmotions();
+                } catch (org.json.JSONException e){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for PWDEmotions", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast toast = Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        this.netQueue.add(requestNewPWDEmotionSub);
+    }
+
+    private void createSubsurveys_CaregiverEmotions(){
+        JSONObject subsurveyObject = new JSONObject(caregiverEmotions);
+        Log.v("TEST",subsurveyObject.toString());
+        JsonObjectRequestWithToken requestNewCareEmotionSub = new JsonObjectRequestWithToken( Request.Method.POST, base_url+CaregiverEmotionSubsurvey_endpoint,subsurveyObject, api_token, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    careEmotionSurveyPK = response.getInt("id");
+                    Log.v("TEST","woo created care emotions!");
+                    createSubsurveys_PWDSleep();
+                } catch (org.json.JSONException e){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for Caregiver Emotions", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
             }
         }, new Response.ErrorListener() {
 
@@ -122,7 +176,87 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             }
         });
 
-        this.netQueue.add(agiSurveyCreateResponse);
+        this.netQueue.add(requestNewCareEmotionSub);
+    }
+
+    private void createSubsurveys_PWDSleep(){
+        JSONObject subsurveyObject = new JSONObject(pwdSleepQal);
+        Log.v("TEST",subsurveyObject.toString());
+        JsonObjectRequestWithToken requestNewPWDSleepSub = new JsonObjectRequestWithToken( Request.Method.POST, base_url+PWDSleepSubsurvey_endpoint,subsurveyObject, api_token,
+        new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    pwdSleepSurveyPK = response.getInt("id");
+                    Log.v("TEST","woo created pwd sleep!");
+                    createCompleteSurvey();
+                } catch (org.json.JSONException e){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for PWDSleep", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String err_msg = new String(error.networkResponse.data);
+                Log.e("ERROR", err_msg);
+                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        this.netQueue.add(requestNewPWDSleepSub);
+    }
+
+    private void createCompleteSurvey(){
+        try{
+            JSONObject surveyObject  = new JSONObject();
+            //get current time in iso8601
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+            df.setTimeZone(tz);
+            String timestamp = df.format(new Date());
+            surveyObject.put("timestamp", timestamp);
+            surveyObject.put("caregiverEmotions",careEmotionSurveyPK);
+            surveyObject.put("PWDEmotions",pwdEmotionSurveyPK);
+            surveyObject.put("PWDSleepEvents",pwdSleepSurveyPK);
+
+            JsonObjectRequestWithToken requestNewCompleteSurvey = new JsonObjectRequestWithToken( Request.Method.POST, base_url+complete_endpoint,surveyObject, api_token, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    try{
+                        int pk = response.getInt("pk");
+                        Log.v("TEST","pk for new complete survey is: "+pk);
+                        finish();
+                    } catch (org.json.JSONException e){
+                        Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for complete survey", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    String err_msg = new String(error.networkResponse.data);
+                    Log.e("ERROR", err_msg);
+                    Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+
+            this.netQueue.add(requestNewCompleteSurvey);
+
+        } catch (org.json.JSONException e){
+            Log.e("TEST","Something went very wrong creating survey object");
+        }
+
+
     }
 
     /**
@@ -192,6 +326,24 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
      */
     public static class CaregiverEmotionsFragment extends Fragment {
 
+        CheckBox Isolated;
+        CheckBox Exhausted;
+        CheckBox Worried;
+        CheckBox Frustrated;
+        CheckBox Discouraged;
+        CheckBox Rested;
+        CheckBox Busy;
+        CheckBox HangingInThere;
+        CheckBox Okay;
+        CheckBox Calm;
+        CheckBox Satisfied;
+        CheckBox Hopeful;
+        CheckBox Motivated;
+        CheckBox Confident;
+        CheckBox InControl;
+
+        DailySurvey ds;
+
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -211,6 +363,42 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_caregiver_emotions_survey, container, false);
+
+            ds = (DailySurvey) getActivity();
+            HashMap<String, Boolean> cEmo = ds.caregiverEmotions;
+
+            Isolated = (CheckBox) rootView.findViewById(R.id.checkIsolated);
+            Isolated.setOnClickListener(updateMapOnClick(cEmo,"Isolated"));
+            Exhausted = (CheckBox) rootView.findViewById(R.id.checkExhausted);
+            Exhausted.setOnClickListener(updateMapOnClick(cEmo,"Exhausted"));
+            Worried = (CheckBox) rootView.findViewById(R.id.checkWorried);
+            Worried.setOnClickListener(updateMapOnClick(cEmo,"Worried"));
+            Frustrated = (CheckBox) rootView.findViewById(R.id.checkFrustrated);
+            Frustrated.setOnClickListener(updateMapOnClick(cEmo,"Frustrated"));
+            Discouraged = (CheckBox) rootView.findViewById(R.id.checkDiscouraged);
+            Discouraged.setOnClickListener(updateMapOnClick(cEmo,"Discouraged"));
+            Rested = (CheckBox) rootView.findViewById(R.id.checkRested);
+            Rested.setOnClickListener(updateMapOnClick(cEmo,"Rested"));
+            Busy = (CheckBox) rootView.findViewById(R.id.checkBusy);
+            Busy.setOnClickListener(updateMapOnClick(cEmo,"Busy"));
+            HangingInThere = (CheckBox) rootView.findViewById(R.id.checkHangingInThere);
+            HangingInThere.setOnClickListener(updateMapOnClick(cEmo,"HangingInThere"));
+            Okay = (CheckBox) rootView.findViewById(R.id.checkOkay);
+            Okay.setOnClickListener(updateMapOnClick(cEmo,"Okay"));
+            Calm = (CheckBox) rootView.findViewById(R.id.checkCalm);
+            Calm.setOnClickListener(updateMapOnClick(cEmo,"Calm"));
+            Satisfied = (CheckBox) rootView.findViewById(R.id.checkSatisfied);
+            Satisfied.setOnClickListener(updateMapOnClick(cEmo,"Satisfied"));
+            Hopeful = (CheckBox) rootView.findViewById(R.id.checkHopeful);
+            Hopeful.setOnClickListener(updateMapOnClick(cEmo,"Hopeful"));
+            Motivated  = (CheckBox) rootView.findViewById(R.id.checkMotivated );
+            Motivated .setOnClickListener(updateMapOnClick(cEmo,"Motivated "));
+            Confident = (CheckBox) rootView.findViewById(R.id.checkConfident);
+            Confident.setOnClickListener(updateMapOnClick(cEmo,"Confident"));
+            InControl = (CheckBox) rootView.findViewById(R.id.checkInControl);
+            InControl.setOnClickListener(updateMapOnClick(cEmo,"InControl"));
+
+
 
             return rootView;
         }
@@ -343,6 +531,15 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
     public static class PWDSleepFragment extends Fragment {
 
+        DailySurvey ds;
+
+        CheckBox multiBathroom;
+        CheckBox badDreams;
+        CheckBox moreNaps;
+        CheckBox diffFallingAsleep;
+        CheckBox wakeUpFreq;
+        CheckBox wakeUpEarly;
+        CheckBox restlessOveractive;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -362,6 +559,30 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pwd_sleep_survey, container, false);
+            ds = (DailySurvey) getActivity();
+
+            HashMap<String, Boolean> slpQ = ds.pwdSleepQal;
+
+            multiBathroom =(CheckBox)rootView.findViewById(R.id.checkMultipleBathroomVisits);
+            multiBathroom.setOnClickListener(updateMapOnClick(slpQ,"MultipleBathroomVisits"));
+
+            badDreams =(CheckBox)rootView.findViewById(R.id.checkBadDreams);
+            badDreams.setOnClickListener(updateMapOnClick(slpQ,"BadDreams"));
+
+            moreNaps =(CheckBox)rootView.findViewById(R.id.checkMoreNaps);
+            moreNaps.setOnClickListener(updateMapOnClick(slpQ,"MoreNaps"));
+
+            diffFallingAsleep =(CheckBox)rootView.findViewById(R.id.checkDifficultyFallingAsleep);
+            diffFallingAsleep.setOnClickListener(updateMapOnClick(slpQ,"DifficultyFallingAsleep"));
+
+            wakeUpFreq =(CheckBox)rootView.findViewById(R.id.checkWakeUpFrequently);
+            wakeUpFreq.setOnClickListener(updateMapOnClick(slpQ,"WakeUpFrequently"));
+
+            wakeUpEarly =(CheckBox)rootView.findViewById(R.id.checkWakeUpEarly);
+            wakeUpEarly.setOnClickListener(updateMapOnClick(slpQ,"WakeUpEarly"));
+
+            restlessOveractive =(CheckBox)rootView.findViewById(R.id.checkRestlessOveractive);
+            restlessOveractive.setOnClickListener(updateMapOnClick(slpQ,"RestlessOveractive"));
 
             return rootView;
         }
