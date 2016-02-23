@@ -79,6 +79,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -151,7 +152,11 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     private void createSubsurveys_CaregiverEmotions(){
         JSONObject subsurveyObject = new JSONObject(caregiverEmotions);
         Log.v("TEST",subsurveyObject.toString());
-        JsonObjectRequestWithToken requestNewCareEmotionSub = new JsonObjectRequestWithToken( Request.Method.POST, base_url+CaregiverEmotionSubsurvey_endpoint,subsurveyObject, api_token, new Response.Listener<JSONObject>() {
+        JsonObjectRequestWithToken requestNewCareEmotionSub = new JsonObjectRequestWithToken(
+                Request.Method.POST, base_url+CaregiverEmotionSubsurvey_endpoint,
+                subsurveyObject,
+                api_token,
+                new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -182,7 +187,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     private void createSubsurveys_PWDSleep(){
         JSONObject subsurveyObject = new JSONObject(pwdSleepQal);
         Log.v("TEST",subsurveyObject.toString());
-        JsonObjectRequestWithToken requestNewPWDSleepSub = new JsonObjectRequestWithToken( Request.Method.POST, base_url+PWDSleepSubsurvey_endpoint,subsurveyObject, api_token,
+        JsonObjectRequestWithToken requestNewPWDSleepSub = new JsonObjectRequestWithToken(
+                Request.Method.POST, base_url+PWDSleepSubsurvey_endpoint,subsurveyObject, api_token,
         new Response.Listener<JSONObject>() {
 
             @Override
@@ -195,8 +201,6 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                     Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for PWDSleep", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-
-
             }
         }, new Response.ErrorListener() {
 
