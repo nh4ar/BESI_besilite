@@ -24,7 +24,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,16 +36,16 @@ public class ScheduleActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
 
     //Holds all activites
-    ArrayList<String> ScheduleList = new ArrayList<String>();
+    ArrayList<String> ScheduleList = new ArrayList<>();
 
     //Allows us to add more items
     ArrayAdapter<String> adapter;
 
 
     //Holds all activity name strings
-    ArrayList<String> ActivityList = new ArrayList<String>();
+    ArrayList<String> ActivityList = new ArrayList<>();
 
-    Map<String,String> ActivityMap = new HashMap<String, String>();
+    Map<String,String> ActivityMap = new HashMap<>();
 
     String base_url;
     String endpoint;
@@ -55,11 +58,23 @@ public class ScheduleActivity extends AppCompatActivity {
 
     public void postProcess() {
         try
-        {
+        {//2016-02-23T07:16:00Z
+
+            java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            String dateString;
+            java.text.DateFormat dprint = java.text.DateFormat.getDateTimeInstance(
+                    DateFormat.SHORT,DateFormat.SHORT);
+            Date d;
             for (int i = 0; i < RawEventList.length(); i++) {
                 JSONObject o = (JSONObject) RawEventList.get(i);
-                adapter.add(o.getString("timestamp") + " |  Activity: " +
-                        ActivityMap.get(o.getString("activity")));
+                try {
+                    dateString = o.getString("acttimestamp").replace("Z", "GMT+00:00");
+                    d = df.parse(dateString);
+                    adapter.add(dprint.format(d) + " |  Activity: " +
+                            ActivityMap.get(o.getString("activity")));
+                } catch(java.text.ParseException e){
+                    Log.e("PARSING ERROR", e.getMessage());
+                }
             }
         }
         catch(JSONException e)
@@ -75,6 +90,8 @@ public class ScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_schedule);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -86,7 +103,7 @@ public class ScheduleActivity extends AppCompatActivity {
         final ListView mListView = (ListView) findViewById(R.id.scheduleEvents);
 
 //      Create our adapter to add items
-        adapter=new ArrayAdapter<String>(this,
+        adapter=new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, ScheduleList);
 
         mListView.setAdapter(adapter);

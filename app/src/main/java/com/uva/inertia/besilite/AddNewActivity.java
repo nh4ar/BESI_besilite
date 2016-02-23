@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,7 +24,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -31,12 +37,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class AddNewActivity extends AppCompatActivity {
 
@@ -50,9 +58,10 @@ public class AddNewActivity extends AppCompatActivity {
     //Allows us to add more items
     ArrayAdapter<String> adapter;
     //Holds all activity name strings
-    ArrayList<String> ActivityList = new ArrayList<>();
+    CaseInsensitiveArrayList ActivityList = new CaseInsensitiveArrayList();
 
     Map<String,String> ActivityMap = new HashMap<>();
+    int selectedActivity;
 
     String base_url;
     String endpoint;
@@ -93,14 +102,186 @@ public class AddNewActivity extends AppCompatActivity {
         netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
 
 
+        final EditText newActivVal = (EditText) findViewById(R.id.new_activity_val);
+        Button addNewActivity = (Button) findViewById(R.id.add_new_activity);
+        addNewActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String temp = newActivVal.getText().toString();
+                if (ActivityList.contains(temp)){
+                    Context context = getApplicationContext();
+                    CharSequence text = "This field already exists";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+                else if (temp.trim().length() == 0){
+                    Context context = getApplicationContext();
+                    CharSequence text = "There is nothing typed in";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+                else{
+                    submitNewActivity(temp);
+                }
+            }
+        });
+
         final ListView mListView = (ListView) findViewById(R.id.actionList);
 
 //      Create our adapter to add items
         adapter=new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, ActivityList);
 
+        mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        mListView.setSelector(R.color.pressed_color);
+        mListView.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
+                view.setSelected(true);
+                selectedActivity = position+1;
+            }
+        });
+
         mListView.setAdapter(adapter);
         getActivityList();
+
+
+        final Button submitActivityReport = (Button)findViewById(R.id.submit_activity_report);
+        submitActivityReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    if (selectedActivity == 0){
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "No activity selected",
+                                Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                    else {
+                        submitFullActivityReport(selectedActivity, calendar);
+                    }
+                } catch (NullPointerException e){
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "No activity selected",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        });
+    }
+
+    void submitFullActivityReport(int selAct, Calendar cal) {
+        endpoint = "/api/v1/survey/activ/smart/";
+        base_url = sharedPref.getString("pref_key_base_url", "");
+        api_token = sharedPref.getString("pref_key_api_token","");
+        try{
+            JSONObject surveyObject = new JSONObject();
+            //get current time in iso8601
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+            df.setTimeZone(tz);
+            String timestamp = df.format(new Date());
+            surveyObject.put("timestamp", timestamp);
+            surveyObject.put("acttimestamp", df.format(cal.getTime()));
+            surveyObject.put("activity", selectedActivity);
+
+            JsonObjectRequestWithToken requestNewCompleteSurvey =
+                    new JsonObjectRequestWithToken(
+                            Request.Method.POST, base_url + endpoint, surveyObject,
+                            api_token, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        int pk = response.getInt("pk");
+                        Log.v("TEST", "pk for new complete survey is: " + pk);
+                        finish();
+                    } catch (org.json.JSONException e) {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Server failed to return a PK for complete survey",
+                                Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    String err_msg = new String(error.networkResponse.data);
+                    Log.e("ERROR", err_msg);
+                    Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+
+            this.netQueue.add(requestNewCompleteSurvey);
+
+        } catch (org.json.JSONException e){
+            Log.e("TEST","Something went very wrong creating survey object");
+        }
+    }
+
+    void submitNewActivity(String newActivity){
+        endpoint = "/api/v1/survey/fields/smart/a/";
+        base_url = sharedPref.getString("pref_key_base_url", "");
+        api_token = sharedPref.getString("pref_key_api_token","");
+        try{
+            JSONObject surveyObject  = new JSONObject();
+            //get current time in iso8601
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+            df.setTimeZone(tz);
+            String timestamp = df.format(new Date());
+            surveyObject.put("timestamp", timestamp);
+            surveyObject.put("value", newActivity);
+
+            JsonObjectRequestWithToken requestNewActivitySurvey =
+                    new JsonObjectRequestWithToken(
+                            Request.Method.POST,
+                            base_url+endpoint,
+                            surveyObject, api_token, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    try{
+                        int pk = response.getInt("pk");
+                        Log.v("TEST","pk for new complete survey is: "+pk);
+                        getActivityList();
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "New Activity Added", Toast.LENGTH_SHORT);
+                        toast.show();
+                        //finish();
+                    } catch (org.json.JSONException e){
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Server failed to return a PK for complete survey",
+                                Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    String err_msg = new String(error.networkResponse.data);
+                    Log.e("ERROR", err_msg);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            err_msg, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+
+            this.netQueue.add(requestNewActivitySurvey);
+
+        } catch (org.json.JSONException e){
+            Log.e("TEST","Something went very wrong creating survey object");
+        }
     }
 
     void getActivityList(){
@@ -108,6 +289,8 @@ public class AddNewActivity extends AppCompatActivity {
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
         activityEndpoint="/api/v1/survey/fields/smart/a";
+
+        adapter.clear();
 
         JsonArrayRequestWithToken activityListRequestArray = new JsonArrayRequestWithToken(base_url+activityEndpoint, api_token, new Response.Listener<JSONArray>() {
 
