@@ -15,8 +15,11 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.android.volley.RequestQueue;
@@ -31,23 +34,25 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AddNewActivity extends AppCompatActivity {
 
-    Date evtDate;
-    Time evtTime;
+    java.text.DateFormat[] dateFormats;
 
+    Calendar calendar;
+    Date date;
 
     SharedPreferences sharedPref;
 
     //Allows us to add more items
     ArrayAdapter<String> adapter;
     //Holds all activity name strings
-    ArrayList<String> ActivityList = new ArrayList<String>();
+    ArrayList<String> ActivityList = new ArrayList<>();
 
-    Map<String,String> ActivityMap = new HashMap<String, String>();
+    Map<String,String> ActivityMap = new HashMap<>();
 
     String base_url;
     String endpoint;
@@ -57,13 +62,30 @@ public class AddNewActivity extends AppCompatActivity {
     JSONArray RawActivityList;
     RequestQueue netQueue;
 
+    TextView selDate;
+    TextView selTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        calendar = new GregorianCalendar();
+        date = new Date();
+        calendar.setTime(date);
+        dateFormats = new java.text.DateFormat[] {
+                java.text.DateFormat.getDateInstance(),
+                java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT),
+        };
+
+        selDate = (TextView) findViewById(R.id.new_activity_date);
+        selTime = (TextView) findViewById(R.id.new_activity_time);
+        selDate.setText(dateFormats[0].format(date));
+        selTime.setText(dateFormats[1].format(date));
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -74,7 +96,7 @@ public class AddNewActivity extends AppCompatActivity {
         final ListView mListView = (ListView) findViewById(R.id.actionList);
 
 //      Create our adapter to add items
-        adapter=new ArrayAdapter<String>(this,
+        adapter=new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, ActivityList);
 
         mListView.setAdapter(adapter);
@@ -113,6 +135,20 @@ public class AddNewActivity extends AppCompatActivity {
         this.netQueue.add(activityListRequestArray);
     }
 
+    public void setDate(int year, int month, int day){
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        date = calendar.getTime();
+        selDate.setText(dateFormats[0].format(date));
+    }
+    public void setTime( int hourOfDay, int minute){
+        calendar.set(Calendar.HOUR, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        date = calendar.getTime();
+        selTime.setText(dateFormats[1].format(date));
+    }
+
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
@@ -125,11 +161,11 @@ public class AddNewActivity extends AppCompatActivity {
 
             // Create a new instance of TimePickerDialog and return it
             return new TimePickerDialog(getActivity(), this, hour, minute,
-                    DateFormat.is24HourFormat(getActivity()));
+                    android.text.format.DateFormat.is24HourFormat(getActivity()));
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            // Do something with the time chosen by the user
+            ((AddNewActivity)getActivity()).setTime(hourOfDay, minute);
         }
     }
     public void showTimePickerDialog(View v) {
@@ -148,13 +184,12 @@ public class AddNewActivity extends AppCompatActivity {
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
-
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-
+            ((AddNewActivity)getActivity()).setDate(year, month, day);
         }
     }
     public void showDatePickerDialog(View v) {

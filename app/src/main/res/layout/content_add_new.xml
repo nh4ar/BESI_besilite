@@ -34,14 +34,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pick_date"
-                    android:onClick="showDatePickerDialog" />
+                    android:onClick="showDatePickerDialog"
+                    android:id="@+id/select_date_button" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Large Text"
-                    android:id="@+id/textView8" />
+                    android:id="@+id/new_activity_date" />
 
             </LinearLayout>
 
@@ -54,14 +55,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pick_time"
-                    android:onClick="showTimePickerDialog" />
+                    android:onClick="showTimePickerDialog"
+                    android:id="@+id/select_time_button" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Large Text"
-                    android:id="@+id/textView9" />
+                    android:id="@+id/new_activity_time" />
 
             </LinearLayout>
 
@@ -74,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add New Activity Type"
-                    android:id="@+id/button3" />
+                    android:id="@+id/add_new_activity" />
 
                 <EditText
                     android:layout_width="fill_parent"
@@ -86,7 +88,7 @@
 
             <ScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/scrollView2" >
 
                 <ListView

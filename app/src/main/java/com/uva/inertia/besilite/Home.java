@@ -68,7 +68,7 @@ public class Home extends AppCompatActivity {
 //                agiSurveyList);
 //        mListView.setAdapter(adapter);
 
-
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +76,7 @@ public class Home extends AppCompatActivity {
                 Intent intent = new Intent(v.getContext(), AddAgiSurvey.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         final Button goToEmotions = (Button) findViewById(R.id.button);
         final Button goToActivities = (Button) findViewById(R.id.button2);
