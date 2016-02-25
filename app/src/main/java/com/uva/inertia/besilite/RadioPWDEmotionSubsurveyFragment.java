@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.util.HashMap;
 
@@ -31,6 +32,7 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
     RadioButton SlowMove;
     RadioButton SlowSpeech;
     RadioButton SlowReaction;
+
     HashMap<String, Boolean> pwdEmo = new HashMap<>();
 
     /**
