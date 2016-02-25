@@ -80,7 +80,7 @@ public class Home extends AppCompatActivity {
 
         final Button goToEmotions = (Button) findViewById(R.id.button);
         final Button goToActivities = (Button) findViewById(R.id.button2);
-        final Button refresh = (Button) findViewById(R.id.button3);
+        final Button goToAgiReports = (Button) findViewById(R.id.button3);
 
 
         goToEmotions.setOnClickListener(new View.OnClickListener() {
@@ -91,10 +91,11 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        refresh.setOnClickListener(new View.OnClickListener() {
+        goToAgiReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateAgiList();
+                Intent intent = new Intent(v.getContext(), AgitationReports.class);
+                startActivity(intent);
             }
         });
 
