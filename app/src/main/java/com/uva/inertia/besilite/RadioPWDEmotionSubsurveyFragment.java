@@ -60,49 +60,49 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
         pwdEmo = ar.pwdEmo;
 
         SadVoice = (RadioButton)rootView.findViewById(R.id.radioSadVoice);
-        SadVoice.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo,"SadVoice"));
+        SadVoice.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SadVoice"));
 
         Tearful = (RadioButton)rootView.findViewById(R.id.radioTearfulness);
-        Tearful.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo,"Tearfulness"));
+        Tearful.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "Tearfulness"));
 
         LackReact = (RadioButton)rootView.findViewById(R.id.radioLackOfReact);
-        LackReact.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo,"LackReactionToPleasantEvents"));
+        LackReact.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "LackReactionToPleasantEvents"));
 
         VeryWorried = (RadioButton)rootView.findViewById(R.id.radioVeryWorried);
-        VeryWorried.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo,"VeryWorried"));
+        VeryWorried.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "VeryWorried"));
 
         Frightened = (RadioButton)rootView.findViewById(R.id.radioFrightened);
-        Frightened.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo,"Frightened"));
+        Frightened.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "Frightened"));
 
         TalkLess = (RadioButton)rootView.findViewById(R.id.radioLessTalk);
-        TalkLess.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo,"TalkLess"));
+        TalkLess.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "TalkLess"));
 
         AppetiteLoss = (RadioButton)rootView.findViewById(R.id.radioAppetiteLoss);
-        AppetiteLoss.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo,"AppetiteLoss"));
+        AppetiteLoss.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "AppetiteLoss"));
 
         LessInterestInHobbies = (RadioButton)rootView.findViewById(R.id.radioLessIntrest);
-        LessInterestInHobbies.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo,"LessInterestInHobbies"));
+        LessInterestInHobbies.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "LessInterestInHobbies"));
 
         SadExpression = (RadioButton)rootView.findViewById(R.id.radioSadExpression);
-        SadExpression.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo,"SadExpression"));
+        SadExpression.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SadExpression"));
 
         LackOfInterest = (RadioButton)rootView.findViewById(R.id.radioLackOfInterest);
-        LackOfInterest.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo, "LackOfInterest"));
+        LackOfInterest.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "LackOfInterest"));
 
         TroubleConcentrating = (RadioButton)rootView.findViewById(R.id.radioTroubleConcen);
-        TroubleConcentrating.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo, "TroubleConcentrating"));
+        TroubleConcentrating.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "TroubleConcentrating"));
 
         BotheredByUsualActivities = (RadioButton)rootView.findViewById(R.id.radioBotheredByUsual);
-        BotheredByUsualActivities.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo, "BotheredByUsualActivities"));
+        BotheredByUsualActivities.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "BotheredByUsualActivities"));
 
         SlowMove = (RadioButton)rootView.findViewById(R.id.radioSlowMove);
-        SlowMove.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo, "SlowMovement"));
+        SlowMove.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SlowMovement"));
 
         SlowSpeech =(RadioButton)rootView.findViewById(R.id.radioSlowSpeech);
-        SlowSpeech.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo, "SlowSpeech"));
+        SlowSpeech.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SlowSpeech"));
 
         SlowReaction =  (RadioButton)rootView.findViewById(R.id.radioSlowReact);
-        SlowReaction.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdEmo, "SlowReaction"));
+        SlowReaction.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SlowReaction"));
 
 
 
