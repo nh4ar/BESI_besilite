@@ -98,6 +98,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         tabLayout.setupWithViewPager(mViewPager);
 
         pwdObs = new HashMap<>();
+        pwdEmo = new HashMap<>();
 
     }
 

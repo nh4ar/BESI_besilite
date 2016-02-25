@@ -56,7 +56,6 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
 
         ar = (AgitationReports) getActivity();
 
-
         pwdEmo = ar.pwdEmo;
 
         SadVoice = (RadioButton)rootView.findViewById(R.id.radioSadVoice);
