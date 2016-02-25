@@ -29,7 +29,6 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings_activity" />
-        <activity android:name=".AddAgiSurvey" />
         <activity
             android:name=".ScheduleActivity"
             android:label="@string/title_activity_schedule"

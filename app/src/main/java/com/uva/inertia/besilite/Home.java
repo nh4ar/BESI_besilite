@@ -59,28 +59,9 @@ public class Home extends AppCompatActivity {
 
         netQueue = Volley.newRequestQueue(this);
 
-
-//        final ListView mListView = (ListView) findViewById(R.id.agiSurveys);
-
-//      Create our adapter to add items
-//        adapter=new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1,
-//                agiSurveyList);
-//        mListView.setAdapter(adapter);
-
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddAgiSurvey.class);
-                startActivity(intent);
-            }
-        });*/
-
         final Button goToEmotions = (Button) findViewById(R.id.button);
         final Button goToActivities = (Button) findViewById(R.id.button2);
-        final Button goToAgiReports = (Button) findViewById(R.id.button3);
+        final Button goToAgiReports = (Button) findViewById(R.id.go_to_agi_report);
 
 
         goToEmotions.setOnClickListener(new View.OnClickListener() {
@@ -106,11 +87,6 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
-
     }
 
 

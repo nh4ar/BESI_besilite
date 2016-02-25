@@ -1,0 +1,69 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.uva.inertia.besilite.AgiGenInfoFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/agi_gen">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agitation Date"
+            android:id="@+id/agi_date"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/agi_date_viewer"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/agi_date"
+            android:layout_toEndOf="@+id/agi_date" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agitation Time"
+            android:id="@+id/agi_time"
+            android:layout_below="@+id/agi_date"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/agi_time_viewer"
+            android:layout_below="@+id/agi_date"
+            android:layout_toRightOf="@+id/agi_time"
+            android:layout_toEndOf="@+id/agi_time" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agitation Level:   "
+            android:id="@+id/textView"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/agi_time"
+            android:layout_alignRight="@+id/agi_time"
+            android:layout_alignEnd="@+id/agi_time" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/agi_level_viewer"
+            android:layout_alignBottom="@+id/textView"
+            android:layout_toRightOf="@+id/agi_date"
+            android:layout_toEndOf="@+id/agi_date" />
+    </RelativeLayout>
+
+</FrameLayout>

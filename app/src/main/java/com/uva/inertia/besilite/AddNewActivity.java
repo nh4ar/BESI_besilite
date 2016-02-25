@@ -61,7 +61,8 @@ public class AddNewActivity extends AppCompatActivity {
     CaseInsensitiveArrayList ActivityList = new CaseInsensitiveArrayList();
 
     Map<String,String> ActivityMap = new HashMap<>();
-    int selectedActivity;
+    Map<String,String> RevActivityMap = new HashMap<>();
+    String selectedActivity;
 
     String base_url;
     String endpoint;
@@ -143,7 +144,7 @@ public class AddNewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
                 view.setSelected(true);
-                selectedActivity = position+1;
+                selectedActivity = RevActivityMap.get(adapter.getItem(position));
             }
         });
 
@@ -156,14 +157,14 @@ public class AddNewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try{
-                    if (selectedActivity == 0){
+                    if (selectedActivity.trim().isEmpty()){
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "No activity selected",
                                 Toast.LENGTH_SHORT);
                         toast.show();
                     }
                     else {
-                        submitFullActivityReport(selectedActivity, calendar);
+                        submitFullActivityReport(calendar);
                     }
                 } catch (NullPointerException e){
                     Toast toast = Toast.makeText(getApplicationContext(),
@@ -175,7 +176,7 @@ public class AddNewActivity extends AppCompatActivity {
         });
     }
 
-    void submitFullActivityReport(int selAct, Calendar cal) {
+    void submitFullActivityReport(Calendar cal) {
         endpoint = "/api/v1/survey/activ/smart/";
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
@@ -288,7 +289,7 @@ public class AddNewActivity extends AppCompatActivity {
         deploy_id = sharedPref.getString("pref_key_deploy_id","");
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
-        activityEndpoint="/api/v1/survey/fields/smart/a";
+        activityEndpoint="/api/v1/survey/fields/smart/a/";
 
         adapter.clear();
 
@@ -301,6 +302,7 @@ public class AddNewActivity extends AppCompatActivity {
                     for (int i = 0; i < resp.length(); i++) {
                         JSONObject o = (JSONObject) resp.get(i);
                         ActivityMap.put(o.getString("pk"),o.getString("value"));
+                        RevActivityMap.put(o.getString("value"), o.getString("pk"));
                         adapter.add(o.getString("value"));
                     }
                 } catch (JSONException e) {

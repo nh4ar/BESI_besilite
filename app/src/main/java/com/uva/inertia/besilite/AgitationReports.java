@@ -23,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,6 +32,14 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
+
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
@@ -51,6 +61,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     int agiSurveyPK;
     int obsSurveyPK;
     int emoSurveyPK;
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -202,7 +213,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
     private void createCompleteSurvey(){
         Log.e("TEST","NEED TO ADD INFO FROM AGITATION");
-        Log.e("TEST","COMPLETE UPLOAD NOT IMPLEMENTED");
+        Log.e("TEST", "COMPLETE UPLOAD NOT IMPLEMENTED");
     }
 
 
@@ -222,7 +233,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return ConfirmFragment.newInstance(position + 1);
+                    return AgiGenInfoFragment.newInstance();
                 case 1:
                     return RadioPWDEmotionSubsurveyFragment.newInstance();
                 case 2:
