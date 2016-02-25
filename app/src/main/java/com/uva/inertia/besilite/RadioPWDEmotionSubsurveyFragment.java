@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -33,7 +34,17 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
     RadioButton SlowSpeech;
     RadioButton SlowReaction;
 
+    RadioGroup col1;
+    RadioGroup col2;
+    RadioGroup col3;
+
+    boolean clearCol1;
+    boolean clearCol2;
+    boolean clearCol3;
+
     HashMap<String, Boolean> pwdEmo = new HashMap<>();
+
+    ArrayList<RadioGroup> columns = new ArrayList<>();
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -50,6 +61,22 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
     }
 
 
+    public RadioGroup.OnCheckedChangeListener resetOtherCols(){
+        return new RadioGroup.OnCheckedChangeListener() {
+            @Override
+//            TODO: THERE IS A BUG HERE WE NEED TO FIX IT
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId != -1) {
+                    for (RadioGroup r : columns) {
+                        if (!r.equals(group)) {
+                            r.clearCheck();
+                        }
+                    }
+                }
+            }
+        };
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +84,20 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
         View rootView = inflater.inflate(R.layout.fragment_radio_emotion_subsurvey, container, false);
 
         ar = (AgitationReports) getActivity();
+
+        RadioGroup col1 = (RadioGroup)rootView.findViewById(R.id.radioCol1);
+        columns.add(col1);
+
+        RadioGroup col2 = (RadioGroup)rootView.findViewById(R.id.radioCol2);
+        columns.add(col2);
+
+        RadioGroup col3 = (RadioGroup)rootView.findViewById(R.id.radioCol3);
+        columns.add(col3);
+
+        col1.setOnCheckedChangeListener(resetOtherCols());
+        col2.setOnCheckedChangeListener(resetOtherCols());
+        col3.setOnCheckedChangeListener(resetOtherCols());
+
 
         pwdEmo = ar.pwdEmo;
 
@@ -104,8 +145,6 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
 
         SlowReaction =  (RadioButton)rootView.findViewById(R.id.radioSlowReact);
         SlowReaction.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SlowReaction"));
-
-
 
         return rootView;
 
