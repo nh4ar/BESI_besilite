@@ -256,7 +256,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                 case 0:
                     return "AGITATION";
                 case 1:
-                    return "EMOTIONS";
+                    return "EMOTION";
                 case 2:
                     return "OBSERVATIONS";
                 case 3:

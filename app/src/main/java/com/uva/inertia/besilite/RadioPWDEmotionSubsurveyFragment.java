@@ -3,9 +3,11 @@ package com.uva.inertia.besilite;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -61,15 +63,15 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
     }
 
 
-    public RadioGroup.OnCheckedChangeListener resetOtherCols(){
-        return new RadioGroup.OnCheckedChangeListener() {
+    public RadioButton.OnCheckedChangeListener resetOtherCols(final int col){
+        return new RadioButton.OnCheckedChangeListener() {
+
             @Override
-//            TODO: THERE IS A BUG HERE WE NEED TO FIX IT
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId != -1) {
-                    for (RadioGroup r : columns) {
-                        if (!r.equals(group)) {
-                            r.clearCheck();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    for (int i = 0; i < columns.size(); i++) {
+                        if (i + 1 != col) {
+                            columns.get(i).clearCheck();
                         }
                     }
                 }
@@ -85,18 +87,14 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
 
         ar = (AgitationReports) getActivity();
 
-        RadioGroup col1 = (RadioGroup)rootView.findViewById(R.id.radioCol1);
+        col1 = (RadioGroup)rootView.findViewById(R.id.radioCol1);
         columns.add(col1);
 
-        RadioGroup col2 = (RadioGroup)rootView.findViewById(R.id.radioCol2);
+        col2 = (RadioGroup)rootView.findViewById(R.id.radioCol2);
         columns.add(col2);
 
-        RadioGroup col3 = (RadioGroup)rootView.findViewById(R.id.radioCol3);
+        col3 = (RadioGroup)rootView.findViewById(R.id.radioCol3);
         columns.add(col3);
-
-        col1.setOnCheckedChangeListener(resetOtherCols());
-        col2.setOnCheckedChangeListener(resetOtherCols());
-        col3.setOnCheckedChangeListener(resetOtherCols());
 
 
         pwdEmo = ar.pwdEmo;
@@ -113,12 +111,6 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
         VeryWorried = (RadioButton)rootView.findViewById(R.id.radioVeryWorried);
         VeryWorried.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "VeryWorried"));
 
-        Frightened = (RadioButton)rootView.findViewById(R.id.radioFrightened);
-        Frightened.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "Frightened"));
-
-        TalkLess = (RadioButton)rootView.findViewById(R.id.radioLessTalk);
-        TalkLess.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "TalkLess"));
-
         AppetiteLoss = (RadioButton)rootView.findViewById(R.id.radioAppetiteLoss);
         AppetiteLoss.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "AppetiteLoss"));
 
@@ -127,9 +119,6 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
 
         SadExpression = (RadioButton)rootView.findViewById(R.id.radioSadExpression);
         SadExpression.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SadExpression"));
-
-        LackOfInterest = (RadioButton)rootView.findViewById(R.id.radioLackOfInterest);
-        LackOfInterest.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "LackOfInterest"));
 
         TroubleConcentrating = (RadioButton)rootView.findViewById(R.id.radioTroubleConcen);
         TroubleConcentrating.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "TroubleConcentrating"));
@@ -140,11 +129,51 @@ public class RadioPWDEmotionSubsurveyFragment extends android.support.v4.app.Fra
         SlowMove = (RadioButton)rootView.findViewById(R.id.radioSlowMove);
         SlowMove.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SlowMovement"));
 
+
+//        The code below is a very hacky way of fixing the lack of grids for radio buttons problem
+//        Because of this, if the buttons change rows, the on changed handlers will need to be updated as well
+//        A better solution may be required in the future
+
+        //COL 1
+
         SlowSpeech =(RadioButton)rootView.findViewById(R.id.radioSlowSpeech);
         SlowSpeech.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SlowSpeech"));
 
         SlowReaction =  (RadioButton)rootView.findViewById(R.id.radioSlowReact);
         SlowReaction.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "SlowReaction"));
+
+        LackOfInterest = (RadioButton)rootView.findViewById(R.id.radioLackOfInterest);
+        LackOfInterest.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "LackOfInterest"));
+
+        Frightened = (RadioButton)rootView.findViewById(R.id.radioFrightened);
+        Frightened.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "Frightened"));
+
+        TalkLess = (RadioButton)rootView.findViewById(R.id.radioLessTalk);
+        TalkLess.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdEmo, "TalkLess"));
+
+        SlowSpeech.setOnCheckedChangeListener(resetOtherCols(1));
+        SlowReaction.setOnCheckedChangeListener(resetOtherCols(1));
+        LackOfInterest.setOnCheckedChangeListener(resetOtherCols(1));
+        Frightened.setOnCheckedChangeListener(resetOtherCols(1));
+        TalkLess.setOnCheckedChangeListener(resetOtherCols(1));
+
+
+        //Col 2
+
+        SadVoice.setOnCheckedChangeListener(resetOtherCols(2));
+        TroubleConcentrating.setOnCheckedChangeListener(resetOtherCols(2));
+        Tearful.setOnCheckedChangeListener(resetOtherCols(2));
+        AppetiteLoss.setOnCheckedChangeListener(resetOtherCols(2));
+        BotheredByUsualActivities.setOnCheckedChangeListener(resetOtherCols(2));
+
+
+        //Col 3
+
+        LackReact.setOnCheckedChangeListener(resetOtherCols(3));
+        LessInterestInHobbies.setOnCheckedChangeListener(resetOtherCols(3));
+        SlowMove.setOnCheckedChangeListener(resetOtherCols(3));
+        VeryWorried.setOnCheckedChangeListener(resetOtherCols(3));
+        SadExpression.setOnCheckedChangeListener(resetOtherCols(3));
 
         return rootView;
 
