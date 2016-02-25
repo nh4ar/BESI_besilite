@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Agitation Reports"
-            android:id="@+id/button3"
+            android:id="@+id/go_to_agi_report"
             android:layout_alignBaseline="@+id/button"
             android:layout_alignBottom="@+id/button"
             android:layout_centerHorizontal="true"

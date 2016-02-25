@@ -6,8 +6,6 @@
     <!-- Strings related to Settings -->
 
 
-
-
     <string name="pref_title_base_url">Base URL</string>
     <string name="pref_default_base_url">http://inertia.ece.virginia.edu/</string>
     <string name="pref_summary_base_url">Set base url to query</string>
@@ -33,5 +31,8 @@
 
     <string name="pick_date">Select Date</string>
     <string name="pick_time">Select Time</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

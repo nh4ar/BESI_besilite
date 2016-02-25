@@ -80,7 +80,8 @@ public class Home extends AppCompatActivity {
 
         final Button goToEmotions = (Button) findViewById(R.id.button);
         final Button goToActivities = (Button) findViewById(R.id.button2);
-        final Button refresh = (Button) findViewById(R.id.button3);
+        final Button goToAgiReport = (Button) findViewById(R.id.go_to_agi_report);
+        //final Button refresh = (Button) findViewById(R.id.button3);
 
 
         goToEmotions.setOnClickListener(new View.OnClickListener() {
@@ -90,13 +91,13 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+/*
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateAgiList();
             }
-        });
+        });*/
 
         goToActivities.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,10 +107,13 @@ public class Home extends AppCompatActivity {
             }
         });
 
-
-
-
-
+        goToAgiReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AddAgiSurvey.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

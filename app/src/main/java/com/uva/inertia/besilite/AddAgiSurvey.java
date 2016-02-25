@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +21,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddAgiSurvey extends AppCompatActivity {
 
@@ -37,6 +41,29 @@ public class AddAgiSurvey extends AppCompatActivity {
     EditText prior_emote;
     EditText activity;
 
+
+    java.text.DateFormat[] dateFormats;
+    Calendar calendar;
+    Date agidate;
+
+    TextView selDate;
+    TextView selTime;
+
+    public void setDate(int year, int month, int day){
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        agidate = calendar.getTime();
+        selDate.setText(dateFormats[0].format(date));
+    }
+
+    public void setTime( int hourOfDay, int minute){
+        calendar.set(Calendar.HOUR, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        agidate = calendar.getTime();
+        selTime.setText(dateFormats[1].format(date));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +79,9 @@ public class AddAgiSurvey extends AppCompatActivity {
         endpoint = "api/v1/survey/agi/create/";
 
         final Button submit = (Button) findViewById(R.id.submit);
-        level = (EditText) findViewById(R.id.level);
-        date = (EditText) findViewById(R.id.date);
-        time = (EditText) findViewById(R.id.time);
+        level = (EditText) findViewById(R.id.agi_level);
+        date = (EditText) findViewById(R.id.agi_date);
+        time = (EditText) findViewById(R.id.agi_time);
         prior_emote = (EditText) findViewById(R.id.prior_emote);
         activity = (EditText) findViewById(R.id.activity);
 

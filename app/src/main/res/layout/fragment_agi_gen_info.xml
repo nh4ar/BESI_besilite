@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.uva.inertia.besilite.AgiGenInfoFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/agi_gen">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agitation Level"
+            android:id="@+id/agi_level"
+            android:layout_gravity="left|center_vertical"
+            android:layout_below="@+id/agi_date"
+            android:layout_alignRight="@+id/agi_date"
+            android:layout_alignEnd="@+id/agi_date"
+            android:layout_marginTop="49dp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/agi_level_viewer"
+            android:layout_alignBottom="@+id/agi_level"
+            android:layout_toRightOf="@+id/agi_level"
+            android:layout_toEndOf="@+id/agi_level"
+            android:editable="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agitation Date"
+            android:id="@+id/agi_date"
+            android:onClick="showDatePickerDialog"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/agi_date_viewer"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/agi_date"
+            android:layout_toEndOf="@+id/agi_date" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agitation Time"
+            android:id="@+id/agi_time"
+            android:layout_below="@+id/agi_date"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/agi_time_viewer"
+            android:layout_below="@+id/agi_date"
+            android:layout_toRightOf="@+id/agi_time"
+            android:layout_toEndOf="@+id/agi_time" />
+    </RelativeLayout>
+
+</FrameLayout>
