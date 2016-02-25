@@ -28,8 +28,8 @@ public class CustomClickHandlers {
             @Override
             public void onClick(View v) {
                 RadioButton c = (RadioButton)v;
-                hm.put(key,c.isChecked());
-                Log.v("DAILYSURVEY", "Click handler called from: " + c.toString());
+                hm.put(key, c.isChecked());
+                Log.v("AGIREPORT", "Click handler called from: " + c.toString());
             }
         };
     }
