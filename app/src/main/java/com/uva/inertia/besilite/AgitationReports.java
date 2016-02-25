@@ -32,6 +32,13 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
@@ -156,6 +163,82 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         createReport();
     }
 
+    public void createReport(){
+        createSubsurveys_Emo();
+    }
+
+
+    private void createSubsurveys_Emo(){
+        JSONObject subsurveyObject = new JSONObject(pwdEmo);
+        Log.v("TEST", subsurveyObject.toString());
+        JsonObjectRequestWithToken requestNewPWDEmoSub = new JsonObjectRequestWithToken(
+                Request.Method.POST, base_url+EmotionEndpoint,subsurveyObject, api_token,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try{
+                            emoSurveyPK = response.getInt("id");
+                            Log.v("TEST","woo created emo subsurvey");
+                            createSubsurveys_Obs();
+                        } catch (org.json.JSONException e){
+                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for emo", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String err_msg = new String(error.networkResponse.data);
+                Log.e("ERROR", err_msg);
+                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        this.netQueue.add(requestNewPWDEmoSub);
+    }
+
+    private void createSubsurveys_Obs(){
+        JSONObject subsurveyObject = new JSONObject(pwdObs);
+        Log.v("TEST",subsurveyObject.toString());
+        JsonObjectRequestWithToken requestNewPWDSleepSub = new JsonObjectRequestWithToken(
+                Request.Method.POST, base_url+ObservationEndpoint,subsurveyObject, api_token,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try{
+                            obsSurveyPK = response.getInt("id");
+                            Log.v("TEST","woo created obs subsurvey");
+                            createCompleteSurvey();
+                        } catch (org.json.JSONException e){
+                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for obs", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String err_msg = new String(error.networkResponse.data);
+                Log.e("ERROR", err_msg);
+                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        this.netQueue.add(requestNewPWDSleepSub);
+
+    }
+
+    private void createCompleteSurvey(){
+        Log.e("TEST","NEED TO ADD INFO FROM AGITATION");
+        Log.e("TEST","COMPLETE UPLOAD NOT IMPLEMENTED");
+    }
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -174,7 +257,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                 case 0:
                     return AgiGenInfoFragment.newInstance();
                 case 1:
-                    return AgiGenInfoFragment.newInstance();
+                    return RadioPWDEmotionSubsurveyFragment.newInstance();
                 case 2:
                     return ObservationSubsurveyFragment.newInstance();
                 case 3:
