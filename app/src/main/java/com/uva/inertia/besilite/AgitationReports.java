@@ -81,6 +81,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     RequestQueue netQueue;
 
     HashMap<String, Boolean> pwdObs;
+    HashMap<String, Boolean> pwdEmo;
 
     int agiSurveyPK;
     int obsSurveyPK;

@@ -61,7 +61,7 @@ public class Home extends AppCompatActivity {
 
         final Button goToEmotions = (Button) findViewById(R.id.button);
         final Button goToActivities = (Button) findViewById(R.id.button2);
-        final Button goToAgiReports = (Button) findViewById(R.id.button3);
+        final Button goToAgiReports = (Button) findViewById(R.id.go_to_agi_report);
 
 
         goToEmotions.setOnClickListener(new View.OnClickListener() {
