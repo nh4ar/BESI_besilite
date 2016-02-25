@@ -33,5 +33,7 @@
 
     <string name="pick_date">Select Date</string>
     <string name="pick_time">Select Time</string>
+    <string name="title_activity_agitation_reports">AgitationReports</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>
