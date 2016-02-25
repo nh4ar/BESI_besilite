@@ -39,35 +39,10 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
-
-
-
-
-    java.text.DateFormat[] dateFormats;
-    Calendar calendar;
-    Date agidate;
-
-    TextView selDate;
-    TextView selTime;
-
-    public void setDate(int year, int month, int day){
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        agidate = calendar.getTime();
-        selDate.setText(dateFormats[0].format(agidate));
-    }
-
-    public void setTime( int hourOfDay, int minute){
-        calendar.set(Calendar.HOUR, hourOfDay);
-        calendar.set(Calendar.MINUTE, minute);
-        agidate = calendar.getTime();
-        selTime.setText(dateFormats[1].format(agidate));
-    }
-
 
     String base_url;
     String api_token;
@@ -86,6 +61,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     int agiSurveyPK;
     int obsSurveyPK;
     int emoSurveyPK;
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -236,7 +212,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
     private void createCompleteSurvey(){
         Log.e("TEST","NEED TO ADD INFO FROM AGITATION");
-        Log.e("TEST","COMPLETE UPLOAD NOT IMPLEMENTED");
+        Log.e("TEST", "COMPLETE UPLOAD NOT IMPLEMENTED");
     }
 
 
