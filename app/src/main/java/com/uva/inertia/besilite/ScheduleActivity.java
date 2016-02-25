@@ -29,7 +29,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 public class ScheduleActivity extends AppCompatActivity {
 
@@ -45,7 +47,9 @@ public class ScheduleActivity extends AppCompatActivity {
     //Holds all activity name strings
     ArrayList<String> ActivityList = new ArrayList<>();
 
+    Map<String,String> ActivityIndexer = new HashMap<>();
     Map<String,String> ActivityMap = new HashMap<>();
+    Map<String,String> TimeMap = new HashMap<>();
 
     String base_url;
     String endpoint;
@@ -65,21 +69,21 @@ public class ScheduleActivity extends AppCompatActivity {
             java.text.DateFormat dprint = java.text.DateFormat.getDateTimeInstance(
                     DateFormat.SHORT,DateFormat.SHORT);
             Date d;
-            for (int i = 0; i < RawEventList.length(); i++) {
-                JSONObject o = (JSONObject) RawEventList.get(i);
+
+            for(String key: TimeMap.keySet()) {
                 try {
-                    dateString = o.getString("acttimestamp").replace("Z", "GMT+00:00");
+                    dateString = TimeMap.get(key).replace("Z", "GMT+00:00");
                     d = df.parse(dateString);
                     adapter.add(dprint.format(d) + " |  Activity: " +
-                            ActivityMap.get(o.getString("activity")));
+                            ActivityMap.get(ActivityIndexer.get(key)));
                 } catch(java.text.ParseException e){
                     Log.e("PARSING ERROR", e.getMessage());
                 }
             }
         }
-        catch(JSONException e)
+        catch(Exception e)
         {
-            adapter.add("Server responded with incorrect JSON");
+            adapter.add(e.getMessage());
         }
     }
 
@@ -103,8 +107,7 @@ public class ScheduleActivity extends AppCompatActivity {
         final ListView mListView = (ListView) findViewById(R.id.scheduleEvents);
 
 //      Create our adapter to add items
-        adapter=new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, ScheduleList);
+        adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ScheduleList);
 
         mListView.setAdapter(adapter);
 
@@ -126,15 +129,27 @@ public class ScheduleActivity extends AppCompatActivity {
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
         endpoint ="/api/v1/survey/activ/smart/";
-        activityEndpoint="/api/v1/survey/fields/smart/a";
+        activityEndpoint="/api/v1/survey/fields/smart/a/";
 
         JsonArrayRequestWithToken activitySurveyRequestArray = new JsonArrayRequestWithToken(base_url+endpoint, api_token, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 adapter.clear();
-                JsonArrayRequestWithToken activityListRequestArray = callActivityAdapterPull();
-                netQueue.add(activityListRequestArray);
-                RawEventList = response;
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject o = (JSONObject) response.get(i);
+                        Log.v("Maps", o.toString());
+                        TimeMap.put(o.getString("pk"), o.getString("acttimestamp"));
+                        ActivityIndexer.put(o.getString("pk"), o.getString("activity"));
+                    }
+                    Log.v("Maps", TimeMap.toString());
+                    Log.v("Maps", ActivityIndexer.toString());
+                    JsonArrayRequestWithToken activityListRequestArray = callActivityAdapterPull();
+                    netQueue.add(activityListRequestArray);
+                }
+                catch (JSONException e){
+                    Log.v("ERROR", e.getMessage());
+                }
             }
         }, new Response.ErrorListener() {
 
@@ -154,10 +169,14 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onResponse(JSONArray resp) {
                 Log.v("Test", resp.toString());
                 try {
+                    Log.v("RESP", "" + resp.length());
                     for (int i = 0; i < resp.length(); i++) {
                         JSONObject o = (JSONObject) resp.get(i);
+                        Log.v("Activity", o.toString());
                         ActivityMap.put(o.getString("pk"),o.getString("value"));
+                        Log.v("Activity", ActivityMap.toString());
                     }
+                    Log.v("Maps", ActivityMap.toString());
                     postProcess();
                 } catch (JSONException e) {
                     ActivityList.add("Server responded with incorrect JSON");

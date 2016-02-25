@@ -19,10 +19,37 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
-public class AgitationReports extends AppCompatActivity {
-    
+public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
+
+
+
+
+    java.text.DateFormat[] dateFormats;
+    Calendar calendar;
+    Date agidate;
+
+    TextView selDate;
+    TextView selTime;
+
+    public void setDate(int year, int month, int day){
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        agidate = calendar.getTime();
+        selDate.setText(dateFormats[0].format(agidate));
+    }
+
+    public void setTime( int hourOfDay, int minute){
+        calendar.set(Calendar.HOUR, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        agidate = calendar.getTime();
+        selTime.setText(dateFormats[1].format(agidate));
+    }
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -45,6 +72,7 @@ public class AgitationReports extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -85,6 +113,11 @@ public class AgitationReports extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void OnConfirmClicked() {
+
+    }
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -102,11 +135,11 @@ public class AgitationReports extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return null;
+                    return AgiGenInfoFragment.newInstance();
                 case 1:
-                    return null;
+                    return AgiGenInfoFragment.newInstance();
                 case 2:
-                    return null;
+                    return AgiGenInfoFragment.newInstance();
                 case 3:
                     return ConfirmFragment.newInstance(position + 1);
             }
