@@ -46,6 +46,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     RequestQueue netQueue;
 
     HashMap<String, Boolean> pwdObs;
+    HashMap<String, Boolean> pwdEmo;
 
     int agiSurveyPK;
     int obsSurveyPK;
@@ -73,6 +74,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -133,8 +135,35 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
 
     private void createSubsurveys_Emo(){
-        Log.e("TEST","EMO UPLOAD NOT IMPLEMENTED");
-        createSubsurveys_Obs();
+        JSONObject subsurveyObject = new JSONObject(pwdEmo);
+        Log.v("TEST", subsurveyObject.toString());
+        JsonObjectRequestWithToken requestNewPWDEmoSub = new JsonObjectRequestWithToken(
+                Request.Method.POST, base_url+EmotionEndpoint,subsurveyObject, api_token,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try{
+                            emoSurveyPK = response.getInt("id");
+                            Log.v("TEST","woo created emo subsurvey");
+                            createSubsurveys_Obs();
+                        } catch (org.json.JSONException e){
+                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for emo", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String err_msg = new String(error.networkResponse.data);
+                Log.e("ERROR", err_msg);
+                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        this.netQueue.add(requestNewPWDEmoSub);
     }
 
     private void createSubsurveys_Obs(){
@@ -194,7 +223,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                 case 0:
                     return ConfirmFragment.newInstance(position + 1);
                 case 1:
-                    return ConfirmFragment.newInstance(position + 1);
+                    return RadioPWDEmotionSubsurveyFragment.newInstance();
                 case 2:
                     return ObservationSubsurveyFragment.newInstance();
                 case 3:
