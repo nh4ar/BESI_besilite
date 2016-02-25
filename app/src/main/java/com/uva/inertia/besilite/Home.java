@@ -72,13 +72,7 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateAgiList();
-            }
-        });*/
+
 
         goToActivities.setOnClickListener(new View.OnClickListener() {
             @Override

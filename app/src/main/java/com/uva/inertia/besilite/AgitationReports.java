@@ -1,5 +1,7 @@
 package com.uva.inertia.besilite;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +21,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
@@ -50,6 +61,24 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         selTime.setText(dateFormats[1].format(agidate));
     }
 
+
+    String base_url;
+    String api_token;
+    String deploy_id;
+    String complete_endpoint;
+    String EmotionEndpoint;
+    String ObservationEndpoint;
+    String AgitationEndpoint;
+
+    SharedPreferences sharedPref;
+    RequestQueue netQueue;
+
+    HashMap<String, Boolean> pwdObs;
+
+    int agiSurveyPK;
+    int obsSurveyPK;
+    int emoSurveyPK;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -78,6 +107,16 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
+
+        base_url = sharedPref.getString("pref_key_base_url", "");
+        api_token = sharedPref.getString("pref_key_api_token", "");
+        deploy_id = sharedPref.getString("pref_key_deploy_id", "");
+        complete_endpoint = "/api/v1/survey/agi/smart/";
+        ObservationEndpoint = "/api/v1/survey/obs/create/";
+        EmotionEndpoint = "/api/v1/survey/emo/create/";
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -85,8 +124,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-
-
+        pwdObs = new HashMap<>();
 
     }
 
@@ -115,9 +153,8 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
     @Override
     public void OnConfirmClicked() {
-
+        createReport();
     }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -139,7 +176,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                 case 1:
                     return AgiGenInfoFragment.newInstance();
                 case 2:
-                    return AgiGenInfoFragment.newInstance();
+                    return ObservationSubsurveyFragment.newInstance();
                 case 3:
                     return ConfirmFragment.newInstance(position + 1);
             }
