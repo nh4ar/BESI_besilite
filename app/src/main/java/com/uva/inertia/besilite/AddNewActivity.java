@@ -106,8 +106,8 @@ public class AddNewActivity extends AppCompatActivity {
                 java.text.DateFormat.getDateInstance(),
                 java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT),
         };
-        dateFormats[0].setTimeZone(tz);
-        dateFormats[1].setTimeZone(tz);
+        dateFormats[0].setTimeZone(TimeZone.getDefault());
+        dateFormats[1].setTimeZone(TimeZone.getDefault());
 
         selDate = (TextView) findViewById(R.id.new_activity_date);
         selTime = (TextView) findViewById(R.id.new_activity_time);
