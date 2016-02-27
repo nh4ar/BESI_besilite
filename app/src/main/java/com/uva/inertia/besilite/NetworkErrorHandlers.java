@@ -4,10 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 
 /**
  * Created by Ben on 2/27/2016.

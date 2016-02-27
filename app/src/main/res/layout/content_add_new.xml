@@ -20,9 +20,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
+            android:layout_height="wrap_content">
 
 
             <LinearLayout
@@ -92,7 +90,7 @@
                     android:id="@+id/add_new_activity" />
 
                 <EditText
-                    android:layout_width="fill_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/new_activity_val"
                     android:layout_weight="1" />
