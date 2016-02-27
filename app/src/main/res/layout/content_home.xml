@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Daily Survey"
+                    android:text="Daily Reports"
                     android:id="@+id/textView15"
                     android:textSize="36dp"
                     android:textStyle="bold"
@@ -127,7 +127,7 @@
         <Button
             android:layout_width="400dp"
             android:layout_height="130dp"
-            android:text="Agitation Reports"
+            android:text="Agitation Report"
             android:id="@+id/button3"
             android:background="@drawable/buttonanimate"
             android:textSize="36sp"
@@ -137,7 +137,9 @@
             android:layout_alignRight="@+id/button2"
             android:layout_alignEnd="@+id/button2"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="40dp"
+            android:singleLine="false"
+            android:maxWidth="100dp" />
     </LinearLayout>
 
 </RelativeLayout>
