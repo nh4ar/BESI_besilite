@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,6 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 public class ScheduleActivity extends AppCompatActivity {
 
@@ -39,6 +41,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     //Holds all activites
     ArrayList<String> ScheduleList = new ArrayList<>();
+    ArrayList<Integer> pkList = new ArrayList<>();
 
     //Allows us to add more items
     ArrayAdapter<String> adapter;
@@ -56,36 +59,8 @@ public class ScheduleActivity extends AppCompatActivity {
     String activityEndpoint;
     String api_token;
     String deploy_id;
-    JSONArray RawEventList;
     RequestQueue netQueue;
 
-
-    public void postProcess() {
-        try
-        {//2016-02-23T07:16:00Z
-
-            java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-            String dateString;
-            java.text.DateFormat dprint = java.text.DateFormat.getDateTimeInstance(
-                    DateFormat.SHORT,DateFormat.SHORT);
-            Date d;
-
-            for(String key: TimeMap.keySet()) {
-                try {
-                    dateString = TimeMap.get(key).replace("Z", "GMT+00:00");
-                    d = df.parse(dateString);
-                    adapter.add(dprint.format(d) + " |  Activity: " +
-                            ActivityMap.get(ActivityIndexer.get(key)));
-                } catch(java.text.ParseException e){
-                    Log.e("PARSING ERROR", e.getMessage());
-                }
-            }
-        }
-        catch(Exception e)
-        {
-            adapter.add(e.getMessage());
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,29 +93,50 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), AddNewActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 90);
             }
         });
 
+    }
+
+    /* Called when the second activity's finished */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch(requestCode) {
+//            case 90:
+//                if (resultCode == RESULT_OK) {\
+        Log.v("CHECK POSITION", "" + requestCode);
+        updateEventList();
+//                }
+//                break;
+//        }
     }
 
     void updateEventList(){
         deploy_id = sharedPref.getString("pref_key_deploy_id","");
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
-        endpoint ="/api/v1/survey/activ/smart/";
+        endpoint ="/api/v1/survey/activ/smart/recent/";
         activityEndpoint="/api/v1/survey/fields/smart/a/";
+
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "New Event", Toast.LENGTH_SHORT);
+        toast.show();
 
         JsonArrayRequestWithToken activitySurveyRequestArray = new JsonArrayRequestWithToken(base_url+endpoint, api_token, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 adapter.clear();
+                pkList.clear();
+                TimeMap.clear();
+                ActivityIndexer.clear();
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject o = (JSONObject) response.get(i);
                         Log.v("Maps", o.toString());
                         TimeMap.put(o.getString("pk"), o.getString("acttimestamp"));
                         ActivityIndexer.put(o.getString("pk"), o.getString("activity"));
+                        pkList.add(o.getInt("pk"));
                     }
                     Log.v("Maps", TimeMap.toString());
                     Log.v("Maps", ActivityIndexer.toString());
@@ -190,4 +186,33 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void postProcess() {
+        try
+        {//2016-02-23T07:16:00Z
+
+            java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            String dateString;
+            java.text.DateFormat dprint = java.text.DateFormat.getDateTimeInstance(
+                    DateFormat.SHORT,DateFormat.SHORT);
+            dprint.setTimeZone(TimeZone.getDefault());
+            Date d;
+
+            for(int i: pkList) {
+                try {
+                    dateString = TimeMap.get(""+i).replace("Z", "GMT+00:00");
+                    d = df.parse(dateString);
+                    adapter.add(dprint.format(d) + " |  Activity: " +
+                            ActivityMap.get(ActivityIndexer.get(""+i)));
+                } catch(java.text.ParseException e){
+                    Log.e("PARSING ERROR", e.getMessage());
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            adapter.add(e.getMessage());
+        }
+    }
+
 }

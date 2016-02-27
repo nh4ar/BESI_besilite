@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -217,7 +218,7 @@ public class AddNewActivity extends AppCompatActivity {
                     try {
                         int pk = response.getInt("pk");
                         Log.v("TEST", "pk for new complete survey is: " + pk);
-                        finish();
+                        finishWithResult();
                     } catch (org.json.JSONException e) {
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "Server failed to return a PK for complete survey",
@@ -242,6 +243,13 @@ public class AddNewActivity extends AppCompatActivity {
         } catch (org.json.JSONException e){
             Log.e("TEST","Something went very wrong creating survey object");
         }
+    }
+
+    private void finishWithResult() {
+        Bundle conData = new Bundle();
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     void submitNewActivity(String newActivity){
