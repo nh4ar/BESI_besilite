@@ -73,7 +73,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Activity Type"
+        android:text="Select Activity Type OR "
         android:id="@+id/activity_type_sel_label"
         android:textSize="20dp"
         android:layout_marginTop="10dp"
@@ -82,7 +82,7 @@
 
     <ListView
         android:layout_width="fill_parent"
-        android:layout_height="230dp"
+        android:layout_height="fill_parent"
         android:id="@+id/actionList"
         android:layout_below="@+id/activity_type_sel_label" />
 
@@ -91,21 +91,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/add_new_act_layout"
-        android:layout_below="@+id/actionList">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add New Activity Type"
-            android:id="@+id/add_new_activity" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/new_activity_val"
-            android:layout_weight="1"
-            android:maxLength="64"/>
+        android:layout_toRightOf="@+id/activity_type_sel_label"
+        android:layout_below="@+id/activity_type_sel_label">
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Activity Type"
+        android:id="@+id/add_new_activity"
+        android:layout_below="@+id/time_sel_layout"
+        android:layout_toRightOf="@+id/activity_type_sel_label"
+        android:layout_toEndOf="@+id/activity_type_sel_label" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/new_activity_val"
+        android:layout_weight="1"
+        android:maxLength="64"
+        android:layout_toRightOf="@+id/add_new_activity"
+        android:layout_toEndOf="@+id/add_new_activity"
+        android:layout_below="@+id/time_sel_layout" />
 
 </RelativeLayout>

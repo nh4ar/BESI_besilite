@@ -114,9 +114,9 @@ public class ScheduleActivity extends AppCompatActivity {
         endpoint ="/api/v1/survey/activ/smart/recent/";
         activityEndpoint="/api/v1/survey/fields/smart/a/";
 
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "New Event", Toast.LENGTH_SHORT);
-        toast.show();
+//        Toast toast = Toast.makeText(getApplicationContext(),
+//                "New Event", Toast.LENGTH_SHORT);
+//        toast.show();
 
         JsonArrayRequestWithToken activitySurveyRequestArray = new JsonArrayRequestWithToken(base_url+endpoint, api_token, new Response.Listener<JSONArray>() {
             @Override
