@@ -290,17 +290,7 @@ public class AddNewActivity extends AppCompatActivity {
                     }
 
                 }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    String err_msg = new String(error.networkResponse.data);
-                    Log.e("ERROR", err_msg);
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            err_msg, Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
+            }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
             this.netQueue.add(requestNewActivitySurvey);
 
@@ -337,7 +327,7 @@ public class AddNewActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                adapter.add("Server responded with error: " + error.getLocalizedMessage());
+                adapter.add("Unable to connect to server. Please check your internet connection");
             }
         });
 
