@@ -250,6 +250,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                                             "Survey Submitted!", Toast.LENGTH_SHORT);
                                     toast.show();
                                     Log.v("TEST", "full survey made");
+                                    finish();
                                 } catch (Exception e) {
                                     Toast toast = Toast.makeText(getApplicationContext(),
                                             "Server failed to return a PK for obs",
