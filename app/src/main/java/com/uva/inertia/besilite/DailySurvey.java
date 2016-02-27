@@ -207,6 +207,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                     try{
                         int pk = response.getInt("pk");
                         Log.v("TEST","pk for new complete survey is: "+pk);
+                        Toast toast = Toast.makeText(getApplicationContext(), "Daily Survey Submitted!", Toast.LENGTH_SHORT);
+                        toast.show();
                         finish();
                     } catch (org.json.JSONException e){
                         Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for complete survey", Toast.LENGTH_SHORT);

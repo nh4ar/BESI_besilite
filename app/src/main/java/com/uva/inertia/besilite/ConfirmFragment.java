@@ -37,8 +37,8 @@ public class ConfirmFragment extends Fragment {
 
     }
 
-    public interface OnConfirmClickedListener{
-        void OnConfirmClicked();
+    public interface OnConfirmClickedListener {
+        public void OnConfirmClicked();
     }
 
     @Override
@@ -50,6 +50,7 @@ public class ConfirmFragment extends Fragment {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener = (OnConfirmClickedListener) getActivity();
                 mListener.OnConfirmClicked();
             }
         });
