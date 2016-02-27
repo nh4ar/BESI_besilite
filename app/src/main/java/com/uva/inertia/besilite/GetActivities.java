@@ -4,10 +4,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,7 +19,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class GetActivities extends AppCompatActivity {
 
@@ -65,7 +62,7 @@ public class GetActivities extends AppCompatActivity {
                                 adapter.add(o.getString("pk") + ": " +o.getString("value"));
                             }
                         } catch (org.json.JSONException e){
-                        };
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

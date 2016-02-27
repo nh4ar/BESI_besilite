@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:text="Agitation Level:"
                 android:id="@+id/textView"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/agi_level_viewer"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textIsSelectable="false"
                 android:layout_centerHorizontal="true"
                 android:layout_alignTop="@+id/agi_level_slider"

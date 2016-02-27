@@ -3,7 +3,6 @@ package com.uva.inertia.besilite;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,7 @@ public class ConfirmFragment extends Fragment {
     }
 
     public interface OnConfirmClickedListener{
-        public void OnConfirmClicked();
+        void OnConfirmClicked();
     }
 
     @Override
@@ -59,14 +58,5 @@ public class ConfirmFragment extends Fragment {
 
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnConfirmClickedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
-        }
-    }
 
 }
