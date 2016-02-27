@@ -20,9 +20,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.TimeZone;
 
 
 /**
@@ -35,10 +38,15 @@ import java.util.GregorianCalendar;
  */
 public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
+    AgitationReports ar;
+    HashMap<String, String> pwdGen;
 
     java.text.DateFormat[] dateFormats;
     Calendar calendar;
     Date agidate;
+    java.text.DateFormat df;
+    TimeZone tz;
+    String agitimestamp;
 
     TextView selDate;
     TextView selTime;
@@ -48,6 +56,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
     public static final int DATEPICKER_FRAGMENT=1; // adding this line
     public static final int TIMEPICKER_FRAGMENT=2; // adding this line
+
+
 
     public AgiGenInfoFragment() {
         // Required empty public constructor
@@ -83,6 +93,9 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         Button dater = (Button)rootView.findViewById(R.id.agi_date);
         Button timer = (Button)rootView.findViewById(R.id.agi_time);
 
+        ar = (AgitationReports) getActivity();
+        pwdGen = ar.pwdGen;
+
         dater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,39 +110,48 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             }
         });
 
+        df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+        tz = TimeZone.getTimeZone("UTC");
+        df.setTimeZone(tz);
 
         selDate = (TextView) rootView.findViewById(R.id.agi_date_viewer);
         selTime = (TextView) rootView.findViewById(R.id.agi_time_viewer);
         calendar = new GregorianCalendar();
         agidate = new Date();
         calendar.setTime(agidate);
+        updateMapDatetime();
 
         selDate.setText(dateFormats[0].format(agidate));
         selTime.setText(dateFormats[1].format(agidate));
+
 
         agiLevlBar = (SeekBar)rootView.findViewById(R.id.agi_level_slider);
         agiLevlBar.setMax(10);
         agitationLevel = 0;
         agiLevelViewer = (TextView)rootView.findViewById(R.id.agi_level_viewer);
-        agiLevelViewer.setText(""+agitationLevel);
+        agiLevelViewer.setText("" + agitationLevel);
 
         agiLevlBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 agitationLevel = progressValue;
+                pwdGen.put("level", "" + agitationLevel);
                 //Toast.makeText(getActivity().getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
-                agiLevelViewer.setText(""+agitationLevel);
+                agiLevelViewer.setText("" + agitationLevel);
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 //Toast.makeText(getActivity().getApplicationContext(), "Started tracking seekbar", Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 //Toast.makeText(getActivity().getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
             }
         });
+
         return rootView;
 
     }
@@ -150,7 +172,9 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         void onFragmentInteraction(Uri uri);
     }
 
-
+    public void updateMapDatetime(){
+        pwdGen.put("agitimestamp", df.format(agidate));
+    }
 
     public void setDate(int year, int month, int day){
         calendar.set(Calendar.YEAR, year);
@@ -159,6 +183,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         agidate = calendar.getTime();
         Log.v("PICKER", agidate.toString());
         selDate.setText(dateFormats[0].format(agidate));
+        updateMapDatetime();
     }
 
     public void setTime( int hourOfDay, int minute){
@@ -167,6 +192,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         agidate = calendar.getTime();
         Log.v("PICKER", agidate.toString());
         selTime.setText(dateFormats[1].format(agidate));
+        updateMapDatetime();
     }
 
     public static class TimePickerFragment extends DialogFragment

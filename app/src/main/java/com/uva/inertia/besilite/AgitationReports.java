@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import com.android.volley.Request;
@@ -30,6 +31,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.Request;
@@ -41,6 +43,7 @@ import org.json.JSONObject;
 
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
 
@@ -52,13 +55,18 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     String ObservationEndpoint;
     String AgitationEndpoint;
 
+
     SharedPreferences sharedPref;
     RequestQueue netQueue;
 
     HashMap<String, Boolean> pwdObs;
     HashMap<String, Boolean> pwdEmo;
+    HashMap<String, String> pwdGen;
 
-    int agiSurveyPK;
+    java.text.DateFormat df;
+    TimeZone tz;
+
+    //int agiSurveyPK;
     int obsSurveyPK;
     int emoSurveyPK;
 
@@ -100,6 +108,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         complete_endpoint = "/api/v1/survey/agi/smart/";
         ObservationEndpoint = "/api/v1/survey/obs/create/";
         EmotionEndpoint = "/api/v1/survey/emo/create/";
+        AgitationEndpoint = "/api/v1/survey/agi/smart/";
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -110,7 +119,11 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
         pwdObs = new HashMap<>();
         pwdEmo = new HashMap<>();
+        pwdGen = new HashMap<>();
 
+        df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+        tz = TimeZone.getTimeZone("UTC");
+        df.setTimeZone(tz);
     }
 
 
@@ -143,6 +156,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
     public void createReport(){
         createSubsurveys_Emo();
+
     }
 
 
@@ -168,10 +182,10 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String err_msg = new String(error.networkResponse.data);
-                Log.e("ERROR", err_msg);
-                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-                toast.show();
+//                String err_msg = new String(error.networkResponse.data);
+//                Log.e("ERROR", err_msg);
+//                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+//                toast.show();
             }
         });
 
@@ -198,13 +212,13 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                     }
                 }, new Response.ErrorListener() {
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                String err_msg = new String(error.networkResponse.data);
-                Log.e("ERROR", err_msg);
-                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-                toast.show();
-            }
+                @Override
+                public void onErrorResponse(VolleyError error) {
+//                    String err_msg = new String(error.networkResponse.data);
+//                    Log.e("ERROR", err_msg);
+//                    Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+//                    toast.show();
+                }
         });
 
         this.netQueue.add(requestNewPWDSleepSub);
@@ -212,8 +226,58 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     }
 
     private void createCompleteSurvey(){
-        Log.e("TEST","NEED TO ADD INFO FROM AGITATION");
-        Log.e("TEST", "COMPLETE UPLOAD NOT IMPLEMENTED");
+
+        /////BACKEND DOESN'T CONTAIN PRIOR EMOTION??
+            try {
+                JSONObject surveyObject = new JSONObject();
+
+                Log.v("MAPS", pwdGen.toString());
+
+                surveyObject.put("timestamp", df.format(new Date()));
+                surveyObject.put("observations", obsSurveyPK);
+                surveyObject.put("PWDEmotions", emoSurveyPK);
+                surveyObject.put("agitimestamp", pwdGen.get("agitimestamp"));
+                surveyObject.put("level", pwdGen.get("level"));
+
+                Log.v("TEST", surveyObject.toString());
+                JsonObjectRequestWithToken postNewAgiSurvey = new JsonObjectRequestWithToken(
+                        Request.Method.POST, base_url + AgitationEndpoint, surveyObject, api_token,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    Toast toast = Toast.makeText(getApplicationContext(),
+                                            "Survey Submitted!", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                    Log.v("TEST", "full survey made");
+                                } catch (Exception e) {
+                                    Toast toast = Toast.makeText(getApplicationContext(),
+                                            "Server failed to return a PK for obs",
+                                            Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            String err_msg = new String(error.networkResponse.data);
+                            Log.e("ERROR", err_msg);
+                            Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        catch(Exception e){
+                            Log.v("ERROR", e.getMessage());
+                        }
+                    }
+                });
+                this.netQueue.add(postNewAgiSurvey);
+            }
+            catch(JSONException e) {
+
+            }
+
     }
 
 
