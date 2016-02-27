@@ -15,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -40,6 +42,9 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
     TextView selDate;
     TextView selTime;
+    SeekBar  agiLevlBar;
+    TextView agiLevelViewer;
+    int agitationLevel;
 
     public static final int DATEPICKER_FRAGMENT=1; // adding this line
     public static final int TIMEPICKER_FRAGMENT=2; // adding this line
@@ -102,7 +107,31 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         selDate.setText(dateFormats[0].format(agidate));
         selTime.setText(dateFormats[1].format(agidate));
 
+        agiLevlBar = (SeekBar)rootView.findViewById(R.id.agi_level_slider);
+        agiLevlBar.setMax(10);
+        agitationLevel = 0;
+        agiLevelViewer = (TextView)rootView.findViewById(R.id.agi_level_viewer);
+        agiLevelViewer.setText(""+agitationLevel);
+
+        agiLevlBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                agitationLevel = progressValue;
+                //Toast.makeText(getActivity().getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
+                agiLevelViewer.setText(""+agitationLevel);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //Toast.makeText(getActivity().getApplicationContext(), "Started tracking seekbar", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //Toast.makeText(getActivity().getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
+            }
+        });
         return rootView;
+
     }
 
 
@@ -138,10 +167,6 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         agidate = calendar.getTime();
         Log.v("PICKER", agidate.toString());
         selTime.setText(dateFormats[1].format(agidate));
-    }
-
-    public static void method(int hourOfDay, int minute){
-
     }
 
     public static class TimePickerFragment extends DialogFragment
