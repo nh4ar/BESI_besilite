@@ -99,13 +99,13 @@
 
             </LinearLayout>
 
-            <ListView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/actionList"
-                />
-
         </LinearLayout>
     </ScrollView>
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/actionList"
+        android:layout_below="@+id/scrollView" />
 
 </RelativeLayout>
