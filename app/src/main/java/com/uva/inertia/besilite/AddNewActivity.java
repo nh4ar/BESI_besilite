@@ -36,7 +36,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -55,6 +57,7 @@ public class AddNewActivity extends AppCompatActivity {
 
     //Allows us to add more items
     ArrayAdapter<String> adapter;
+    ArrayList<String> tempList;
     //Holds all activity name strings
     CaseInsensitiveArrayList ActivityList = new CaseInsensitiveArrayList();
 
@@ -71,6 +74,7 @@ public class AddNewActivity extends AppCompatActivity {
 
     TextView selDate;
     TextView selTime;
+    EditText newActivVal;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -116,7 +120,7 @@ public class AddNewActivity extends AppCompatActivity {
         netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
 
 
-        final EditText newActivVal = (EditText) findViewById(R.id.new_activity_val);
+        newActivVal = (EditText) findViewById(R.id.new_activity_val);
         Button addNewActivity = (Button) findViewById(R.id.add_new_activity);
         addNewActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +149,7 @@ public class AddNewActivity extends AppCompatActivity {
         });
 
         final ListView mListView = (ListView) findViewById(R.id.actionList);
-
+        tempList = new ArrayList<>();
 //      Create our adapter to add items
         adapter=new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, ActivityList);
@@ -241,7 +245,6 @@ public class AddNewActivity extends AppCompatActivity {
     }
 
     private void finishWithResult() {
-        Bundle conData = new Bundle();
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -276,6 +279,7 @@ public class AddNewActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "New Activity Added", Toast.LENGTH_SHORT);
                         toast.show();
+                        newActivVal.setText("");
                         //finish();
                     } catch (org.json.JSONException e){
                         Toast toast = Toast.makeText(getApplicationContext(),
@@ -301,6 +305,7 @@ public class AddNewActivity extends AppCompatActivity {
         activityEndpoint="/api/v1/survey/fields/smart/a/";
 
         adapter.clear();
+        tempList.clear();
 
         JsonArrayRequestWithToken activityListRequestArray = new JsonArrayRequestWithToken(base_url+activityEndpoint, api_token, new Response.Listener<JSONArray>() {
 
@@ -312,12 +317,19 @@ public class AddNewActivity extends AppCompatActivity {
                         JSONObject o = (JSONObject) resp.get(i);
                         ActivityMap.put(o.getString("pk"),o.getString("value"));
                         RevActivityMap.put(o.getString("value"), o.getString("pk"));
-                        adapter.add(o.getString("value"));
+                        tempList.add(o.getString("value"));
+                    }
+
+                    Collections.sort(tempList, String.CASE_INSENSITIVE_ORDER);
+                    Log.v("MAPS", tempList.toString());
+                    for (String s: tempList){
+                        adapter.add(s);
                     }
                 } catch (JSONException e) {
                     adapter.add("Server responded with incorrect JSON");
                 }
             }
+
 
         }, new Response.ErrorListener() {
             @Override
