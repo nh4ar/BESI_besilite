@@ -53,6 +53,7 @@ public class AddNewActivity extends AppCompatActivity {
 
     Calendar calendar;
     Date date;
+    TimeZone tz;
 
     SharedPreferences sharedPref;
 
@@ -70,7 +71,6 @@ public class AddNewActivity extends AppCompatActivity {
     String activityEndpoint;
     String api_token;
     String deploy_id;
-    JSONArray RawActivityList;
     RequestQueue netQueue;
 
     TextView selDate;
@@ -97,6 +97,8 @@ public class AddNewActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        tz = TimeZone.getTimeZone("UTC");
+
         calendar = new GregorianCalendar();
         date = new Date();
         calendar.setTime(date);
@@ -104,6 +106,8 @@ public class AddNewActivity extends AppCompatActivity {
                 java.text.DateFormat.getDateInstance(),
                 java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT),
         };
+        dateFormats[0].setTimeZone(tz);
+        dateFormats[1].setTimeZone(tz);
 
         selDate = (TextView) findViewById(R.id.new_activity_date);
         selTime = (TextView) findViewById(R.id.new_activity_time);
@@ -196,7 +200,6 @@ public class AddNewActivity extends AppCompatActivity {
         try{
             JSONObject surveyObject = new JSONObject();
             //get current time in iso8601
-            TimeZone tz = TimeZone.getTimeZone("UTC");
             java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
             df.setTimeZone(tz);
             String timestamp = df.format(new Date());

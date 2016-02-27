@@ -121,6 +121,9 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         calendar.setTime(agidate);
         updateMapDatetime();
 
+        dateFormats[0].setTimeZone(tz);
+        dateFormats[1].setTimeZone(tz);
+
         selDate.setText(dateFormats[0].format(agidate));
         selTime.setText(dateFormats[1].format(agidate));
 
