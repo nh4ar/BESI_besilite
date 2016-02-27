@@ -3,6 +3,7 @@ package com.uva.inertia.besilite;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -129,8 +130,9 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
 
         agiLevlBar = (SeekBar)rootView.findViewById(R.id.agi_level_slider);
-        agiLevlBar.setMax(10);
-        agitationLevel = 0;
+        agiLevlBar.setMax(9);
+        agitationLevel = 1;
+        pwdGen.put("level", "" + agitationLevel);
         agiLevelViewer = (TextView)rootView.findViewById(R.id.agi_level_viewer);
         agiLevelViewer.setText("" + agitationLevel);
 
@@ -139,9 +141,9 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 agitationLevel = progressValue;
-                pwdGen.put("level", "" + agitationLevel);
+                pwdGen.put("level", "" + (agitationLevel+1));
                 //Toast.makeText(getActivity().getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
-                agiLevelViewer.setText("" + agitationLevel);
+                agiLevelViewer.setText("" + (agitationLevel+1));
             }
 
             @Override
@@ -201,6 +203,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current time as the default values for the picker
@@ -231,6 +234,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
