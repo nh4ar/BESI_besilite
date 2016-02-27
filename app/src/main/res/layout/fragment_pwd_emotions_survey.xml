@@ -4,165 +4,297 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".DailySurvey">
+    tools:context="com.example.jfgaines.besiapp.DepressionChecklist"
+    android:id="@+id/DepressionLayout"
+    android:background="#E1BEE7">
 
-    <GridLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:rowCount="5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content">
 
-        <CheckBox
-            android:text="Sad Voice"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkSadVoice"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:checked="false" />
+            android:layout_height="wrap_content">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Trouble Concentrating"
-            android:id="@+id/checkTroubleConcen"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:layout_margin="10dp"
-            android:checked="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Please select what you observed."
+                android:id="@+id/textView10"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textSize="36dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tearfulness"
-            android:id="@+id/checkTearfulness"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:checked="false" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imageView5"
+                android:layout_gravity="right"
+                android:src="@drawable/pwd"
+                android:layout_marginLeft="510dp" />
+        </LinearLayout>
 
-        <CheckBox
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Appetite Loss"
-            android:id="@+id/checkAppetiteLoss"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_margin="10dp"
-            android:checked="false" />
+            android:layout_height="wrap_content">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bothered by Usual Activies"
-            android:id="@+id/checkBotheredByUsual"
-            android:layout_row="1"
-            android:layout_column="2"
-            android:layout_margin="10dp"
-            android:checked="false" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout8"
+                android:layout_below="@+id/textView10"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginRight="10dp">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lack of Reaction"
-            android:id="@+id/checkLackOfReact"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:checked="false" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sad voice"
+                    android:id="@+id/checkSadVoice"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Less Interested in Hobbies"
-            android:id="@+id/checkLessIntrest"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:layout_margin="10dp"
-            android:checked="false" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tearfulness"
+                    android:id="@+id/checkTearfulness"
+                    android:checked="false"
+                    android:layout_below="@+id/checkTearfulness"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Slow Movement"
-            android:id="@+id/checkSlowMove"
-            android:layout_row="2"
-            android:layout_column="2"
-            android:layout_margin="10dp"
-            android:checked="false" />
+                <CheckBox
+                    android:layout_width="303dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lack of reaction"
+                    android:id="@+id/checkLackOfReact"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Very Worried"
-            android:id="@+id/checkVeryWorried"
-            android:layout_row="3"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:checked="false" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Very worried"
+                    android:id="@+id/checkVeryWorried"
+                    android:checked="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sad Expression"
-            android:id="@+id/checkSadExpression"
-            android:layout_row="3"
-            android:layout_column="1"
-            android:layout_margin="10dp"
-            android:checked="false" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frightened"
+                    android:id="@+id/checkFrightened"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="10dp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Slow Speech"
-            android:id="@+id/checkSlowSpeech"
-            android:layout_row="3"
-            android:layout_column="2"
-            android:layout_margin="10dp"
-            android:checked="false" />
+            </LinearLayout>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Frightened"
-            android:id="@+id/checkFrightened"
-            android:layout_row="4"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:checked="false" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout5"
+                android:layout_alignTop="@+id/linearLayout8"
+                android:layout_alignLeft="@+id/button6"
+                android:layout_alignStart="@+id/button6"
+                android:layout_marginBottom="40dp"
+                android:layout_marginRight="10dp">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Less Talkative"
-            android:id="@+id/checkLessTalk"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_margin="10dp"
-            android:checked="false" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Less Talkative"
+                    android:id="@+id/checkLessTalk"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lack of Interest"
-            android:id="@+id/checkLackOfInterest"
-            android:layout_row="4"
-            android:layout_column="1"
-            android:layout_margin="10dp"
-            android:checked="false" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loss of appetite"
+                    android:id="@+id/checkAppetiteLoss"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Slow Reaction"
-            android:id="@+id/checkSlowReact"
-            android:layout_row="4"
-            android:layout_column="2"
-            android:layout_margin="10dp"
-            android:checked="false" />
-    </GridLayout>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loss of interest in hobbies"
+                    android:id="@+id/checkLessIntrest"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sad expression"
+                    android:id="@+id/checkSadExpression"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lack of interest"
+                    android:id="@+id/checkLackOfInterest"
+                    android:checked="false"
+                    android:layout_column="28"
+                    android:textSize="30dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trouble concentrating"
+                    android:id="@+id/checkTroubleConcen"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout9"
+                android:layout_alignTop="@+id/linearLayout5"
+                android:layout_toRightOf="@+id/button6"
+                android:layout_toEndOf="@+id/button6">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trouble paying attention"
+                    android:id="@+id/CheckAttention"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bothered by usual activities"
+                    android:id="@+id/checkBotheredByUsual"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Slow movement"
+                    android:button="@drawable/customcheckbox"
+                    android:id="@+id/checkSlowMove"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Slow speech"
+                    android:id="@+id/checkSlowSpeech"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:checked="false"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_column="0"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Slow reaction"
+                    android:id="@+id/checkSlowReact"
+                    android:button="@drawable/customcheckbox"
+                    android:checked="false"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="10dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
