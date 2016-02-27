@@ -156,7 +156,7 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 adapter.clear();
-                adapter.add("Server responded with error: " + error.getLocalizedMessage());
+                adapter.add("Unable to connect to server. Please check your internet connection");
             }
         });
         this.netQueue.add(activitySurveyRequestArray);
@@ -183,11 +183,6 @@ public class ScheduleActivity extends AppCompatActivity {
                 }
             }
 
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                ActivityList.add("Server responded with error: " + error.getLocalizedMessage());
-            }
-        });
+        }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
     }
 }

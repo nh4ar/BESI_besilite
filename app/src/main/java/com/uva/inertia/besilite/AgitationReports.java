@@ -178,16 +178,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                             toast.show();
                         }
                     }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-//                String err_msg = new String(error.networkResponse.data);
-//                Log.e("ERROR", err_msg);
-//                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-//                toast.show();
-            }
-        });
+                }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
         this.netQueue.add(requestNewPWDEmoSub);
     }
@@ -210,16 +201,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                             toast.show();
                         }
                     }
-                }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-//                    String err_msg = new String(error.networkResponse.data);
-//                    Log.e("ERROR", err_msg);
-//                    Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-//                    toast.show();
-                }
-        });
+                },NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
         this.netQueue.add(requestNewPWDSleepSub);
 
@@ -258,21 +240,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                                     toast.show();
                                 }
                             }
-                        }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            String err_msg = new String(error.networkResponse.data);
-                            Log.e("ERROR", err_msg);
-                            Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                        catch(Exception e){
-                            Log.v("ERROR", e.getMessage());
-                        }
-                    }
-                });
+                        }, NetworkErrorHandlers.toastHandler(getApplicationContext()) );
                 this.netQueue.add(postNewAgiSurvey);
             }
             catch(JSONException e) {

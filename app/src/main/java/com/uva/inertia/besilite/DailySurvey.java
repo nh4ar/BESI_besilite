@@ -136,15 +136,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                     toast.show();
                 }
             }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast toast = Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
+        }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
         this.netQueue.add(requestNewPWDEmotionSub);
     }
@@ -170,16 +162,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 }
 
             }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                String err_msg = new String(error.networkResponse.data);
-                Log.e("ERROR", err_msg);
-                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
+        }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
         this.netQueue.add(requestNewCareEmotionSub);
     }
@@ -202,16 +185,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                     toast.show();
                 }
             }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                String err_msg = new String(error.networkResponse.data);
-                Log.e("ERROR", err_msg);
-                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
+        }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
         this.netQueue.add(requestNewPWDSleepSub);
     }
@@ -243,16 +217,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                     }
 
                 }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    String err_msg = new String(error.networkResponse.data);
-                    Log.e("ERROR", err_msg);
-                    Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
+            }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
             this.netQueue.add(requestNewCompleteSurvey);
 
