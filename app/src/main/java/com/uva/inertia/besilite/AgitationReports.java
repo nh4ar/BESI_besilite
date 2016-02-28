@@ -1,36 +1,31 @@
 package com.uva.inertia.besilite;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
 
@@ -42,15 +37,21 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     String ObservationEndpoint;
     String AgitationEndpoint;
 
+
     SharedPreferences sharedPref;
     RequestQueue netQueue;
 
     HashMap<String, Boolean> pwdObs;
     HashMap<String, Boolean> pwdEmo;
+    HashMap<String, String> pwdGen;
 
-    int agiSurveyPK;
+    java.text.DateFormat df;
+    TimeZone tz;
+
+    //int agiSurveyPK;
     int obsSurveyPK;
     int emoSurveyPK;
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -89,6 +90,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         complete_endpoint = "/api/v1/survey/agi/smart/";
         ObservationEndpoint = "/api/v1/survey/obs/create/";
         EmotionEndpoint = "/api/v1/survey/emo/create/";
+        AgitationEndpoint = "/api/v1/survey/agi/smart/";
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -99,7 +101,11 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
         pwdObs = new HashMap<>();
         pwdEmo = new HashMap<>();
+        pwdGen = new HashMap<>();
 
+        df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+        tz = TimeZone.getTimeZone("UTC");
+        df.setTimeZone(tz);
     }
 
 
@@ -132,6 +138,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
     public void createReport(){
         createSubsurveys_Emo();
+
     }
 
 
@@ -153,16 +160,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                             toast.show();
                         }
                     }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                String err_msg = new String(error.networkResponse.data);
-                Log.e("ERROR", err_msg);
-                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
+                }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
         this.netQueue.add(requestNewPWDEmoSub);
     }
@@ -185,24 +183,52 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                             toast.show();
                         }
                     }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                String err_msg = new String(error.networkResponse.data);
-                Log.e("ERROR", err_msg);
-                Toast toast = Toast.makeText(getApplicationContext(), err_msg, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
+                },NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
         this.netQueue.add(requestNewPWDSleepSub);
 
     }
 
     private void createCompleteSurvey(){
-        Log.e("TEST","NEED TO ADD INFO FROM AGITATION");
-        Log.e("TEST","COMPLETE UPLOAD NOT IMPLEMENTED");
+
+        /////BACKEND DOESN'T CONTAIN PRIOR EMOTION??
+            try {
+                JSONObject surveyObject = new JSONObject();
+
+                Log.v("MAPS", pwdGen.toString());
+
+                surveyObject.put("timestamp", df.format(new Date()));
+                surveyObject.put("observations", obsSurveyPK);
+                surveyObject.put("PWDEmotions", emoSurveyPK);
+                surveyObject.put("agitimestamp", pwdGen.get("agitimestamp"));
+                surveyObject.put("level", pwdGen.get("level"));
+
+                Log.v("TEST", surveyObject.toString());
+                JsonObjectRequestWithToken postNewAgiSurvey = new JsonObjectRequestWithToken(
+                        Request.Method.POST, base_url + AgitationEndpoint, surveyObject, api_token,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    Toast toast = Toast.makeText(getApplicationContext(),
+                                            "Agitation Report Submitted!", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                    Log.v("TEST", "full survey made");
+                                    finish();
+                                } catch (Exception e) {
+                                    Toast toast = Toast.makeText(getApplicationContext(),
+                                            "Server failed to return a PK for obs",
+                                            Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                            }
+                        }, NetworkErrorHandlers.toastHandler(getApplicationContext()) );
+                this.netQueue.add(postNewAgiSurvey);
+            }
+            catch(JSONException e) {
+
+            }
+
     }
 
 
@@ -222,7 +248,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return ConfirmFragment.newInstance(position + 1);
+                    return AgiGenInfoFragment.newInstance();
                 case 1:
                     return RadioPWDEmotionSubsurveyFragment.newInstance();
                 case 2:
@@ -245,7 +271,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                 case 0:
                     return "AGITATION";
                 case 1:
-                    return "EMOTIONS";
+                    return "EMOTION";
                 case 2:
                     return "OBSERVATIONS";
                 case 3:

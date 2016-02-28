@@ -5,147 +5,142 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:rowCount="5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <RadioButton
-            android:text="Sad Voice"
+        <GridLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioSadVoice"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_margin="10dp" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Trouble Concentrating"
-            android:id="@+id/radioTroubleConcen"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:layout_margin="10dp" />
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioCol1">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tearfulness"
-            android:id="@+id/radioTearfulness"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Slow Speech"
+                    android:id="@+id/radioSlowSpeech"
+                    android:layout_margin="10dp"
+                    android:checked="false" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Appetite Loss"
-            android:id="@+id/radioAppetiteLoss"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frightened"
+                    android:id="@+id/radioFrightened"
+                    android:layout_margin="10dp"
+                    android:checked="false" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bothered by Usual Activies"
-            android:id="@+id/radioBotheredByUsual"
-            android:layout_row="1"
-            android:layout_column="2"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Less Talkative"
+                    android:id="@+id/radioLessTalk"
+                    android:layout_margin="10dp" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lack of Reaction"
-            android:id="@+id/radioLackOfReact"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lack of Interest"
+                    android:id="@+id/radioLackOfInterest"
+                    android:layout_margin="10dp" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Less Interested in Hobbies"
-            android:id="@+id/radioLessIntrest"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Slow Reaction"
+                    android:id="@+id/radioSlowReact"
+                    android:layout_margin="10dp" />
+            </RadioGroup>
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Slow Movement"
-            android:id="@+id/radioSlowMove"
-            android:layout_row="2"
-            android:layout_column="2"
-            android:layout_margin="10dp" />
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:id="@+id/radioCol2">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Very Worried"
-            android:id="@+id/radioVeryWorried"
-            android:layout_row="3"
-            android:layout_column="0"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:text="Sad Voice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioSadVoice"
+                    android:layout_margin="10dp" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sad Expression"
-            android:id="@+id/radioSadExpression"
-            android:layout_row="3"
-            android:layout_column="1"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trouble Concentrating"
+                    android:id="@+id/radioTroubleConcen"
+                    android:layout_margin="10dp" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Slow Speech"
-            android:id="@+id/radioSlowSpeech"
-            android:layout_row="3"
-            android:layout_column="2"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tearfulness"
+                    android:id="@+id/radioTearfulness"
+                    android:layout_margin="10dp" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Frightened"
-            android:id="@+id/radioFrightened"
-            android:layout_row="4"
-            android:layout_column="0"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Appetite Loss"
+                    android:id="@+id/radioAppetiteLoss"
+                    android:layout_margin="10dp" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Less Talkative"
-            android:id="@+id/radioLessTalk"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_margin="10dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bothered by Usual Activies"
+                    android:id="@+id/radioBotheredByUsual"
+                    android:layout_margin="10dp" />
+            </RadioGroup>
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lack of Interest"
-            android:id="@+id/radioLackOfInterest"
-            android:layout_row="4"
-            android:layout_column="1"
-            android:layout_margin="10dp" />
+            <RadioGroup android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="left|top"
+                android:id="@+id/radioCol3">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lack of Reaction"
+                    android:id="@+id/radioLackOfReact"
+                    android:layout_margin="10dp" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Slow Reaction"
-            android:id="@+id/radioSlowReact"
-            android:layout_row="4"
-            android:layout_column="2"
-            android:layout_margin="10dp" />
-    </GridLayout>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Less Interested in Hobbies"
+                    android:id="@+id/radioLessIntrest"
+                    android:layout_margin="10dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Slow Movement"
+                    android:id="@+id/radioSlowMove"
+                    android:layout_margin="10dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Very Worried"
+                    android:id="@+id/radioVeryWorried"
+                    android:layout_margin="10dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sad Expression"
+                    android:id="@+id/radioSadExpression"
+                    android:layout_margin="10dp" />
+
+            </RadioGroup>
+        </GridLayout>
+    </RelativeLayout>
+
 </FrameLayout>

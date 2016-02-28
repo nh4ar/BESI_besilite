@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -47,28 +46,9 @@ public class Home extends AppCompatActivity {
 
         netQueue = Volley.newRequestQueue(this);
 
-
-//        final ListView mListView = (ListView) findViewById(R.id.agiSurveys);
-
-//      Create our adapter to add items
-//        adapter=new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1,
-//                agiSurveyList);
-//        mListView.setAdapter(adapter);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddAgiSurvey.class);
-                startActivity(intent);
-            }
-        });
-
-        final ImageView goToEmotions = (ImageView) findViewById(R.id.button);
-        final ImageView goToActivities = (ImageView) findViewById(R.id.button2);
-        final Button refresh = (Button) findViewById(R.id.button3);
+        final ImageView goToEmotions = (ImageView) findViewById(R.id.daily_reports);
+        final ImageView goToActivities = (ImageView) findViewById(R.id.go_to_activities);
+        final Button goToAgiReports = (Button) findViewById(R.id.go_to_agi_report);
 
 
         goToEmotions.setOnClickListener(new View.OnClickListener() {
@@ -79,10 +59,11 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        refresh.setOnClickListener(new View.OnClickListener() {
+        goToAgiReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateAgiList();
+                Intent intent = new Intent(v.getContext(), AgitationReports.class);
+                startActivity(intent);
             }
         });
 
@@ -93,11 +74,6 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
-
     }
 
 

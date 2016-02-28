@@ -54,34 +54,33 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
         pwdObs = ar.pwdObs;
 
         Kicking = (CheckBox) rootView.findViewById(R.id.checkKicking);
-        Kicking.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "Kicking"));
+        Kicking.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Kicking"));
         Hitting = (CheckBox) rootView.findViewById(R.id.checkHitting);
-        Hitting.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "Hitting"));
+        Hitting.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Hitting"));
         Pacing = (CheckBox) rootView.findViewById(R.id.checkPacing);
-        Pacing.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "Pacing"));
+        Pacing.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Pacing"));
         Wandering = (CheckBox) rootView.findViewById(R.id.checkWandering);
-        Wandering.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "Wandering"));
+        Wandering.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Wandering"));
         Disrobing = (CheckBox) rootView.findViewById(R.id.checkDisrobing);
-        Disrobing.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "Disrobing"));
+        Disrobing.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Disrobing"));
         Scratching = (CheckBox) rootView.findViewById(R.id.checkScratching);
-        Scratching.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "Scratching"));
+        Scratching.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Scratching"));
         ScreamingYelling = (CheckBox) rootView.findViewById(R.id.checkScreamingYelling);
-        ScreamingYelling.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "ScreamingYelling"));
+        ScreamingYelling.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "ScreamingYelling"));
         StrangeNoises = (CheckBox) rootView.findViewById(R.id.checkStrangeNoises);
-        StrangeNoises.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "StrangeNoises"));
+        StrangeNoises.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "StrangeNoises"));
         Repetitive = (CheckBox) rootView.findViewById(R.id.checkRepetitive);
-        Repetitive.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "Repetitive"));
+        Repetitive.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Repetitive"));
         Biting = (CheckBox) rootView.findViewById(R.id.checkBiting);
-        Biting.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "Biting"));
+        Biting.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Biting"));
         Spitting = (CheckBox) rootView.findViewById(R.id.checkSpitting);
-        Spitting.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "Spitting"));
+        Spitting.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Spitting"));
         EatingNonFood = (CheckBox) rootView.findViewById(R.id.checkEatingNonFood);
-        EatingNonFood.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "EatingNonFood"));
+        EatingNonFood.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "EatingNonFood"));
         BreakingThings = (CheckBox) rootView.findViewById(R.id.checkBreakingThings);
-        BreakingThings.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "BreakingThings"));
+        BreakingThings.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "BreakingThings"));
         UnableToFindCommonPlaces = (CheckBox) rootView.findViewById(R.id.checkUnableToFindCommonPlaces);
-        UnableToFindCommonPlaces.setOnClickListener(CustomClickHandlers.updateMapOnRadio(pwdObs, "UnableToFindCommonPlaces"));
-
+        UnableToFindCommonPlaces.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "UnableToFindCommonPlaces"));
 
         return rootView;
     }
