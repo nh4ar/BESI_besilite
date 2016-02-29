@@ -62,43 +62,53 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Slow Speech"
+                    android:button="@drawable/customcheckbox"
                     android:id="@+id/radioSlowSpeech"
                     android:checked="false"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/customcheckbox"
                     android:text="Frightened"
                     android:id="@+id/radioFrightened"
                     android:checked="false"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
+                    android:button="@drawable/customcheckbox"
                     android:layout_height="wrap_content"
                     android:text="Less Talkative"
                     android:id="@+id/radioLessTalk"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lack of Interest"
+                    android:button="@drawable/customcheckbox"
                     android:id="@+id/radioLackOfInterest"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/customcheckbox"
                     android:text="Slow Reaction"
                     android:id="@+id/radioSlowReact"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
             </RadioGroup>
 
             <RadioGroup
@@ -112,41 +122,51 @@
                     android:text="Sad Voice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/customcheckbox"
                     android:id="@+id/radioSadVoice"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trouble Concentrating"
+                    android:button="@drawable/customcheckbox"
                     android:id="@+id/radioTroubleConcen"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tearfulness"
                     android:id="@+id/radioTearfulness"
+                    android:button="@drawable/customcheckbox"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Appetite Loss"
+                    android:button="@drawable/customcheckbox"
                     android:id="@+id/radioAppetiteLoss"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bothered by Usual Activies"
+                    android:button="@drawable/customcheckbox"
                     android:id="@+id/radioBotheredByUsual"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
             </RadioGroup>
 
             <RadioGroup android:layout_height="wrap_content"
@@ -156,42 +176,52 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/customcheckbox"
                     android:text="Lack of Reaction"
                     android:id="@+id/radioLackOfReact"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Less Interested in Hobbies"
+                    android:button="@drawable/customcheckbox"
                     android:id="@+id/radioLessIntrest"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Slow Movement"
+                    android:button="@drawable/customcheckbox"
                     android:id="@+id/radioSlowMove"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Very Worried"
                     android:id="@+id/radioVeryWorried"
+                    android:button="@drawable/customcheckbox"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sad Expression"
+                    android:button="@drawable/customcheckbox"
                     android:id="@+id/radioSadExpression"
                     android:textSize="32sp"
-                    android:layout_marginBottom="40dp" />
+                    android:layout_marginBottom="40dp"
+                    android:paddingLeft="10dp" />
 
             </RadioGroup>
         </GridLayout>
