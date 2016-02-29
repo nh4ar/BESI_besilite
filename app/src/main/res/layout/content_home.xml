@@ -18,7 +18,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="false"
         android:id="@+id/linearLayout"
-        android:layout_alignParentBottom="false">
+        android:layout_alignParentBottom="false"
+        android:visibility="invisible">
 
         <ImageView
             style="@style/SubIconView"
@@ -131,7 +132,6 @@
             android:id="@+id/go_to_agi_report"
             android:background="@drawable/buttonanimate"
             android:textSize="36sp"
-            android:onClick="AgitationReport"
             android:textStyle="bold"
             android:layout_below="@+id/go_to_activities"
             android:layout_alignRight="@+id/go_to_activities"
