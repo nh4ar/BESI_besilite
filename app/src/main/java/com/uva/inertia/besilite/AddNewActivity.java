@@ -350,10 +350,13 @@ public class AddNewActivity extends AppCompatActivity {
         selDate.setText(dateFormats[0].format(date));
     }
     public void setTime( int hourOfDay, int minute){
-        calendar.set(Calendar.HOUR, hourOfDay);
+        Log.v("TIME", ""+hourOfDay);
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         date = calendar.getTime();
+        Log.v("TIME", date.toString());
         selTime.setText(dateFormats[1].format(date));
+        Log.v("TIME", dateFormats[1].format(date));
     }
 
     public static class TimePickerFragment extends DialogFragment
@@ -372,7 +375,8 @@ public class AddNewActivity extends AppCompatActivity {
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            ((AddNewActivity)getActivity()).setTime(hourOfDay, minute);
+            Log.v("TIME", ""+hourOfDay);
+            ((AddNewActivity) getActivity()).setTime(hourOfDay, minute);
         }
     }
     public void showTimePickerDialog(View v) {

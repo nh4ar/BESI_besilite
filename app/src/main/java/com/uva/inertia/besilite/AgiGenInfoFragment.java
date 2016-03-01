@@ -192,7 +192,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     }
 
     public void setTime( int hourOfDay, int minute){
-        calendar.set(Calendar.HOUR, hourOfDay);
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         agidate = calendar.getTime();
         Log.v("PICKER", agidate.toString());
