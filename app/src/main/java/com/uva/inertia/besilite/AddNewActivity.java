@@ -9,11 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,10 +48,8 @@ import java.util.TimeZone;
 
 public class AddNewActivity extends AppCompatActivity {
 
-    Date evtDate;
-    Time evtTime;
-
     java.text.DateFormat[] dateFormats;
+
     Calendar calendar;
     Date date;
     TimeZone tz;
@@ -65,7 +60,7 @@ public class AddNewActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     ArrayList<String> tempList;
     //Holds all activity name strings
-    ArrayList<String> ActivityList = new ArrayList<String>();
+    CaseInsensitiveArrayList ActivityList = new CaseInsensitiveArrayList();
 
     Map<String,String> ActivityMap = new HashMap<>();
     Map<String,String> RevActivityMap = new HashMap<>();
@@ -76,7 +71,6 @@ public class AddNewActivity extends AppCompatActivity {
     String activityEndpoint;
     String api_token;
     String deploy_id;
-    JSONArray RawActivityList;
     RequestQueue netQueue;
 
     TextView selDate;
@@ -158,7 +152,7 @@ public class AddNewActivity extends AppCompatActivity {
         final ListView mListView = (ListView) findViewById(R.id.actionList);
         tempList = new ArrayList<>();
 //      Create our adapter to add items
-        adapter=new ArrayAdapter<String>(this,
+        adapter=new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, ActivityList);
 
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -373,8 +367,7 @@ public class AddNewActivity extends AppCompatActivity {
             int minute = c.get(Calendar.MINUTE);
 
             // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(),
-                    android.R.style.Theme_Holo_Light_Dialog_NoActionBar, this, hour, minute,
+            return new TimePickerDialog(getActivity(), this, hour, minute,
                     android.text.format.DateFormat.is24HourFormat(getActivity()));
         }
 
@@ -398,6 +391,7 @@ public class AddNewActivity extends AppCompatActivity {
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
+
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }

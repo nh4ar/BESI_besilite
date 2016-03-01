@@ -18,7 +18,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="false"
         android:id="@+id/linearLayout"
-        android:layout_alignParentBottom="false">
+        android:layout_alignParentBottom="false"
+        android:visibility="invisible">
 
         <ImageView
             style="@style/SubIconView"
@@ -75,12 +76,12 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/button2"
+                    android:id="@+id/go_to_activities"
                     android:src="@drawable/activitiesicon"
                     android:background="@drawable/iconpressed"
                     android:layout_width="250dp"
                     android:layout_height="175dp"
-                    android:layout_below="@+id/button2"
+                    android:layout_below="@+id/go_to_activities"
                     android:layout_toLeftOf="@+id/linearLayout"
                     android:layout_toStartOf="@+id/linearLayout"
                     android:layout_marginBottom="10dp" />
@@ -102,20 +103,20 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/button"
+                    android:id="@+id/daily_reports"
                     android:src="@drawable/reportsicon"
                     android:layout_width="250dp"
                     android:layout_height="175dp"
                     android:layout_above="@+id/button3"
-                    android:layout_toLeftOf="@+id/button2"
-                    android:layout_toStartOf="@+id/button2"
+                    android:layout_toLeftOf="@+id/go_to_activities"
+                    android:layout_toStartOf="@+id/go_to_activities"
                     android:layout_marginBottom="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Daily Survey"
+                    android:text="Daily Reports"
                     android:id="@+id/textView15"
                     android:textSize="36dp"
                     android:textStyle="bold"
@@ -127,17 +128,18 @@
         <Button
             android:layout_width="400dp"
             android:layout_height="130dp"
-            android:text="Agitation Reports"
-            android:id="@+id/button3"
+            android:text="Agitation Report"
+            android:id="@+id/go_to_agi_report"
             android:background="@drawable/buttonanimate"
             android:textSize="36sp"
-            android:onClick="AgitationReport"
             android:textStyle="bold"
-            android:layout_below="@+id/button2"
-            android:layout_alignRight="@+id/button2"
-            android:layout_alignEnd="@+id/button2"
+            android:layout_below="@+id/go_to_activities"
+            android:layout_alignRight="@+id/go_to_activities"
+            android:layout_alignEnd="@+id/go_to_activities"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="40dp"
+            android:singleLine="false"
+            android:maxWidth="100dp" />
     </LinearLayout>
 
 </RelativeLayout>

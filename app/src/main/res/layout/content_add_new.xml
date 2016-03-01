@@ -10,92 +10,136 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.uva.inertia.besilite.AddNewActivity"
-    tools:showIn="@layout/activity_add_new">
+    tools:showIn="@layout/activity_add_new"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:background="#E1BEE7">
 
-    <ScrollView
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:text="Submit"
+        android:id="@+id/submit_activity_report"
+        android:background="@drawable/loginbtnanimate"
+        android:textSize="36sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView" >
+        android:layout_alignParentEnd="false">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/date_sel_layout"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone">
 
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="@string/pick_date"
+                android:onClick="showDatePickerDialog"
+                android:id="@+id/select_date_button"
+                android:background="@drawable/buttonanimate"
+                android:textSize="36dp"
+                android:layout_marginRight="10dp" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pick_date"
-                    android:onClick="showDatePickerDialog" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Large Text"
-                    android:id="@+id/textView8" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pick_time"
-                    android:onClick="showTimePickerDialog" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Large Text"
-                    android:id="@+id/textView9" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add New Activity Type"
-                    android:id="@+id/button3" />
-
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-            <ScrollView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/scrollView2" >
-
-                <ListView
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/actionList" />
-            </ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Date"
+                android:id="@+id/new_activity_date"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/time_sel_layout"
+            android:layout_below="@+id/date_sel_layout"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="@string/pick_time"
+                android:onClick="showTimePickerDialog"
+                android:id="@+id/select_time_button"
+                android:background="@drawable/buttonanimate"
+                android:textSize="36dp"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Time"
+                android:id="@+id/new_activity_time"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Activity OR "
+                android:id="@+id/activity_type_sel_label"
+                android:textSize="36sp"
+                android:textColor="#000000"
+                android:layout_below="@+id/time_sel_layout"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="New Activity"
+                android:id="@+id/add_new_activity"
+                android:layout_below="@+id/time_sel_layout"
+                android:layout_toRightOf="@+id/activity_type_sel_label"
+                android:layout_toEndOf="@+id/activity_type_sel_label"
+                android:background="@drawable/buttonanimate"
+                android:textSize="36dp"
+                android:layout_marginRight="20dp" />
+
+            <EditText
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/new_activity_val"
+                android:layout_weight="1"
+                android:maxLength="64"
+                android:layout_toRightOf="@+id/add_new_activity"
+                android:layout_toEndOf="@+id/add_new_activity"
+                android:layout_below="@+id/time_sel_layout"
+                android:textSize="36sp"
+                android:layout_gravity="center"
+                android:inputType="text"
+                android:hint="Add New Activity" />
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/actionList"
+            android:layout_below="@+id/activity_type_sel_label"
+            android:visibility="visible" />
+    </LinearLayout>
 
 </RelativeLayout>

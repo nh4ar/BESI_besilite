@@ -67,7 +67,7 @@ public class GetEmotions extends AppCompatActivity {
                             }
                         } catch (org.json.JSONException e){
                             mTextView.setText("Invalid Json");
-                        };
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
