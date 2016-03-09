@@ -20,4 +20,3 @@ public class noSwipeViewPager extends android.support.v4.view.ViewPager {
         return false;
     }
 }
-//this is a random change
