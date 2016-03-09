@@ -30,13 +30,23 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="20dp" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/daily_survey_submit"
+                android:layout_marginLeft="450dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="36dp"
+                android:textColor="#000000" />
+
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:id="@+id/imageView4"
                 android:layout_gravity="right"
                 android:src="@drawable/pwd"
-                android:layout_marginLeft="600dp" />
+                android:layout_marginLeft="0dp" />
         </LinearLayout>
 
         <LinearLayout

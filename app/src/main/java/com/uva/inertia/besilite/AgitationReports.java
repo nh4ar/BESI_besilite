@@ -92,7 +92,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         AgitationEndpoint = "/api/v1/survey/agi/smart/";
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (NoSwipeViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -225,7 +225,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                 this.netQueue.add(postNewAgiSurvey);
             }
             catch(JSONException e) {
-
+                Log.e("ERROR", e.getMessage());
             }
 
     }
@@ -248,11 +248,11 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
             switch (position) {
                 case 0:
                     return AgiGenInfoFragment.newInstance();
+                //case 1:
+                  //  return RadioPWDEmotionSubsurveyFragment.newInstance();
                 case 1:
-                    return RadioPWDEmotionSubsurveyFragment.newInstance();
-                case 2:
                     return ObservationSubsurveyFragment.newInstance();
-                case 3:
+                case 2:
                     return ConfirmFragment.newInstance(position + 1);
             }
             return null;
@@ -261,7 +261,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 3;
         }
 
         @Override
@@ -269,11 +269,11 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
             switch (position) {
                 case 0:
                     return "AGITATION";
+                //case 1:
+                  //  return "EMOTION";
                 case 1:
-                    return "EMOTION";
-                case 2:
                     return "OBSERVATIONS";
-                case 3:
+                case 2:
                     return "SUBMIT";
             }
             return null;

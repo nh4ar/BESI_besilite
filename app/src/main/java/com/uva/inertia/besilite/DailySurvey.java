@@ -54,6 +54,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     int pwdSleepSurveyPK;
     int careEmotionSurveyPK;
 
+    TabLayout tabLayout;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -67,7 +69,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private NoSwipeViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,14 +101,16 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (NoSwipeViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
 
     }
+
+
 
     @Override
     public void OnConfirmClicked() {
@@ -243,13 +247,13 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                return CaregiverEmotionsFragment.newInstance();
+                    return CaregiverEmotionsFragment.newInstance();
                 case 1:
                     return PWDEmotionsFragment.newInstance();
                 case 2:
                     return PWDSleepFragment.newInstance();
-                case 3:
-                    return ConfirmFragment.newInstance(position + 1);
+                //case 3:
+                  //  return ConfirmFragment.newInstance(position + 1);
             }
             return null;
 
@@ -258,20 +262,20 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         @Override
         public int getCount() {
             // Show 4 total pages.
-            return 4;
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Caregiver Emotions";
+                    return "Caregiver Feelings";
                 case 1:
-                    return "PWD Emotions";
+                    return "Loved One Mood";
                 case 2:
-                    return "PWD Sleep";
-                case 3:
-                    return "Submit";
+                    return "Loved One Sleep";
+                //case 3:
+                  //  return "Submit";
             }
             return null;
         }
@@ -287,6 +291,11 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 Log.v("DAILYSURVEY","Click handler called from: " + c.toString());
             }
         };
+    }
+
+    void selectPage(int pageIndex){
+        tabLayout.setScrollPosition(pageIndex,0f,true);
+        mViewPager.setCurrentItem(pageIndex);
     }
 
     /**
@@ -312,6 +321,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
         DailySurvey ds;
 
+        Button nextButton;
+
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -330,43 +341,64 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_caregiver_emotions_survey, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_caregiver_emotions_survey,
+                    container, false);
 
             ds = (DailySurvey) getActivity();
             HashMap<String, Boolean> cEmo = ds.caregiverEmotions;
 
             Isolated = (CheckBox) rootView.findViewById(R.id.checkIsolated);
             Isolated.setOnClickListener(updateMapOnClick(cEmo,"Isolated"));
+
             Exhausted = (CheckBox) rootView.findViewById(R.id.checkExhausted);
             Exhausted.setOnClickListener(updateMapOnClick(cEmo,"Exhausted"));
+
             Worried = (CheckBox) rootView.findViewById(R.id.checkWorried);
             Worried.setOnClickListener(updateMapOnClick(cEmo,"Worried"));
+
             Frustrated = (CheckBox) rootView.findViewById(R.id.checkFrustrated);
             Frustrated.setOnClickListener(updateMapOnClick(cEmo,"Frustrated"));
+
             Discouraged = (CheckBox) rootView.findViewById(R.id.checkDiscouraged);
             Discouraged.setOnClickListener(updateMapOnClick(cEmo,"Discouraged"));
+
             Rested = (CheckBox) rootView.findViewById(R.id.checkRested);
             Rested.setOnClickListener(updateMapOnClick(cEmo,"Rested"));
+
             Busy = (CheckBox) rootView.findViewById(R.id.checkBusy);
             Busy.setOnClickListener(updateMapOnClick(cEmo,"Busy"));
+
             HangingInThere = (CheckBox) rootView.findViewById(R.id.checkHangingInThere);
             HangingInThere.setOnClickListener(updateMapOnClick(cEmo,"HangingInThere"));
+
             Okay = (CheckBox) rootView.findViewById(R.id.checkOkay);
             Okay.setOnClickListener(updateMapOnClick(cEmo,"Okay"));
+
             Calm = (CheckBox) rootView.findViewById(R.id.checkCalm);
             Calm.setOnClickListener(updateMapOnClick(cEmo,"Calm"));
+
             Satisfied = (CheckBox) rootView.findViewById(R.id.checkSatisfied);
             Satisfied.setOnClickListener(updateMapOnClick(cEmo,"Satisfied"));
+
             Hopeful = (CheckBox) rootView.findViewById(R.id.checkHopeful);
             Hopeful.setOnClickListener(updateMapOnClick(cEmo,"Hopeful"));
+
             Motivated  = (CheckBox) rootView.findViewById(R.id.checkMotivated );
             Motivated .setOnClickListener(updateMapOnClick(cEmo,"Motivated "));
+
             Confident = (CheckBox) rootView.findViewById(R.id.checkConfident);
             Confident.setOnClickListener(updateMapOnClick(cEmo,"Confident"));
+
             InControl = (CheckBox) rootView.findViewById(R.id.checkInControl);
             InControl.setOnClickListener(updateMapOnClick(cEmo,"InControl"));
 
-
+            nextButton = (Button) rootView.findViewById(R.id.caregiver_emo_next);
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DailySurvey) getActivity()).selectPage(1);
+                }
+            });
 
             return rootView;
         }
@@ -390,6 +422,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         CheckBox SlowSpeech;
         CheckBox SlowReaction;
         Button getChecks;
+        Button nextButton;
+
         HashMap<String, Boolean> hp = new HashMap<>();
         DailySurvey dailySurvey;
 
@@ -490,6 +524,13 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
             updateHashMap();
 
+            nextButton = (Button) rootView.findViewById(R.id.pwd_mood_next);
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DailySurvey) getActivity()).selectPage(2);
+                }
+            });
 
             return rootView;
 
@@ -508,6 +549,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         CheckBox wakeUpFreq;
         CheckBox wakeUpEarly;
         CheckBox restlessOveractive;
+        Button submitButton;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -552,9 +594,19 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             restlessOveractive =(CheckBox)rootView.findViewById(R.id.checkRestlessOveractive);
             restlessOveractive.setOnClickListener(updateMapOnClick(slpQ,"RestlessOveractive"));
 
+            submitButton = (Button) rootView.findViewById(R.id.daily_survey_submit);
+            submitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DailySurvey) getActivity()).createSurveys();
+                }
+            });
+
             return rootView;
         }
     }
 
 
+
 }
+

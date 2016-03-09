@@ -223,13 +223,6 @@
                 android:id="@+id/linearLayout17"
                 android:layout_marginLeft="200dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignBottom="@+id/linearLayout17"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"></RelativeLayout>
-
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -307,7 +300,6 @@
             android:layout_alignRight="@+id/linearLayout10"
             android:layout_alignEnd="@+id/linearLayout10"
             android:layout_gravity="center_horizontal"
-            android:onClick="SubmitonClick"
             android:textStyle="bold"
             android:visibility="gone" />
     </LinearLayout>
@@ -333,5 +325,15 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/caregiver_emo_next"
+        android:textSize="36dp"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_toLeftOf="@+id/imageView2"
+        android:layout_toStartOf="@+id/imageView2" />
 
 </RelativeLayout>
