@@ -69,7 +69,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private NoSwipeViewPager mViewPager;
+    private noSwipeViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (NoSwipeViewPager) findViewById(R.id.container);
+        mViewPager = (noSwipeViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);

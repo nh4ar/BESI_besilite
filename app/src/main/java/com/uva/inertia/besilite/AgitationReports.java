@@ -92,7 +92,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         AgitationEndpoint = "/api/v1/survey/agi/smart/";
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (NoSwipeViewPager) findViewById(R.id.container);
+        mViewPager = (noSwipeViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

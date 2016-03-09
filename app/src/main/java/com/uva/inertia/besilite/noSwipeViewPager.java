@@ -6,9 +6,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class NoSwipeViewPager extends android.support.v4.view.ViewPager {
+public class noSwipeViewPager extends android.support.v4.view.ViewPager {
 
-    public NoSwipeViewPager(Context con, AttributeSet attr){
+    public noSwipeViewPager(Context con, AttributeSet attr){
         super(con, attr);
     }
     @Override
@@ -20,3 +20,4 @@ public class NoSwipeViewPager extends android.support.v4.view.ViewPager {
         return false;
     }
 }
+//this is a random change
