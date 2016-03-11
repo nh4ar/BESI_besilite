@@ -52,6 +52,8 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     int obsSurveyPK;
     int emoSurveyPK;
 
+    TabLayout tabLayout;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -95,7 +97,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         mViewPager = (noSwipeViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         pwdObs = new HashMap<>();
@@ -230,6 +232,11 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
     }
 
+
+    void selectPage(int pageIndex){
+        tabLayout.setScrollPosition(pageIndex,0f,true);
+        mViewPager.setCurrentItem(pageIndex);
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

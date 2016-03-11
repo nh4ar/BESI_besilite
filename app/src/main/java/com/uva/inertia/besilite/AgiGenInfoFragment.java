@@ -63,6 +63,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     TextView agiLevelViewer;
     int level;
 
+    Button next;
+
     RadioGroup agiLevelGroup;
 
     public static final int DATEPICKER_FRAGMENT=1; // adding this line
@@ -139,7 +141,13 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         selTime.setText(dateFormats[1].format(agidate));
 
 
-
+        next = (Button)rootView.findViewById(R.id.agi_gen_info_next);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AgitationReports) getActivity()).selectPage(1);
+            }
+        });
 
         agiLevelGroup = (RadioGroup)rootView.findViewById(R.id.agiLevelGrp);
 
@@ -235,14 +243,6 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
 
 
-
-
-
-
-
-
-
-
     private class DurationTimePickDialog extends TimePickerDialog
     {
         final OnTimeSetListener mCallback;
@@ -304,21 +304,6 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         newFragment.setTargetFragment(this, TIMEPICKER_FRAGMENT);
         newFragment.show((getActivity()).getSupportFragmentManager().beginTransaction(), "agiTimePicker");
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
