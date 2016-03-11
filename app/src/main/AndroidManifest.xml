@@ -12,11 +12,13 @@
 
         <activity
             android:name=".GetEmotions"
-            android:label="@string/title_activity_get_emotions" />
+            android:label="@string/title_activity_get_emotions"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,15 +27,18 @@
         </activity>
         <activity
             android:name=".GetActivities"
-            android:label="@string/title_activity_get_activities" />
+            android:label="@string/title_activity_get_activities"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings_activity" />
+            android:label="@string/title_activity_settings_activity"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ScheduleActivity"
             android:label="@string/title_activity_schedule"
             android:parentActivityName=".Home"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.uva.inertia.besilite.Home" />
@@ -42,7 +47,8 @@
             android:name=".AddNewActivity"
             android:label="@string/title_activity_add_new"
             android:parentActivityName=".Home"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.uva.inertia.besilite.Home" />
@@ -51,7 +57,8 @@
             android:name=".DailySurvey"
             android:label="@string/title_activity_daily_survey"
             android:parentActivityName=".Home"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.uva.inertia.besilite.Home" />
@@ -60,7 +67,8 @@
             android:name=".AgitationReports"
             android:label="@string/title_activity_agitation_reports"
             android:parentActivityName=".Home"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.uva.inertia.besilite.Home" />
