@@ -92,7 +92,7 @@
                 <CheckBox
                     android:layout_width="303dp"
                     android:layout_height="wrap_content"
-                    android:text="Lack of reaction"
+                    android:text="Lack of reaction to pleasant events"
                     android:id="@+id/checkLackOfReact"
                     android:checked="false"
                     android:textSize="30dp"
@@ -158,7 +158,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Loss of appetite"
+                    android:text="Appetite Loss"
                     android:id="@+id/checkAppetiteLoss"
                     android:checked="false"
                     android:textSize="30dp"
@@ -172,7 +172,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Loss of interest in hobbies"
+                    android:text="Loss of interest in usual activities"
                     android:id="@+id/checkLessIntrest"
                     android:checked="false"
                     android:textSize="30dp"
@@ -198,7 +198,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lack of interest"
+                    android:text="Lack of interest -- TO REMOVE"
                     android:id="@+id/checkLackOfInterest"
                     android:checked="false"
                     android:layout_column="28"
@@ -212,7 +212,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Trouble concentrating"
+                    android:text="Trouble concentrating TO REMOVE"
                     android:id="@+id/checkTroubleConcen"
                     android:checked="false"
                     android:textSize="30dp"
