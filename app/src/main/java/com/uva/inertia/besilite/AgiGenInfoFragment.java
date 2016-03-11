@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.NumberPicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -59,7 +61,9 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     TextView selTime;
     SeekBar  agiLevlBar;
     TextView agiLevelViewer;
-    int agitationLevel;
+    int level;
+
+    RadioGroup agiLevelGroup;
 
     public static final int DATEPICKER_FRAGMENT=1; // adding this line
     public static final int TIMEPICKER_FRAGMENT=2; // adding this line
@@ -95,7 +99,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_agi_gen_info, container, false);
+        final View rootView =  inflater.inflate(R.layout.fragment_agi_gen_info, container, false);
 
         Button dater = (Button)rootView.findViewById(R.id.agi_date);
         Button timer = (Button)rootView.findViewById(R.id.agi_time);
@@ -135,33 +139,56 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         selTime.setText(dateFormats[1].format(agidate));
 
 
-        agiLevlBar = (SeekBar)rootView.findViewById(R.id.agi_level_slider);
-        agiLevlBar.setMax(9);
-        agitationLevel = 1;
-        pwdGen.put("level", "" + agitationLevel);
-        agiLevelViewer = (TextView)rootView.findViewById(R.id.agi_level_viewer);
-        agiLevelViewer.setText("" + agitationLevel);
 
-        agiLevlBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
+        agiLevelGroup = (RadioGroup)rootView.findViewById(R.id.agiLevelGrp);
+
+        agiLevelGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
-                agitationLevel = progressValue;
-                pwdGen.put("level", "" + (agitationLevel+1));
-                //Toast.makeText(getActivity().getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
-                agiLevelViewer.setText("" + (agitationLevel+1));
-            }
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int level = 1;
+                switch (checkedId) {
+                    case R.id.agiLevel1:
+                        level = 1;
+                        break;
+                    case R.id.agiLevel2:
+                        level = 2;
+                        break;
+                    case R.id.agiLevel3:
+                        level = 3;
+                        break;
+                    case R.id.agiLevel4:
+                        level = 4;
+                        break;
+                    case R.id.agiLevel5:
+                        level = 5;
+                        break;
+                    case R.id.agiLevel6:
+                        level = 6;
+                        break;
+                    case R.id.agiLevel7:
+                        level = 7;
+                        break;
+                    case R.id.agiLevel8:
+                        level = 8;
+                        break;
+                    case R.id.agiLevel9:
+                        level = 9;
+                        break;
+                    case R.id.agiLevel10:
+                        level = 10;
+                        break;
+                }
+                pwdGen.put("level", "" + (level));
+                agiLevelViewer.setText("" + level);
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                //Toast.makeText(getActivity().getApplicationContext(), "Started tracking seekbar", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                //Toast.makeText(getActivity().getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
             }
         });
+
+        level = 1;
+        pwdGen.put("level", "" + level);
+        agiLevelViewer = (TextView)rootView.findViewById(R.id.agi_level_viewer);
+        agiLevelViewer.setText("" + level);
 
         return rootView;
 
