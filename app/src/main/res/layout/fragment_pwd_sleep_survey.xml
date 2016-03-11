@@ -151,7 +151,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="More Naps"
+                    android:text="More naps than usual"
                     android:id="@+id/checkMoreNaps"
                     android:button="@drawable/customcheckbox"
                     android:checked="false"
@@ -166,7 +166,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Restless or Overactive"
+                    android:text="Restless or overactive"
                     android:id="@+id/checkRestlessOveractive"
                     android:checked="false"
                     android:button="@drawable/customcheckbox"

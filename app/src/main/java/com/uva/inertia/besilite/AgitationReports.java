@@ -136,33 +136,33 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     }
 
     public void createReport(){
-        createSubsurveys_Obs();
+        createSubsurveys_Emo();
 
     }
 
 
-//    private void createSubsurveys_Emo(){
-//        JSONObject subsurveyObject = new JSONObject(pwdEmo);
-//        Log.v("TEST", subsurveyObject.toString());
-//        JsonObjectRequestWithToken requestNewPWDEmoSub = new JsonObjectRequestWithToken(
-//                Request.Method.POST, base_url+EmotionEndpoint,subsurveyObject, api_token,
-//                new Response.Listener<JSONObject>() {
-//
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try{
-//                            emoSurveyPK = response.getInt("id");
-//                            Log.v("TEST","woo created emo subsurvey");
-//                            createSubsurveys_Obs();
-//                        } catch (org.json.JSONException e){
-//                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for emo", Toast.LENGTH_SHORT);
-//                            toast.show();
-//                        }
-//                    }
-//                }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
-//
-//        this.netQueue.add(requestNewPWDEmoSub);
-//    }
+    private void createSubsurveys_Emo(){
+        JSONObject subsurveyObject = new JSONObject();
+        Log.v("TEST", subsurveyObject.toString());
+        JsonObjectRequestWithToken requestNewPWDEmoSub = new JsonObjectRequestWithToken(
+                Request.Method.POST, base_url+EmotionEndpoint,subsurveyObject, api_token,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try{
+                            emoSurveyPK = response.getInt("id");
+                            Log.v("TEST","woo created emo subsurvey");
+                            createSubsurveys_Obs();
+                        } catch (org.json.JSONException e){
+                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for emo", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
+
+        this.netQueue.add(requestNewPWDEmoSub);
+    }
 
     private void createSubsurveys_Obs(){
         JSONObject subsurveyObject = new JSONObject(pwdObs);

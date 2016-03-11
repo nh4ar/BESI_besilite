@@ -79,7 +79,7 @@
                         android:text="Kicking"
                         android:id="@+id/checkKicking"
                         android:checked="false"
-                        android:textSize="25dp"
+                        android:textSize="36dp"
                         android:layout_column="0"
                         android:button="@drawable/customcheckbox"
                         android:layout_marginLeft="10dp"

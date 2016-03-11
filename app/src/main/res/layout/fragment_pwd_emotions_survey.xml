@@ -146,7 +146,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Less Talkative"
+                    android:text="Less talkative"
                     android:id="@+id/checkLessTalk"
                     android:checked="false"
                     android:textSize="30dp"
