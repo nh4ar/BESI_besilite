@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 import java.util.HashMap;
@@ -29,6 +30,8 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
     CheckBox BreakingThings;
     CheckBox UnableToFindCommonPlaces;
 
+    ConfirmFragment.OnConfirmClickedListener mListener;
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -50,6 +53,16 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_observation_subsurvey, container, false);
         ar = (AgitationReports) getActivity();
+
+        Button confirmBtn = (Button) rootView.findViewById(R.id.submitOnObs);
+
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
+                mListener.OnConfirmClicked();
+            }
+        });
 
         pwdObs = ar.pwdObs;
 

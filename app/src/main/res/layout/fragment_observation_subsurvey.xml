@@ -297,6 +297,19 @@
             </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/submitOnObs"
+        android:background="@drawable/loginbtnanimate"
+        android:textSize="36dp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
