@@ -261,7 +261,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
         @Override
         public int getCount() {
-            // Show 4 total pages.
+            // Show 3 total pages.
             return 3;
         }
 
@@ -271,9 +271,9 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 case 0:
                     return "Caregiver Feelings";
                 case 1:
-                    return "Loved One Mood";
+                    return "Participant Mood";
                 case 2:
-                    return "Loved One Sleep";
+                    return "Participant Sleep";
                 //case 3:
                   //  return "Submit";
             }

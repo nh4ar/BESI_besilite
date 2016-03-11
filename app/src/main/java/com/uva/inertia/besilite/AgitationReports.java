@@ -136,33 +136,33 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     }
 
     public void createReport(){
-        createSubsurveys_Emo();
+        createSubsurveys_Obs();
 
     }
 
 
-    private void createSubsurveys_Emo(){
-        JSONObject subsurveyObject = new JSONObject(pwdEmo);
-        Log.v("TEST", subsurveyObject.toString());
-        JsonObjectRequestWithToken requestNewPWDEmoSub = new JsonObjectRequestWithToken(
-                Request.Method.POST, base_url+EmotionEndpoint,subsurveyObject, api_token,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try{
-                            emoSurveyPK = response.getInt("id");
-                            Log.v("TEST","woo created emo subsurvey");
-                            createSubsurveys_Obs();
-                        } catch (org.json.JSONException e){
-                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for emo", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    }
-                }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
-
-        this.netQueue.add(requestNewPWDEmoSub);
-    }
+//    private void createSubsurveys_Emo(){
+//        JSONObject subsurveyObject = new JSONObject(pwdEmo);
+//        Log.v("TEST", subsurveyObject.toString());
+//        JsonObjectRequestWithToken requestNewPWDEmoSub = new JsonObjectRequestWithToken(
+//                Request.Method.POST, base_url+EmotionEndpoint,subsurveyObject, api_token,
+//                new Response.Listener<JSONObject>() {
+//
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try{
+//                            emoSurveyPK = response.getInt("id");
+//                            Log.v("TEST","woo created emo subsurvey");
+//                            createSubsurveys_Obs();
+//                        } catch (org.json.JSONException e){
+//                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for emo", Toast.LENGTH_SHORT);
+//                            toast.show();
+//                        }
+//                    }
+//                }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
+//
+//        this.netQueue.add(requestNewPWDEmoSub);
+//    }
 
     private void createSubsurveys_Obs(){
         JSONObject subsurveyObject = new JSONObject(pwdObs);
@@ -252,8 +252,8 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                   //  return RadioPWDEmotionSubsurveyFragment.newInstance();
                 case 1:
                     return ObservationSubsurveyFragment.newInstance();
-                case 2:
-                    return ConfirmFragment.newInstance(position + 1);
+//                case 2:
+//                    return ConfirmFragment.newInstance(position + 1);
             }
             return null;
         }
@@ -261,20 +261,20 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "AGITATION";
+                    return "Agitation";
                 //case 1:
                   //  return "EMOTION";
                 case 1:
-                    return "OBSERVATIONS";
-                case 2:
-                    return "SUBMIT";
+                    return "Observations";
+//                case 2:
+//                    return "Submit";
             }
             return null;
         }
