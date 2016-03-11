@@ -94,15 +94,114 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="20dp" />
 
-            <SeekBar
-                android:layout_width="500dp"
+            <RadioGroup
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/agi_level_slider"
+                android:orientation="horizontal"
                 android:layout_below="@+id/textView"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_centerHorizontal="true"
+                android:id="@+id/agiLevelGrp">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:id="@+id/agiLevel1"
+                    android:checked="true"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:id="@+id/agiLevel2"
+                    android:checked="false"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:id="@+id/agiLevel3"
+                    android:checked="false"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:id="@+id/agiLevel4"
+                    android:checked="false"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:id="@+id/agiLevel5"
+                    android:checked="false"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    android:id="@+id/agiLevel6"
+                    android:checked="false"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7"
+                    android:id="@+id/agiLevel7"
+                    android:checked="false"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8"
+                    android:id="@+id/agiLevel8"
+                    android:checked="false"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9"
+                    android:id="@+id/agiLevel9"
+                    android:checked="false"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:id="@+id/agiLevel10"
+                    android:checked="false"
+                    android:textSize="26dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+            </RadioGroup>
 
             <TextView
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -113,9 +212,9 @@
                 android:textSize="36sp"
                 android:textIsSelectable="false"
                 android:layout_centerHorizontal="true"
-                android:layout_alignTop="@+id/agi_level_slider"
                 android:layout_marginTop="40dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_below="@+id/textView" />
 
         </RelativeLayout>
 
