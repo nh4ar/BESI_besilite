@@ -269,11 +269,11 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Caregiver Feelings";
+                    return "Caregiver Report";
                 case 1:
-                    return "Participant Mood";
+                    return "PWD Mood";
                 case 2:
-                    return "Participant Sleep";
+                    return "PWD Sleep Quality";
                 //case 3:
                   //  return "Submit";
             }

@@ -10,7 +10,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout6">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -30,23 +31,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="20dp" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Submit"
-                android:id="@+id/daily_survey_submit"
-                android:layout_marginLeft="450dp"
-                android:layout_gravity="center_vertical"
-                android:textSize="36dp"
-                android:textColor="#000000" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/imageView4"
-                android:layout_gravity="right"
-                android:src="@drawable/pwd"
-                android:layout_marginLeft="0dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -181,5 +165,30 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="400dp"
+        android:layout_height="100dp"
+        android:text="Submit"
+        android:id="@+id/daily_survey_submit"
+        android:textSize="36dp"
+        android:textAllCaps="false"
+        android:background="@drawable/loginbtnanimate"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:visibility="visible"
+        android:layout_below="@+id/linearLayout6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView4"
+        android:layout_gravity="top|right"
+        android:src="@drawable/pwd"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

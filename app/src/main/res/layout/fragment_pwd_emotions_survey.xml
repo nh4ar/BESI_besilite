@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Please select what you observed."
+                android:text="Please select all that apply."
                 android:id="@+id/textView10"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -30,21 +30,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="20dp" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next"
-                android:id="@+id/pwd_mood_next"
-                android:layout_marginLeft="300dp"
-                android:textSize="36dp"
-                android:textColor="#000000" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/imageView5"
-                android:src="@drawable/pwd"
-                android:layout_marginLeft="0dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -65,7 +50,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sad voice"
+                    android:text="Short-tempered"
                     android:id="@+id/checkSadVoice"
                     android:checked="false"
                     android:textSize="30dp"
@@ -83,7 +68,7 @@
                     android:checked="false"
                     android:layout_below="@+id/checkTearfulness"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:button="@drawable/customcheckbox"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
@@ -96,7 +81,7 @@
                     android:id="@+id/checkLackOfReact"
                     android:checked="false"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:button="@drawable/customcheckbox"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
@@ -105,13 +90,13 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Very worried"
+                    android:text="Anxiety/Worrying"
                     android:id="@+id/checkVeryWorried"
                     android:checked="false"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:button="@drawable/customcheckbox"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
@@ -124,7 +109,7 @@
                     android:id="@+id/checkFrightened"
                     android:checked="false"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:button="@drawable/customcheckbox"
                     android:layout_marginLeft="10dp"
                     android:paddingLeft="10dp" />
@@ -162,7 +147,7 @@
                     android:id="@+id/checkAppetiteLoss"
                     android:checked="false"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
                     android:button="@drawable/customcheckbox"
                     android:layout_marginLeft="10dp"
@@ -176,7 +161,7 @@
                     android:id="@+id/checkLessIntrest"
                     android:checked="false"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:button="@drawable/customcheckbox"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
@@ -185,12 +170,12 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sad expression"
+                    android:text="Sad expression/voice"
                     android:id="@+id/checkSadExpression"
                     android:checked="false"
                     android:textSize="30dp"
                     android:button="@drawable/customcheckbox"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
                     android:paddingLeft="10dp" />
@@ -198,13 +183,13 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lack of interest -- TO REMOVE"
+                    android:text="Physical complaints"
                     android:id="@+id/checkLackOfInterest"
                     android:checked="false"
                     android:layout_column="28"
                     android:textSize="30dp"
                     android:button="@drawable/customcheckbox"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
                     android:paddingLeft="10dp" />
@@ -212,14 +197,15 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Trouble concentrating TO REMOVE"
+                    android:text="Anticipation of the worst"
                     android:id="@+id/checkTroubleConcen"
                     android:checked="false"
                     android:textSize="30dp"
                     android:button="@drawable/customcheckbox"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:paddingLeft="10dp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -247,11 +233,11 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bothered by usual activities"
+                    android:text="Lack of energy"
                     android:id="@+id/checkBotheredByUsual"
                     android:checked="false"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
                     android:button="@drawable/customcheckbox"
                     android:layout_marginLeft="10dp"
@@ -262,12 +248,12 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Slow movement"
+                    android:text="Low self-esteem"
                     android:button="@drawable/customcheckbox"
                     android:id="@+id/checkSlowMove"
                     android:checked="false"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
                     android:paddingLeft="10dp" />
@@ -284,7 +270,7 @@
                     android:button="@drawable/customcheckbox"
                     android:layout_column="0"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
                     android:paddingLeft="10dp" />
@@ -292,18 +278,59 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Slow reaction"
+                    android:text="Slow reaction/movement"
                     android:id="@+id/checkSlowReact"
                     android:button="@drawable/customcheckbox"
                     android:checked="false"
                     android:textSize="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:paddingLeft="10dp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Suicidal"
+                    android:id="@+id/checkBox"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:checked="false"
+                    android:button="@drawable/customcheckbox"
+                    android:layout_column="0"
+                    android:textSize="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
                     android:paddingLeft="10dp" />
 
             </LinearLayout>
         </LinearLayout>
 
+        <Button
+            android:layout_width="400dp"
+            android:layout_height="100dp"
+            android:text="Next"
+            android:id="@+id/pwd_mood_next"
+            android:textSize="36dp"
+            android:textAllCaps="false"
+            android:background="@drawable/loginbtnanimate"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/linearLayout10"
+            android:layout_alignEnd="@+id/linearLayout10"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView5"
+        android:src="@drawable/pwd"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

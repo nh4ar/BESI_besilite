@@ -275,7 +275,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Agitation";
+                    return "Agitation Time";
                 //case 1:
                   //  return "EMOTION";
                 case 1:

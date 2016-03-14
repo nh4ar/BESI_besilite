@@ -29,28 +29,9 @@
                 android:textSize="36dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="40dp" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Submit"
-                android:id="@+id/submitOnObs"
-                android:background="@drawable/loginbtnanimate"
-                android:textSize="36dp"
-                android:textStyle="bold"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginLeft="280dp"
-                android:layout_gravity="center_vertical" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/imageView3"
-                android:layout_gravity="right"
-                android:src="@drawable/pwd" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,11 +60,11 @@
                         android:text="Kicking"
                         android:id="@+id/checkKicking"
                         android:checked="false"
-                        android:textSize="36dp"
+                        android:textSize="25dp"
                         android:layout_column="0"
                         android:button="@drawable/customcheckbox"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -97,7 +78,7 @@
                         android:layout_marginLeft="10dp"
                         android:button="@drawable/customcheckbox"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -111,7 +92,7 @@
                         android:button="@drawable/customcheckbox"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -125,7 +106,7 @@
                         android:textSize="25dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -162,7 +143,7 @@
                         android:button="@drawable/customcheckbox"
                         android:textSize="25dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -176,7 +157,7 @@
                         android:textSize="25dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -190,7 +171,7 @@
                         android:textSize="25dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -204,7 +185,7 @@
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
                         android:button="@drawable/customcheckbox"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -241,7 +222,7 @@
                         android:textSize="25dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -256,7 +237,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -271,7 +252,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -289,7 +270,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
                     <CheckBox
@@ -311,6 +292,31 @@
 
         </LinearLayout>
 
+        <Button
+            android:layout_width="400dp"
+            android:layout_height="100dp"
+            android:text="Submit"
+            android:id="@+id/submitOnObs"
+            android:background="@drawable/loginbtnanimate"
+            android:textSize="36dp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp" />
+
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView3"
+        android:layout_gravity="right"
+        android:src="@drawable/pwd"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>
