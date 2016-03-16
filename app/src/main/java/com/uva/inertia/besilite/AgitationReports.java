@@ -1,6 +1,7 @@
 package com.uva.inertia.besilite;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
@@ -76,6 +77,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.BLACK);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
@@ -99,6 +101,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setTabTextColors(Color.BLACK,Color.BLACK);
 
         pwdObs = new HashMap<>();
         pwdEmo = new HashMap<>();

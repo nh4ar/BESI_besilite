@@ -1,6 +1,7 @@
 package com.uva.inertia.besilite;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -77,6 +78,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         setContentView(R.layout.activity_daily_survey);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.BLACK);
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -106,6 +108,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setTabTextColors(Color.BLACK,Color.BLACK);
+
 
 
     }
@@ -269,11 +273,11 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Caregiver Report";
+                    return "Caregiver";
                 case 1:
-                    return "PWD Mood";
+                    return "Mood";
                 case 2:
-                    return "PWD Sleep Quality";
+                    return "Sleep";
                 //case 3:
                   //  return "Submit";
             }
