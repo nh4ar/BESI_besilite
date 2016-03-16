@@ -19,7 +19,8 @@
     </style>
 
     <style name="AppTheme.Theme.Styled.ActionBar">
-        <item name="android:titleTextStyle">@style/AppTheme.Theme.Styled.ActionBar.TitleTextStyle</item>
+        <item name="android:titleTextStyle">@style/AppTheme.Theme.Styled.ActionBar.TitleTextStyle
+        </item>
     </style>
 
     <style name="AppTheme.Theme.Styled.ActionBar.TitleTextStyle" parent="@android:style/Widget.TextView">
