@@ -88,10 +88,10 @@ public class ScheduleActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddNewActivity.class);
+                Intent intent = new Intent(v.getContext(), AddActivityBundle.class);
                 startActivityForResult(intent, 90);
-            }
-        });
+    }
+});
 
     }
 

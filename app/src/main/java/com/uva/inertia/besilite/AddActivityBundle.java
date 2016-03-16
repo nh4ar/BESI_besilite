@@ -2,6 +2,7 @@ package com.uva.inertia.besilite;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,16 +12,20 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class AddActivityBundle extends AppCompatActivity {
+public class AddActivityBundle extends AppCompatActivity{
 
     Button addNew;
     Button submit;
+    String newActivityType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,8 @@ public class AddActivityBundle extends AppCompatActivity {
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNewActivityDialogFrag newAct = new AddNewActivityDialogFrag();
-                newAct.show(getFragmentManager(), "NewAct");
+                AddNewActivityDialogFrag newAct = AddNewActivityDialogFrag.newInstance("newAct");
+                newAct.show(getFragmentManager(), "fragment_add_activity");
             }
         });
 
@@ -50,5 +55,12 @@ public class AddActivityBundle extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-
+    public void onFinishNewActDialog(String text){
+        if (text.length() < 1){
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Cannot submit empty field", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        Log.v("ACTIVITY", text);
+    }
 }
