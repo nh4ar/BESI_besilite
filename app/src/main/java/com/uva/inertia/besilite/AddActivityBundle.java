@@ -52,10 +52,11 @@ public class AddActivityBundle extends AppCompatActivity{
     SharedPreferences sharedPref;
 
     //Allows us to add more items
-    ArrayAdapter<String> adapter;
+    CustomAdapter adapter;
     ArrayList<String> tempList;
     //Holds all activity name strings
     CaseInsensitiveArrayList ActivityList;
+    ArrayList<CheckboxListViewItem> ConvertedList;
 
     Map<String,String> ActivityMap = new HashMap<>();
     Map<String,String> RevActivityMap = new HashMap<>();
@@ -101,8 +102,9 @@ public class AddActivityBundle extends AppCompatActivity{
         tempList = new ArrayList<>();
 
 //      Create our adapter to add items
-        ActivityList = new CaseInsensitiveArrayList();
-        adapter      = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ActivityList);
+        ActivityList  = new CaseInsensitiveArrayList();
+        ConvertedList = generateCheckboxes(ActivityList);
+        adapter       = new CustomAdapter(this, ConvertedList);
 
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         mListView.setSelector(R.color.pressed_color);
@@ -117,6 +119,14 @@ public class AddActivityBundle extends AppCompatActivity{
 
         mListView.setAdapter(adapter);
         getActivityList();
+    }
+
+    public ArrayList<CheckboxListViewItem> generateCheckboxes(CaseInsensitiveArrayList ar){
+        ArrayList<CheckboxListViewItem> ret = new ArrayList<>();
+        for (String s: ar){
+            ret.add(new CheckboxListViewItem(s, 0));
+        }
+        return ret;
     }
 
     public void onFinishNewActDialog(String temp){
@@ -181,7 +191,6 @@ public class AddActivityBundle extends AppCompatActivity{
                                         Toast.LENGTH_SHORT);
                                 toast.show();
                             }
-
                         }
                     }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
@@ -217,10 +226,10 @@ public class AddActivityBundle extends AppCompatActivity{
                     Collections.sort(tempList, String.CASE_INSENSITIVE_ORDER);
                     Log.v("MAPS", tempList.toString());
                     for (String s: tempList){
-                        adapter.add(s);
+                        //adapter.add(s);
                     }
                 } catch (JSONException e) {
-                    adapter.add("Server responded with incorrect JSON");
+                    Log.e("ERROR", "Server responded with incorrect JSON");
                 }
             }
 
@@ -228,7 +237,7 @@ public class AddActivityBundle extends AppCompatActivity{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                adapter.add("Unable to connect to server. Please check your internet connection");
+                Log.e("ERROR", "Unable to connect to server. Please check your internet connection");
             }
         });
 
