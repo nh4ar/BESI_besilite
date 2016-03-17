@@ -83,6 +83,8 @@ public class AddActivityBundle extends AppCompatActivity{
         addNew = (Button)findViewById(R.id.add_new_activity_button);
         submit = (Button)findViewById(R.id.submit_activity_bundle);
 
+        int newBundlePK;
+
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -234,14 +236,88 @@ public class AddActivityBundle extends AppCompatActivity{
             }
 
 
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("ERROR", "Unable to connect to server. Please check your internet connection");
-            }
-        });
+        }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
 
         this.netQueue.add(activityListRequestArray);
+    }
+
+    void submitBundle(ArrayList<Integer> pks){
+        createNewBundle(pks);
+    }
+
+    void submitBundleMemberList(ArrayList<Integer> pks, int newBundlePK){
+        deploy_id = sharedPref.getString("pref_key_deploy_id","");
+        base_url = sharedPref.getString("pref_key_base_url", "");
+        api_token = sharedPref.getString("pref_key_api_token","");
+        endpoint="/api/v1/survey/fields/smart/a/";
+
+        JSONArray bundleMemberList = new JSONArray();
+        for (int pk: pks){
+            JSONObject newBundleMember = new JSONObject();
+            try {
+                newBundleMember.put("bundle", newBundlePK);
+                newBundleMember.put("activity",pk);
+                bundleMemberList.put(newBundleMember);
+            } catch (JSONException e){
+                //meh
+            }
+        }
+        JsonArrayRequestWithTokenViaString submitBundleList =
+                new JsonArrayRequestWithTokenViaString(
+                        Request.Method.POST,
+                        base_url+endpoint,
+                        bundleMemberList.toString(), api_token, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    "New bundle members Added", Toast.LENGTH_SHORT);
+                            toast.show();
+                            //newActivVal.setText("");
+                            finish();
+
+                    }
+                }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
+
+        this.netQueue.add(submitBundleList);
+
+
+    }
+
+    void createNewBundle(ArrayList<Integer> pks){
+
+        final ArrayList<Integer> pks_final = pks;
+        //stuff ....
+
+            JSONObject postObject = new JSONObject();
+            try{
+                TimeZone tz = TimeZone.getTimeZone("UTC");
+                java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+                df.setTimeZone(tz);
+                String timestamp = df.format(new Date());
+                postObject.put("timestamp", timestamp);
+            } catch (JSONException e){
+                //
+            }
+            Log.v("TEST",postObject.toString());
+            JsonObjectRequestWithToken requestNewBundle = new JsonObjectRequestWithToken( Request.Method.POST, base_url+endpoint,postObject, api_token, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    try{
+                        int newBundlePK = response.getInt("id");
+                        Log.v("TEST","woo created new bundle!");
+                        submitBundleMemberList(pks_final, newBundlePK);
+                    } catch (org.json.JSONException e){
+                        Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for new bundle", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
+            }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
+
+            this.netQueue.add(requestNewBundle);
+
     }
 
 }
