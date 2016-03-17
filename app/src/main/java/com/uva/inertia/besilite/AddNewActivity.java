@@ -131,7 +131,6 @@ public class AddNewActivity extends AppCompatActivity {
                     Context context = getApplicationContext();
                     CharSequence text = "This field already exists";
                     int duration = Toast.LENGTH_SHORT;
-
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
@@ -139,7 +138,6 @@ public class AddNewActivity extends AppCompatActivity {
                     Context context = getApplicationContext();
                     CharSequence text = "There is nothing typed in";
                     int duration = Toast.LENGTH_SHORT;
-
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
