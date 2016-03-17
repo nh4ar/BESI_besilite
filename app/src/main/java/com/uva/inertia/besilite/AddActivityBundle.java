@@ -105,7 +105,7 @@ public class AddActivityBundle extends AppCompatActivity{
         ActivityList  = new CaseInsensitiveArrayList();
         ConvertedList = generateCheckboxes(ActivityList);
         adapter       = new CustomAdapter(this, ConvertedList);
-
+        Log.v("WORK", adapter.toString());
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         mListView.setSelector(R.color.pressed_color);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -226,7 +226,7 @@ public class AddActivityBundle extends AppCompatActivity{
                     Collections.sort(tempList, String.CASE_INSENSITIVE_ORDER);
                     Log.v("MAPS", tempList.toString());
                     for (String s: tempList){
-                        //adapter.add(s);
+                        adapter.add(new CheckboxListViewItem(s, 0));
                     }
                 } catch (JSONException e) {
                     Log.e("ERROR", "Server responded with incorrect JSON");
