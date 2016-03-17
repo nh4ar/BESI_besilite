@@ -30,10 +30,23 @@ public class CustomAdapter extends ArrayAdapter<CheckboxListViewItem>
         TextView name = (TextView) convertView.findViewById(R.id.textView1);
         CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox1);
         name.setText(modelItems.get(position).getName());
+
+        final int pos = position;
+        cb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (modelItems.get(pos).getValue() == 1)
+                    modelItems.get(pos).setValue(0);
+                else
+                    modelItems.get(pos).setValue(1);
+            }
+        });
+
         if(modelItems.get(position).getValue() == 1)
-        cb.setChecked(true);
+            cb.setChecked(true);
         else
-        cb.setChecked(false);
+            cb.setChecked(false);
+
         return convertView;
         }
 }
