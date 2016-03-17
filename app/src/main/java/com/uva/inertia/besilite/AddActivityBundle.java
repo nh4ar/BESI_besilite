@@ -57,6 +57,7 @@ public class AddActivityBundle extends AppCompatActivity{
     //Holds all activity name strings
     CaseInsensitiveArrayList ActivityList;
     ArrayList<CheckboxListViewItem> ConvertedList;
+    ArrayList<CheckboxListViewItem> ConvertedListCopy;
 
     Map<String,String> ActivityMap = new HashMap<>();
     Map<String,String> RevActivityMap = new HashMap<>();
@@ -96,7 +97,7 @@ public class AddActivityBundle extends AppCompatActivity{
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.v("TEST", getCheckedActivityList().toString());
             }
         });
 
@@ -107,7 +108,7 @@ public class AddActivityBundle extends AppCompatActivity{
         ActivityList  = new CaseInsensitiveArrayList();
         ConvertedList = generateCheckboxes(ActivityList);
         adapter       = new CustomAdapter(this, ConvertedList);
-
+        Log.v("WORK", adapter.toString());
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         mListView.setSelector(R.color.pressed_color);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -126,7 +127,7 @@ public class AddActivityBundle extends AppCompatActivity{
     public ArrayList<CheckboxListViewItem> generateCheckboxes(CaseInsensitiveArrayList ar){
         ArrayList<CheckboxListViewItem> ret = new ArrayList<>();
         for (String s: ar){
-            ret.add(new CheckboxListViewItem(s, 0));
+            ret.add(new CheckboxListViewItem(s, 0, -1));
         }
         return ret;
     }
@@ -211,6 +212,7 @@ public class AddActivityBundle extends AppCompatActivity{
 
         adapter.clear();
         tempList.clear();
+        ConvertedList.clear();
 
         JsonArrayRequestWithToken activityListRequestArray = new JsonArrayRequestWithToken(base_url+activityEndpoint, api_token, new Response.Listener<JSONArray>() {
 
@@ -228,7 +230,9 @@ public class AddActivityBundle extends AppCompatActivity{
                     Collections.sort(tempList, String.CASE_INSENSITIVE_ORDER);
                     Log.v("MAPS", tempList.toString());
                     for (String s: tempList){
-                        //adapter.add(s);
+                        CheckboxListViewItem c = new CheckboxListViewItem(s, 0,
+                                Integer.parseInt(RevActivityMap.get(s)));
+                        adapter.add(c);
                     }
                 } catch (JSONException e) {
                     Log.e("ERROR", "Server responded with incorrect JSON");
@@ -318,6 +322,19 @@ public class AddActivityBundle extends AppCompatActivity{
 
             this.netQueue.add(requestNewBundle);
 
+    }
+
+    public ArrayList<Integer> getCheckedActivityList(){
+        ArrayList<Integer> ret = new ArrayList<>();
+
+        for (int i = 0; i < adapter.getCount(); i++){
+            CheckboxListViewItem c = adapter.getItem(i);
+            if (c.getValue() == 1){
+                ret.add(c.getPK());
+            }
+        }
+
+        return ret;
     }
 
 }
