@@ -84,8 +84,6 @@ public class AddActivityBundle extends AppCompatActivity{
         addNew = (Button)findViewById(R.id.add_new_activity_button);
         submit = (Button)findViewById(R.id.submit_activity_bundle);
 
-        int newBundlePK;
-
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +95,7 @@ public class AddActivityBundle extends AppCompatActivity{
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("TEST", getCheckedActivityList().toString());
+                submitBundle(getCheckedActivityList());
             }
         });
 
@@ -253,7 +251,7 @@ public class AddActivityBundle extends AppCompatActivity{
         deploy_id = sharedPref.getString("pref_key_deploy_id","");
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
-        endpoint="/api/v1/survey/fields/smart/a/";
+        endpoint="/api/v1/survey/activ/memb/smart/create/";
 
         JSONArray bundleMemberList = new JSONArray();
         for (int pk: pks){
@@ -291,6 +289,11 @@ public class AddActivityBundle extends AppCompatActivity{
 
     void createNewBundle(ArrayList<Integer> pks){
 
+        deploy_id = sharedPref.getString("pref_key_deploy_id","");
+        base_url = sharedPref.getString("pref_key_base_url", "");
+        api_token = sharedPref.getString("pref_key_api_token","");
+        endpoint="/api/v1/survey/activ/smart/";
+
         final ArrayList<Integer> pks_final = pks;
         //stuff ....
 
@@ -302,15 +305,15 @@ public class AddActivityBundle extends AppCompatActivity{
                 String timestamp = df.format(new Date());
                 postObject.put("timestamp", timestamp);
             } catch (JSONException e){
-                //
+                Log.e("ERROR", e.getMessage());
             }
-            Log.v("TEST",postObject.toString());
+        Log.v("TEST",postObject.toString());
             JsonObjectRequestWithToken requestNewBundle = new JsonObjectRequestWithToken( Request.Method.POST, base_url+endpoint,postObject, api_token, new Response.Listener<JSONObject>() {
 
                 @Override
                 public void onResponse(JSONObject response) {
                     try{
-                        int newBundlePK = response.getInt("id");
+                        int newBundlePK = response.getInt("pk");
                         Log.v("TEST","woo created new bundle!");
                         submitBundleMemberList(pks_final, newBundlePK);
                     } catch (org.json.JSONException e){
@@ -336,5 +339,4 @@ public class AddActivityBundle extends AppCompatActivity{
 
         return ret;
     }
-
 }
