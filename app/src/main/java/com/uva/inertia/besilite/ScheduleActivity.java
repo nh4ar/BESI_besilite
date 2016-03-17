@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -54,6 +56,7 @@ public class ScheduleActivity extends AppCompatActivity {
     String api_token;
     String deploy_id;
     RequestQueue netQueue;
+    TextView bundleInfo;
 
 
     @Override
@@ -77,6 +80,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
         final ListView mListView = (ListView) findViewById(R.id.scheduleEvents);
 
+        bundleInfo = (TextView) findViewById(R.id.lastBundleInfo);
 //      Create our adapter to add items
         adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ScheduleList);
 
@@ -90,8 +94,8 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), AddActivityBundle.class);
                 startActivityForResult(intent, 90);
-    }
-});
+            }
+        });
 
     }
 
@@ -109,6 +113,7 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     void updateEventList(){
+        bundleInfo.setText("Loading...");
         deploy_id = sharedPref.getString("pref_key_deploy_id","");
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
@@ -123,21 +128,22 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 adapter.clear();
-                pkList.clear();
-                TimeMap.clear();
-                ActivityIndexer.clear();
                 try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject o = (JSONObject) response.get(i);
-                        Log.v("Maps", o.toString());
-                        TimeMap.put(o.getString("pk"), o.getString("acttimestamp"));
-                        ActivityIndexer.put(o.getString("pk"), o.getString("activity"));
-                        pkList.add(o.getInt("pk"));
+                    if (response.length() > 0) {
+                        JSONObject bundle = (JSONObject) response.get(0);
+
+                        bundleInfo.setText("Your last activity log:");
+
+                        JSONArray actlist = bundle.getJSONArray("activities");
+
+                        for (int i = 0; i < actlist.length(); i++) {
+
+                            adapter.add(actlist.getString(i));
+
+                        }
+                    } else {
+                        bundleInfo.setText("No activity logs found");
                     }
-                    Log.v("Maps", TimeMap.toString());
-                    Log.v("Maps", ActivityIndexer.toString());
-                    JsonArrayRequestWithToken activityListRequestArray = callActivityAdapterPull();
-                    netQueue.add(activityListRequestArray);
                 }
                 catch (JSONException e){
                     Log.v("ERROR", e.getMessage());
@@ -152,58 +158,6 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         });
         this.netQueue.add(activitySurveyRequestArray);
-    }
-
-    JsonArrayRequestWithToken callActivityAdapterPull(){
-        return new JsonArrayRequestWithToken(base_url+activityEndpoint, api_token, new Response.Listener<JSONArray>() {
-
-            @Override
-            public void onResponse(JSONArray resp) {
-                Log.v("Test", resp.toString());
-                try {
-                    Log.v("RESP", "" + resp.length());
-                    for (int i = 0; i < resp.length(); i++) {
-                        JSONObject o = (JSONObject) resp.get(i);
-                        Log.v("Activity", o.toString());
-                        ActivityMap.put(o.getString("pk"),o.getString("value"));
-                        Log.v("Activity", ActivityMap.toString());
-                    }
-                    Log.v("Maps", ActivityMap.toString());
-                    postProcess();
-                } catch (JSONException e) {
-                    ActivityList.add("Server responded with incorrect JSON");
-                }
-            }
-
-        }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
-    }
-
-    public void postProcess() {
-        try
-        {//2016-02-23T07:16:00Z
-
-            java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-            String dateString;
-            java.text.DateFormat dprint = java.text.DateFormat.getDateTimeInstance(
-                    DateFormat.SHORT,DateFormat.SHORT);
-            dprint.setTimeZone(TimeZone.getDefault());
-            Date d;
-
-            for(int i: pkList) {
-                try {
-                    dateString = TimeMap.get(""+i).replace("Z", "GMT+00:00");
-                    d = df.parse(dateString);
-                    adapter.add(dprint.format(d) + " |  Activity: " +
-                            ActivityMap.get(ActivityIndexer.get(""+i)));
-                } catch(java.text.ParseException e){
-                    Log.e("PARSING ERROR", e.getMessage());
-                }
-            }
-        }
-        catch(Exception e)
-        {
-            adapter.add(e.getMessage());
-        }
     }
 
 }
