@@ -393,7 +393,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             Hopeful.setOnClickListener(updateMapOnClick(cEmo,"Hopeful"));
 
             Motivated  = (CheckBox) rootView.findViewById(R.id.checkMotivated );
-            Motivated .setOnClickListener(updateMapOnClick(cEmo,"Motivated "));
+            Motivated.setOnClickListener(updateMapOnClick(cEmo,"Motivated"));
 
             Confident = (CheckBox) rootView.findViewById(R.id.checkConfident);
             Confident.setOnClickListener(updateMapOnClick(cEmo,"Confident"));
