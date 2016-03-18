@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -76,6 +77,9 @@ public class AddActivityBundle extends AppCompatActivity{
         setContentView(R.layout.activity_add_activity_bundle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add New Activity");
+        toolbar.setTitleTextColor(Color.BLACK);
+        toolbar.setTitleTextAppearance(getApplicationContext(), R.style.AppTheme_Theme_Styled_ActionBar_TitleTextStyle);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -95,7 +99,14 @@ public class AddActivityBundle extends AppCompatActivity{
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitBundle(getCheckedActivityList());
+                ArrayList<Integer> arr = getCheckedActivityList();
+                if (arr.size() > 0)
+                    submitBundle(arr);
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "No activities selected", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 
