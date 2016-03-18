@@ -82,9 +82,6 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
@@ -102,6 +99,11 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         caregiverEmotions = new HashMap<>();
 
 
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (noSwipeViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -109,9 +111,6 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabTextColors(Color.BLACK,Color.BLACK);
-
-
-
     }
 
 
@@ -126,9 +125,13 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     }
 
     private void createSubsurveys_PWDEmotions(){
+        Log.v("DAILYSURVEY", pwdEmotions.toString());
         JSONObject subsurveyObject = new JSONObject(pwdEmotions);
         Log.v("TEST",subsurveyObject.toString());
-        JsonObjectRequestWithToken requestNewPWDEmotionSub = new JsonObjectRequestWithToken( Request.Method.POST, base_url+PWDEmotionSubsurvey_endpoint,subsurveyObject, api_token, new Response.Listener<JSONObject>() {
+        Log.v("DAILYSURVEY", pwdEmotions.toString());
+        JsonObjectRequestWithToken requestNewPWDEmotionSub = new JsonObjectRequestWithToken(
+                Request.Method.POST, base_url+PWDEmotionSubsurvey_endpoint,subsurveyObject,
+                api_token, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -207,6 +210,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             surveyObject.put("caregiverEmotions",careEmotionSurveyPK);
             surveyObject.put("PWDEmotions",pwdEmotionSurveyPK);
             surveyObject.put("PWDSleepEvents",pwdSleepSurveyPK);
+
+            Log.v("DAILYSURVEY", pwdEmotions.toString());
 
             JsonObjectRequestWithToken requestNewCompleteSurvey = new JsonObjectRequestWithToken( Request.Method.POST, base_url+complete_endpoint,surveyObject, api_token, new Response.Listener<JSONObject>() {
 
@@ -292,7 +297,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             public void onClick(View v) {
                 CheckBox c = (CheckBox)v;
                 hm.put(key,c.isChecked());
-                Log.v("DAILYSURVEY","Click handler called from: " + c.toString());
+                Log.v("DAILYSURVEY","Click handler called from: " + hm.toString());
             }
         };
     }
@@ -404,32 +409,35 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 }
             });
 
+
             return rootView;
         }
     }
 
     public static class PWDEmotionsFragment extends Fragment {
 
-        CheckBox SadVoice;
-        CheckBox Tearful;
-        CheckBox LackReact;
-        CheckBox VeryWorried;
+        CheckBox ShortTemper;
+        CheckBox Tearfulness;
+        CheckBox LackReactionToPleasantEvents;
+        CheckBox Worrying;
         CheckBox Frightened;
         CheckBox TalkLess;
         CheckBox AppetiteLoss;
-        CheckBox LessInterestInHobbies;
+        CheckBox LossInterestInUsualActivities;
         CheckBox SadExpression;
-        CheckBox LackOfInterest;
-        CheckBox TroubleConcentrating;
-        CheckBox BotheredByUsualActivities;
-        CheckBox SlowMove;
+        CheckBox TroublePayingAttention;
         CheckBox SlowSpeech;
         CheckBox SlowReaction;
+        CheckBox Physical;
+        CheckBox AnticipationOfWorst;
+        CheckBox LackEnergy;
+        CheckBox LowSelfEsteem;
+        CheckBox Suicidal;
         Button getChecks;
         Button nextButton;
 
         HashMap<String, Boolean> hp = new HashMap<>();
-        DailySurvey dailySurvey;
+        DailySurvey dailysurvey;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -445,28 +453,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         public PWDEmotionsFragment() {
         }
 
-        public void updateHashMap(){
-            hp.put("SadVoice",SadVoice.isChecked());
-            hp.put("Tearfulness",Tearful.isChecked());
-            hp.put("LackReactionToPleasantEvents",LackReact.isChecked());
-            hp.put("VeryWorried",VeryWorried.isChecked());
-            hp.put("Frightened",Frightened.isChecked());
-            hp.put("TalkLess",TalkLess.isChecked());
-            hp.put("AppetiteLoss",AppetiteLoss.isChecked());
-            hp.put("LessInterestInHobbies",LessInterestInHobbies.isChecked());
-            hp.put("SadExpression",SadExpression.isChecked());
-            hp.put("LackOfInterest",LackOfInterest.isChecked());
-            hp.put("TroubleConcentrating",TroubleConcentrating.isChecked());
-            hp.put("BotheredByUsualActivities",BotheredByUsualActivities.isChecked());
-            hp.put("SlowMovement",SlowMove.isChecked());
-            hp.put("SlowSpeech",SlowSpeech.isChecked());
-            hp.put("SlowReaction", SlowReaction.isChecked());
-            dailySurvey.pwdEmotions = hp;
-        }
-
         @Override
         public void onPause(){
-            updateHashMap();
             Log.v("PAUSE","paused");
             super.onPause();
 
@@ -479,60 +467,49 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pwd_emotions_survey, container, false);
 
-            dailySurvey = (DailySurvey) getActivity();
+            dailysurvey = (DailySurvey) getActivity();
 
-            SadVoice = (CheckBox)rootView.findViewById(R.id.checkSadVoice);
-            SadVoice.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"SadVoice"));
-
-            Tearful = (CheckBox)rootView.findViewById(R.id.checkTearfulness);
-            Tearful.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"Tearfulness"));
-
-            LackReact = (CheckBox)rootView.findViewById(R.id.checkLackOfReact);
-            LackReact.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"LackReactionToPleasantEvents"));
-
-            VeryWorried = (CheckBox)rootView.findViewById(R.id.checkVeryWorried);
-            VeryWorried.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"VeryWorried"));
-
-            Frightened = (CheckBox)rootView.findViewById(R.id.checkFrightened);
-            Frightened.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"Frightened"));
-
-            TalkLess = (CheckBox)rootView.findViewById(R.id.checkLessTalk);
-            TalkLess.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"TalkLess"));
-
-            AppetiteLoss = (CheckBox)rootView.findViewById(R.id.checkAppetiteLoss);
-            AppetiteLoss.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"AppetiteLoss"));
-
-            LessInterestInHobbies = (CheckBox)rootView.findViewById(R.id.checkLessIntrest);
-            LessInterestInHobbies.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"LessInterestInHobbies"));
-
-            SadExpression = (CheckBox)rootView.findViewById(R.id.checkSadExpression);
-            SadExpression.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"SadExpression"));
-
-            LackOfInterest = (CheckBox)rootView.findViewById(R.id.checkLackOfInterest);
-            LackOfInterest.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "LackOfInterest"));
-
-            TroubleConcentrating = (CheckBox)rootView.findViewById(R.id.checkTroubleConcen);
-            TroubleConcentrating.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "TroubleConcentrating"));
-
-            BotheredByUsualActivities = (CheckBox)rootView.findViewById(R.id.checkBotheredByUsual);
-            BotheredByUsualActivities.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "BotheredByUsualActivities"));
-
-            SlowMove = (CheckBox)rootView.findViewById(R.id.checkSlowMove);
-            SlowMove.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "SlowMovement"));
-
-            SlowSpeech =(CheckBox)rootView.findViewById(R.id.checkSlowSpeech);
-            SlowSpeech.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "SlowSpeech"));
-
-            SlowReaction =  (CheckBox)rootView.findViewById(R.id.checkSlowReact);
-            SlowReaction.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "SlowReaction"));
-
-            updateHashMap();
+            ShortTemper = (CheckBox)rootView.findViewById(R.id.checkShortTemper );
+            ShortTemper.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "ShortTemper"));
+            Tearfulness = (CheckBox)rootView.findViewById(R.id.checkTearfulness );
+            Tearfulness.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "Tearfulness"));
+            LackReactionToPleasantEvents = (CheckBox)rootView.findViewById(R.id.checkLackOfReact );
+            LackReactionToPleasantEvents.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "LackReactionToPleasantEvents"));
+            Worrying = (CheckBox)rootView.findViewById(R.id.checkWorrying );
+            Worrying.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "Worrying"));
+            Frightened = (CheckBox)rootView.findViewById(R.id.checkFrightened );
+            Frightened.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "Frightened"));
+            TalkLess = (CheckBox)rootView.findViewById(R.id.checkTalkLess );
+            TalkLess.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "TalkLess"));
+            AppetiteLoss = (CheckBox)rootView.findViewById(R.id.checkAppetiteLoss );
+            AppetiteLoss.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "AppetiteLoss"));
+            LossInterestInUsualActivities = (CheckBox)rootView.findViewById(R.id.checkLossInterestInUsualActivities );
+            LossInterestInUsualActivities.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "LossInterestInUsualActivities"));
+            SadExpression = (CheckBox)rootView.findViewById(R.id.checkSadExpression );
+            SadExpression.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "SadExpression"));
+            TroublePayingAttention = (CheckBox)rootView.findViewById(R.id.checkTroublePayingAttention );
+            TroublePayingAttention.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "TroublePayingAttention"));
+            SlowSpeech = (CheckBox)rootView.findViewById(R.id.checkSlowSpeech );
+            SlowSpeech.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "SlowSpeech"));
+            SlowReaction = (CheckBox)rootView.findViewById(R.id.checkSlowReaction );
+            SlowReaction.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "SlowReaction"));
+            Physical = (CheckBox)rootView.findViewById(R.id.checkPhysical );
+            Physical.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "Physical"));
+            AnticipationOfWorst = (CheckBox)rootView.findViewById(R.id.checkAnticipationOfWorst );
+            AnticipationOfWorst.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "AnticipationOfWorst"));
+            LackEnergy = (CheckBox)rootView.findViewById(R.id.checkLackEnergy );
+            LackEnergy.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "LackEnergy"));
+            LowSelfEsteem = (CheckBox)rootView.findViewById(R.id.checkLowSelfEsteem );
+            LowSelfEsteem.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "LowSelfEsteem"));
+            Suicidal = (CheckBox)rootView.findViewById(R.id.checkSuicidal );
+            Suicidal.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "Suicidal"));
 
             nextButton = (Button) rootView.findViewById(R.id.pwd_mood_next);
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ((DailySurvey) getActivity()).selectPage(2);
+                    Log.v("DAILYSURVEY",((DailySurvey)getActivity()).pwdEmotions.toString());
                 }
             });
 
@@ -574,6 +551,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pwd_sleep_survey, container, false);
             ds = (DailySurvey) getActivity();
+
+            Log.v("DAILYSURVEY", ds.pwdEmotions.toString());
 
             HashMap<String, Boolean> slpQ = ds.pwdSleepQal;
 
