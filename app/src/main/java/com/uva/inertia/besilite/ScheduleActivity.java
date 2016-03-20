@@ -130,17 +130,17 @@ public class ScheduleActivity extends AppCompatActivity {
                 adapter.clear();
                 try {
                     if (response.length() > 0) {
-                        JSONObject bundle = (JSONObject) response.get(0);
-
+                        JSONObject bundle = (JSONObject) response.get(response.length()-1);
+                        Log.v("TEST", bundle.toString());
                         bundleInfo.setText("Your last activity log:");
 
                         JSONArray actlist = bundle.getJSONArray("activities");
-
+                        Log.v("TEST", actlist.toString());
                         for (int i = 0; i < actlist.length(); i++) {
-
                             adapter.add(actlist.getString(i));
-
+                            Log.v("TEST", actlist.getString(i));
                         }
+
                     } else {
                         bundleInfo.setText("No activity logs found");
                     }

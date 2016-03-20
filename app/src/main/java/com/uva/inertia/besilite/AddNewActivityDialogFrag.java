@@ -41,7 +41,7 @@ public class AddNewActivityDialogFrag extends DialogFragment{
         alertDialogBuilder.setTitle(title);
         final EditText input = new EditText(getActivity());
         alertDialogBuilder.setView(input);
-        alertDialogBuilder.setPositiveButton("Add new activity type", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 passItAlong(input.getText().toString());

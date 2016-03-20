@@ -82,9 +82,6 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
@@ -102,6 +99,11 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         caregiverEmotions = new HashMap<>();
 
 
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (noSwipeViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -109,9 +111,6 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabTextColors(Color.BLACK,Color.BLACK);
-
-
-
     }
 
 
@@ -126,9 +125,13 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     }
 
     private void createSubsurveys_PWDEmotions(){
+        Log.v("DAILYSURVEY", pwdEmotions.toString());
         JSONObject subsurveyObject = new JSONObject(pwdEmotions);
         Log.v("TEST",subsurveyObject.toString());
-        JsonObjectRequestWithToken requestNewPWDEmotionSub = new JsonObjectRequestWithToken( Request.Method.POST, base_url+PWDEmotionSubsurvey_endpoint,subsurveyObject, api_token, new Response.Listener<JSONObject>() {
+        Log.v("DAILYSURVEY", pwdEmotions.toString());
+        JsonObjectRequestWithToken requestNewPWDEmotionSub = new JsonObjectRequestWithToken(
+                Request.Method.POST, base_url+PWDEmotionSubsurvey_endpoint,subsurveyObject,
+                api_token, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -208,6 +211,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             surveyObject.put("PWDEmotions",pwdEmotionSurveyPK);
             surveyObject.put("PWDSleepEvents",pwdSleepSurveyPK);
 
+            Log.v("DAILYSURVEY", pwdEmotions.toString());
+
             JsonObjectRequestWithToken requestNewCompleteSurvey = new JsonObjectRequestWithToken( Request.Method.POST, base_url+complete_endpoint,surveyObject, api_token, new Response.Listener<JSONObject>() {
 
                 @Override
@@ -275,9 +280,9 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 case 0:
                     return "Caregiver";
                 case 1:
-                    return "PWD Mood";
+                    return "Participant Mood";
                 case 2:
-                    return "PWD Sleep";
+                    return "Participant Sleep";
                 //case 3:
                   //  return "Submit";
             }
@@ -292,7 +297,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             public void onClick(View v) {
                 CheckBox c = (CheckBox)v;
                 hm.put(key,c.isChecked());
-                Log.v("DAILYSURVEY","Click handler called from: " + c.toString());
+                Log.v("DAILYSURVEY","Click handler called from: " + hm.toString());
             }
         };
     }
@@ -388,7 +393,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             Hopeful.setOnClickListener(updateMapOnClick(cEmo,"Hopeful"));
 
             Motivated  = (CheckBox) rootView.findViewById(R.id.checkMotivated );
-            Motivated .setOnClickListener(updateMapOnClick(cEmo,"Motivated "));
+            Motivated.setOnClickListener(updateMapOnClick(cEmo,"Motivated"));
 
             Confident = (CheckBox) rootView.findViewById(R.id.checkConfident);
             Confident.setOnClickListener(updateMapOnClick(cEmo,"Confident"));
@@ -404,6 +409,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 }
             });
 
+
             return rootView;
         }
     }
@@ -417,7 +423,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         CheckBox Frightened;
         CheckBox TalkLess;
         CheckBox AppetiteLoss;
-        CheckBox LessInterestInHobbies;
+        CheckBox LossInterestInUsualActivities;
         CheckBox SadExpression;
         CheckBox Suicidal;
         CheckBox TroubleConcentrating;
@@ -431,7 +437,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         Button nextButton;
 
         HashMap<String, Boolean> hp = new HashMap<>();
-        DailySurvey dailySurvey;
+        DailySurvey dailysurvey;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -470,7 +476,6 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
         @Override
         public void onPause(){
-            updateHashMap();
             Log.v("PAUSE","paused");
             super.onPause();
 
@@ -483,10 +488,10 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pwd_emotions_survey, container, false);
 
-            dailySurvey = (DailySurvey) getActivity();
+            dailysurvey = (DailySurvey) getActivity();
 
-            ShortTempered = (CheckBox)rootView.findViewById(R.id.checkShortTempered);
-            ShortTempered.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"ShortTempered"));
+            SadVoice = (CheckBox)rootView.findViewById(R.id.checkSadVoice);
+            SadVoice.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"SadVoice"));
 
             Tearful = (CheckBox)rootView.findViewById(R.id.checkTearfulness);
             Tearful.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"Tearfulness"));
@@ -543,6 +548,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 @Override
                 public void onClick(View v) {
                     ((DailySurvey) getActivity()).selectPage(2);
+                    Log.v("DAILYSURVEY",((DailySurvey)getActivity()).pwdEmotions.toString());
                 }
             });
 
@@ -584,6 +590,8 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pwd_sleep_survey, container, false);
             ds = (DailySurvey) getActivity();
+
+            Log.v("DAILYSURVEY", ds.pwdEmotions.toString());
 
             HashMap<String, Boolean> slpQ = ds.pwdSleepQal;
 

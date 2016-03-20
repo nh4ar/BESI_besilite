@@ -78,6 +78,7 @@
             android:name=".AddActivityBundle"
             android:label="@string/title_activity_add_activity_bundle"
             android:parentActivityName=".Home"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
