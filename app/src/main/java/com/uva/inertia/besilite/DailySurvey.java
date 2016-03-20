@@ -393,7 +393,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             Hopeful.setOnClickListener(updateMapOnClick(cEmo,"Hopeful"));
 
             Motivated  = (CheckBox) rootView.findViewById(R.id.checkMotivated );
-            Motivated.setOnClickListener(updateMapOnClick(cEmo,"Motivated"));
+            Motivated.setOnClickListener(updateMapOnClick(cEmo, "Motivated"));
 
             Confident = (CheckBox) rootView.findViewById(R.id.checkConfident);
             Confident.setOnClickListener(updateMapOnClick(cEmo,"Confident"));
@@ -423,7 +423,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         CheckBox Frightened;
         CheckBox TalkLess;
         CheckBox AppetiteLoss;
-        CheckBox LossInterestInUsualActivities;
+        CheckBox LessInterest;
         CheckBox SadExpression;
         CheckBox Suicidal;
         CheckBox TroubleConcentrating;
@@ -461,7 +461,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             hp.put("Frightened",Frightened.isChecked());
             hp.put("TalkLess",TalkLess.isChecked());
             hp.put("AppetiteLoss",AppetiteLoss.isChecked());
-            hp.put("LessInterestInHobbies",LessInterestInHobbies.isChecked());
+            hp.put("LessIntrest",LessInterest.isChecked());
             hp.put("SadExpression",SadExpression.isChecked());
             hp.put("Suicidal",Suicidal.isChecked());
             hp.put("TroubleConcentrating",TroubleConcentrating.isChecked());
@@ -471,7 +471,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             hp.put("PhysicalComplaints", PhysicalComplaints.isChecked());
             hp.put("LowEsteem",LowEsteem.isChecked());
             hp.put("WorstAnticipate",WorstAnticipate.isChecked());
-            dailySurvey.pwdEmotions = hp;
+            dailysurvey.pwdEmotions = hp;
         }
 
         @Override
@@ -490,56 +490,56 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
             dailysurvey = (DailySurvey) getActivity();
 
-            SadVoice = (CheckBox)rootView.findViewById(R.id.checkSadVoice);
-            SadVoice.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"SadVoice"));
+            ShortTempered = (CheckBox)rootView.findViewById(R.id.checkShortTempered);
+            ShortTempered.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"ShortTempered"));
 
             Tearful = (CheckBox)rootView.findViewById(R.id.checkTearfulness);
-            Tearful.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"Tearfulness"));
+            Tearful.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"Tearfulness"));
 
             LackReact = (CheckBox)rootView.findViewById(R.id.checkLackOfReact);
-            LackReact.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"LackReactionToPleasantEvents"));
+            LackReact.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"LackReactionToPleasantEvents"));
 
             VeryWorried = (CheckBox)rootView.findViewById(R.id.checkVeryWorried);
-            VeryWorried.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"VeryWorried"));
+            VeryWorried.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"VeryWorried"));
 
             Frightened = (CheckBox)rootView.findViewById(R.id.checkFrightened);
-            Frightened.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"Frightened"));
+            Frightened.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"Frightened"));
 
             TalkLess = (CheckBox)rootView.findViewById(R.id.checkLessTalk);
-            TalkLess.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"TalkLess"));
+            TalkLess.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"TalkLess"));
 
             AppetiteLoss = (CheckBox)rootView.findViewById(R.id.checkAppetiteLoss);
-            AppetiteLoss.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"AppetiteLoss"));
+            AppetiteLoss.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"AppetiteLoss"));
 
-            LessInterestInHobbies = (CheckBox)rootView.findViewById(R.id.checkLessIntrest);
-            LessInterestInHobbies.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"LessInterestInHobbies"));
+            LessInterest = (CheckBox)rootView.findViewById(R.id.checkLessInterest);
+            LessInterest.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"LessInterestInHobbies"));
 
             SadExpression = (CheckBox)rootView.findViewById(R.id.checkSadExpression);
-            SadExpression.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"SadExpression"));
+            SadExpression.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"SadExpression"));
 
             Suicidal = (CheckBox)rootView.findViewById(R.id.checkSuicidal);
-            Suicidal.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "Suicidal"));
+            Suicidal.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "Suicidal"));
 
             TroubleConcentrating = (CheckBox)rootView.findViewById(R.id.checkTroubleConcen);
-            TroubleConcentrating.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "TroubleConcentrating"));
+            TroubleConcentrating.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "TroubleConcentrating"));
 
             LackEnergy = (CheckBox)rootView.findViewById(R.id.checkLackEnergy);
-            LackEnergy.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "LackEnergy"));
+            LackEnergy.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "LackEnergy"));
 
             SlowMove = (CheckBox)rootView.findViewById(R.id.checkSlowMove);
-            SlowMove.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "SlowMovement"));
+            SlowMove.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "SlowMovement"));
 
             SlowSpeech =(CheckBox)rootView.findViewById(R.id.checkSlowSpeech);
-            SlowSpeech.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "SlowSpeech"));
+            SlowSpeech.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "SlowSpeech"));
 
             PhysicalComplaints =  (CheckBox)rootView.findViewById(R.id.checkPhysicalComplaints);
-            PhysicalComplaints.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "PhysicalComplaints"));
+            PhysicalComplaints.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "PhysicalComplaints"));
 
             LowEsteem =(CheckBox)rootView.findViewById(R.id.checkLowEsteem);
-            LowEsteem.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions, "LowEsteem"));
+            LowEsteem.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "LowEsteem"));
 
             WorstAnticipate = (CheckBox)rootView.findViewById(R.id.checkWorstAnticipate);
-            WorstAnticipate.setOnClickListener(updateMapOnClick(dailySurvey.pwdEmotions,"WorstAnticipate"));
+            WorstAnticipate.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"WorstAnticipate"));
 
             updateHashMap();
 
@@ -548,7 +548,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 @Override
                 public void onClick(View v) {
                     ((DailySurvey) getActivity()).selectPage(2);
-                    Log.v("DAILYSURVEY",((DailySurvey)getActivity()).pwdEmotions.toString());
+                    Log.v("DAILYSURVEY", ((DailySurvey) getActivity()).pwdEmotions.toString());
                 }
             });
 

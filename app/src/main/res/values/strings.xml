@@ -24,12 +24,12 @@
     <string name="title_activity_settings_activity">Settings</string>
     <string name="title_activity_schedule">Activity Log</string>
 
-    <string name="title_activity_add_new">Add New Activity</string>
+    <string name="title_activity_add_new">Activity Log</string>
     <string name="title_activity_daily_survey">Daily Report</string>
 
     <string name="pick_date">Select Date</string>
     <string name="pick_time">Select Time</string>
     <string name="title_activity_agitation_reports">Agitation Report</string>
-    <string name="title_activity_add_activity_bundle">AddActivityBundle</string>
+    <string name="title_activity_add_activity_bundle">Activity Log</string>
 
 </resources>
