@@ -215,7 +215,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                             public void onResponse(JSONObject response) {
                                 try {
                                     Toast toast = Toast.makeText(getApplicationContext(),
-                                            "Agitation Report Submitted!", Toast.LENGTH_SHORT);
+                                            "Agitation Report Submitted", Toast.LENGTH_SHORT);
                                     toast.show();
                                     Log.v("TEST", "full survey made");
                                     finish();

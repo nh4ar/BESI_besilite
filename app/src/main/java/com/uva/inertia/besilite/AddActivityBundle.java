@@ -271,7 +271,7 @@ public class AddActivityBundle extends AppCompatActivity{
                     public void onResponse(JSONArray response) {
 
                             Toast toast = Toast.makeText(getApplicationContext(),
-                                    "New bundle members Added", Toast.LENGTH_SHORT);
+                                    "Activity Log Submitted", Toast.LENGTH_SHORT);
                             toast.show();
                             //newActivVal.setText("");
                             finish();
