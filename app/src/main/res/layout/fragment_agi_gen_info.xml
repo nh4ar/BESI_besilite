@@ -231,7 +231,7 @@
                 android:textSize="36sp"
                 android:textIsSelectable="false"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="75dp"
                 android:textStyle="bold"
                 android:layout_below="@+id/textView" />
 

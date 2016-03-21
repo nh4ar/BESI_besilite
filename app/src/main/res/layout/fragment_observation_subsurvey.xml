@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Please select what you observed today."
+                android:text="Please select all that apply."
                 android:id="@+id/textView11"
                 android:textStyle="bold"
                 android:textSize="36dp"

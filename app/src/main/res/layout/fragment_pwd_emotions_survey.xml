@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Short-tempered"
-                    android:id="@+id/checkShortTemper"
+                    android:id="@+id/checkShortTempered"
                     android:checked="false"
                     android:textSize="30dp"
                     android:layout_marginLeft="10dp"
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Anxiety/Worrying"
-                    android:id="@+id/checkWorrying"
+                    android:id="@+id/checkVeryWorried"
                     android:checked="false"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
@@ -131,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Less talkative"
-                    android:id="@+id/checkTalkLess"
+                    android:id="@+id/checkLessTalk"
                     android:checked="false"
                     android:textSize="30dp"
                     android:layout_marginLeft="10dp"
@@ -158,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Loss of interest in usual activities"
-                    android:id="@+id/checkLossInterestInUsualActivities"
+                    android:id="@+id/checkLessInterest"
                     android:checked="false"
                     android:textSize="30dp"
                     android:layout_marginTop="10dp"
@@ -184,7 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Physical complaints"
-                    android:id="@+id/checkPhysical"
+                    android:id="@+id/checkPhysicalComplaints"
                     android:checked="false"
                     android:layout_column="28"
                     android:textSize="30dp"
@@ -198,7 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Anticipation of the worst"
-                    android:id="@+id/checkAnticipationOfWorst"
+                    android:id="@+id/checkWorstAnticipate"
                     android:checked="false"
                     android:textSize="30dp"
                     android:button="@drawable/customcheckbox"
@@ -221,7 +221,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trouble paying attention"
-                    android:id="@+id/checkTroublePayingAttention"
+                    android:id="@+id/checkTroubleConcen"
                     android:checked="false"
                     android:textSize="30dp"
                     android:layout_marginLeft="10dp"
@@ -250,7 +250,7 @@
                     android:layout_height="wrap_content"
                     android:text="Low self-esteem"
                     android:button="@drawable/customcheckbox"
-                    android:id="@+id/checkLowSelfEsteem"
+                    android:id="@+id/checkLowEsteem"
                     android:checked="false"
                     android:textSize="30dp"
                     android:layout_marginTop="10dp"
@@ -279,7 +279,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Slow reaction/movement"
-                    android:id="@+id/checkSlowReaction"
+                    android:id="@+id/checkSlowMove"
                     android:button="@drawable/customcheckbox"
                     android:checked="false"
                     android:textSize="30dp"
@@ -320,7 +320,8 @@
             android:layout_alignEnd="@+id/linearLayout10"
             android:layout_gravity="center_horizontal"
             android:textStyle="bold"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_marginBottom="60dp" />
 
     </LinearLayout>
 
@@ -328,9 +329,11 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/imageView5"
+        android:layout_gravity="top|right"
         android:src="@drawable/pwd"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp" />
 
 </RelativeLayout>

@@ -10,35 +10,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.uva.inertia.besilite.AddActivityBundle"
-    tools:showIn="@layout/activity_add_activity_bundle">
+    tools:showIn="@layout/activity_add_activity_bundle"
+    android:background="#E1BEE7">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
         android:text="Add new activity"
+        android:textAllCaps="false"
         android:id="@+id/add_new_activity_button"
-        android:layout_alignParentTop="true"
+        android:background="@drawable/buttonanimate"
+        android:layout_marginBottom="65dp"
+        android:layout_above="@+id/submit_activity_bundle"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
         android:text="Submit"
+        android:textAllCaps="false"
         android:id="@+id/submit_activity_bundle"
-        android:layout_below="@+id/add_new_activity_button"
-        android:layout_alignRight="@+id/add_new_activity_button"
-        android:layout_alignEnd="@+id/add_new_activity_button"
-        android:layout_marginRight="76dp"
-        android:layout_marginEnd="76dp" />
+        android:background="@drawable/loginbtnanimate"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/activity_type_listview"
+        android:layout_toEndOf="@+id/activity_type_listview"
+        android:layout_marginBottom="236dp" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/activity_type_listview"
-        android:layout_alignTop="@+id/add_new_activity_button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/add_new_activity_button"
-        android:layout_toStartOf="@+id/add_new_activity_button" />
+        android:layout_toStartOf="@+id/add_new_activity_button"
+        android:layout_marginRight="40dp" />
 </RelativeLayout>
