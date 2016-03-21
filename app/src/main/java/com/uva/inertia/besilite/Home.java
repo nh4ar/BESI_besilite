@@ -72,7 +72,7 @@ public class Home extends AppCompatActivity {
         goToActivities.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddActivityBundle.class);
+                Intent intent = new Intent(v.getContext(), Morning_Layout.class);
                 startActivity(intent);
             }
         });
