@@ -84,6 +84,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.uva.inertia.besilite.Home" />
         </activity>
+
+        <activity
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:name=".Morning_Layout"
+            android:label="@string/app_name" />
+        <intent-filter>
+            <action android:name="Morning_Layout.class" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
+        <activity
+            android:name=".CountrycodeActivity2"
+            android:theme="@style/Theme_Sphinx_Dialog_Alert"
+            android:noHistory="true"
+            android:label="Frequent Activities (Select an activity)">
+        </activity>
     </application>
 
 </manifest>

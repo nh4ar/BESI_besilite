@@ -32,4 +32,32 @@
     <string name="title_activity_agitation_reports">Agitation Report</string>
     <string name="title_activity_add_activity_bundle">AddActivityBundle</string>
 
+    <string-array name="country_names2">
+        <item>Reading</item>
+        <item>Walking</item>
+        <item>Bathing</item>
+        <item>Brushing Teeth</item>
+        <item>Listening To Music</item>
+        <item>Preparing Food</item>
+    </string-array>
+
+    <string-array name="country_codes2">
+        <item>Reading</item>
+        <item>Walking</item>
+        <item>Bathing</item>
+        <item>Brushing Teeth</item>
+        <item>Listening To Music</item>
+        <item>Preparing Food</item>
+    </string-array>
+
+    <string-array name="country_flags2">
+        <item>@drawable/reading2</item>
+        <item>@drawable/walking2</item>
+        <item>@drawable/bathing_pro</item>
+        <item>@drawable/brushingteeth2</item>
+        <item>@drawable/music</item>
+        <item>@drawable/food</item>
+    </string-array>
+
+
 </resources>
