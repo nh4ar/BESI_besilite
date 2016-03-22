@@ -50,14 +50,4 @@
         <item>Preparing Food</item>
     </string-array>
 
-    <string-array name="country_flags2">
-        <item>@drawable/reading2</item>
-        <item>@drawable/walking2</item>
-        <item>@drawable/bathing_pro</item>
-        <item>@drawable/brushingteeth2</item>
-        <item>@drawable/music</item>
-        <item>@drawable/food</item>
-    </string-array>
-
-
 </resources>
