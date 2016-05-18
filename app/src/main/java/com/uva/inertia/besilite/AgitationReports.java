@@ -1,5 +1,6 @@
 package com.uva.inertia.besilite;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,10 +24,16 @@ import com.android.volley.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
+import java.util.UUID;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
 
@@ -141,12 +148,50 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     }
 
     public void createReport(){
-        createSubsurveys_Emo();
+
+        String file_uuid = dumpSurveyToFile();
+        createSubsurveys_Emo(file_uuid);
+        finish();
 
     }
 
 
-    private void createSubsurveys_Emo(){
+    private String dumpSurveyToFile(){
+        String uuid = UUID.randomUUID().toString();
+        JSONObject surveyDump = new JSONObject();
+        JSONObject obsSubsurvey = new JSONObject(pwdObs);
+        try {
+            //survey data
+            surveyDump.put("timestamp", df.format(new Date()));
+            surveyDump.put("obsSubsurvey", obsSubsurvey);
+            surveyDump.put("agitimestamp", pwdGen.get("agitimestamp"));
+            surveyDump.put("level", pwdGen.get("level"));
+
+            //file type for parser
+            surveyDump.put("filetype", "agiReport");
+        } catch (JSONException e){
+            Log.e("ERROR", e.getMessage());
+        }
+
+        String filename = uuid;
+        File folder = new File(getFilesDir(), "survey");
+        if (!folder.mkdirs()) {
+            Log.e("FILES", "Did not create folder");
+        }
+
+        File out = new File(folder, filename);
+        try {
+            FileWriter fw = new FileWriter(out);
+            fw.write(surveyDump.toString());
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return uuid;
+    }
+
+    private void createSubsurveys_Emo(final String file_uuid){
         JSONObject subsurveyObject = new JSONObject();
         Log.v("TEST", subsurveyObject.toString());
         JsonObjectRequestWithToken requestNewPWDEmoSub = new JsonObjectRequestWithToken(
@@ -158,7 +203,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                         try{
                             emoSurveyPK = response.getInt("id");
                             Log.v("TEST","woo created emo subsurvey");
-                            createSubsurveys_Obs();
+                            createSubsurveys_Obs(file_uuid);
                         } catch (org.json.JSONException e){
                             Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for emo", Toast.LENGTH_SHORT);
                             toast.show();
@@ -169,7 +214,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         this.netQueue.add(requestNewPWDEmoSub);
     }
 
-    private void createSubsurveys_Obs(){
+    private void createSubsurveys_Obs(final String file_uuid){
         JSONObject subsurveyObject = new JSONObject(pwdObs);
         Log.v("TEST",subsurveyObject.toString());
         JsonObjectRequestWithToken requestNewPWDSleepSub = new JsonObjectRequestWithToken(
@@ -181,7 +226,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                         try{
                             obsSurveyPK = response.getInt("id");
                             Log.v("TEST","woo created obs subsurvey");
-                            createCompleteSurvey();
+                            createCompleteSurvey(file_uuid);
                         } catch (org.json.JSONException e){
                             Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for obs", Toast.LENGTH_SHORT);
                             toast.show();
@@ -193,7 +238,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
     }
 
-    private void createCompleteSurvey(){
+    private void createCompleteSurvey(final String file_uuid){
 
         /////BACKEND DOESN'T CONTAIN PRIOR EMOTION??
             try {
@@ -218,6 +263,15 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                                             "Agitation Report Submitted", Toast.LENGTH_SHORT);
                                     toast.show();
                                     Log.v("TEST", "full survey made");
+                                    File folder = new File(getFilesDir(), "survey");
+                                    if (!folder.mkdirs()) {
+                                        Log.e("FILES", "Did not create folder");
+                                    }
+
+                                    File surveyFile = new File(folder, file_uuid);
+                                    if(!surveyFile.delete()){
+                                        Log.e("FILES","File failed to delete");
+                                    }
                                     finish();
                                 } catch (Exception e) {
                                     Toast toast = Toast.makeText(getApplicationContext(),

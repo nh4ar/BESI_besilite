@@ -25,13 +25,18 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
+import java.util.UUID;
 
 
 public class DailySurvey extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
@@ -120,11 +125,55 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         createSurveys();
     }
 
-    public void createSurveys(){
-        createSubsurveys_PWDEmotions();
+    private String dumpSurveyToFile(){
+        String uuid = UUID.randomUUID().toString();
+        JSONObject surveyDump = new JSONObject();
+        JSONObject pwdEmoSubsurvey = new JSONObject(pwdEmotions);
+        JSONObject careEmoSubsurvey = new JSONObject(caregiverEmotions);
+        JSONObject pwdSleepSubsurvey = new JSONObject(pwdSleepQal);
+        try {
+            //survey data
+            //get current time in iso8601
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+            df.setTimeZone(tz);
+            String timestamp = df.format(new Date());
+            surveyDump.put("timestamp", timestamp);
+            surveyDump.put("pwdEmoSubsurvey", pwdEmoSubsurvey);
+            surveyDump.put("careEmoSubsurvey",careEmoSubsurvey);
+            surveyDump.put("pwdSleepSubsurvey", pwdSleepSubsurvey);
+
+            //file type for parser
+            surveyDump.put("filetype", "dailyReport");
+        } catch (JSONException e){
+            Log.e("ERROR", e.getMessage());
+        }
+
+        String filename = uuid;
+        File folder = new File(getFilesDir(), "survey");
+        if (!folder.mkdirs()) {
+            Log.e("FILES", "Did not create folder");
+        }
+
+        File out = new File(folder, filename);
+        try {
+            FileWriter fw = new FileWriter(out);
+            fw.write(surveyDump.toString());
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return uuid;
     }
 
-    private void createSubsurveys_PWDEmotions(){
+    public void createSurveys(){
+        String uuid = dumpSurveyToFile();
+        createSubsurveys_PWDEmotions(uuid);
+        finish();
+    }
+
+    private void createSubsurveys_PWDEmotions(final String uuid){
         Log.v("DAILYSURVEY", pwdEmotions.toString());
         JSONObject subsurveyObject = new JSONObject(pwdEmotions);
         Log.v("TEST",subsurveyObject.toString());
@@ -138,7 +187,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 try{
                     pwdEmotionSurveyPK = response.getInt("id");
                     Log.v("TEST","woo created pwd emotions!");
-                    createSubsurveys_CaregiverEmotions();
+                    createSubsurveys_CaregiverEmotions(uuid);
                 } catch (org.json.JSONException e){
                     Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for PWDEmotions", Toast.LENGTH_SHORT);
                     toast.show();
@@ -149,7 +198,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         this.netQueue.add(requestNewPWDEmotionSub);
     }
 
-    private void createSubsurveys_CaregiverEmotions(){
+    private void createSubsurveys_CaregiverEmotions(final String uuid){
         JSONObject subsurveyObject = new JSONObject(caregiverEmotions);
         Log.v("TEST",subsurveyObject.toString());
         JsonObjectRequestWithToken requestNewCareEmotionSub = new JsonObjectRequestWithToken(
@@ -163,7 +212,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 try{
                     careEmotionSurveyPK = response.getInt("id");
                     Log.v("TEST","woo created care emotions!");
-                    createSubsurveys_PWDSleep();
+                    createSubsurveys_PWDSleep(uuid);
                 } catch (org.json.JSONException e){
                     Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for Caregiver Emotions", Toast.LENGTH_SHORT);
                     toast.show();
@@ -175,7 +224,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         this.netQueue.add(requestNewCareEmotionSub);
     }
 
-    private void createSubsurveys_PWDSleep(){
+    private void createSubsurveys_PWDSleep(final String uuid){
         JSONObject subsurveyObject = new JSONObject(pwdSleepQal);
         Log.v("TEST",subsurveyObject.toString());
         JsonObjectRequestWithToken requestNewPWDSleepSub = new JsonObjectRequestWithToken(
@@ -187,7 +236,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                 try{
                     pwdSleepSurveyPK = response.getInt("id");
                     Log.v("TEST","woo created pwd sleep!");
-                    createCompleteSurvey();
+                    createCompleteSurvey(uuid);
                 } catch (org.json.JSONException e){
                     Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for PWDSleep", Toast.LENGTH_SHORT);
                     toast.show();
@@ -198,7 +247,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         this.netQueue.add(requestNewPWDSleepSub);
     }
 
-    private void createCompleteSurvey(){
+    private void createCompleteSurvey(final String file_uuid){
         try{
             JSONObject surveyObject  = new JSONObject();
             //get current time in iso8601
@@ -222,6 +271,17 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                         Log.v("TEST","pk for new complete survey is: "+pk);
                         Toast toast = Toast.makeText(getApplicationContext(), "Daily Report Submitted", Toast.LENGTH_SHORT);
                         toast.show();
+
+                        File folder = new File(getFilesDir(), "survey");
+                        if (!folder.mkdirs()) {
+                            Log.e("FILES", "Did not create folder");
+                        }
+
+                        File surveyFile = new File(folder, file_uuid);
+                        if(!surveyFile.delete()){
+                            Log.e("FILES","File failed to delete");
+                        }
+
                         finish();
                     } catch (org.json.JSONException e){
                         Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for complete survey", Toast.LENGTH_SHORT);

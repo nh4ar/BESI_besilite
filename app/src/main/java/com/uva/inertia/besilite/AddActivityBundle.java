@@ -217,18 +217,18 @@ public class AddActivityBundle extends AppCompatActivity{
                 try {
                     for (int i = 0; i < resp.length(); i++) {
                         JSONObject o = (JSONObject) resp.get(i);
-                        ActivityMap.put(o.getString("pk"),o.getString("value"));
-                        RevActivityMap.put(o.getString("value"), o.getString("pk"));
-                        tempList.add(o.getString("value"));
-                    }
+                    ActivityMap.put(o.getString("pk"),o.getString("value"));
+                    RevActivityMap.put(o.getString("value"), o.getString("pk"));
+                    tempList.add(o.getString("value"));
+                }
 
-                    Collections.sort(tempList, String.CASE_INSENSITIVE_ORDER);
-                    Log.v("MAPS", tempList.toString());
-                    for (String s: tempList){
-                        CheckboxListViewItem c = new CheckboxListViewItem(s, 0,
-                                Integer.parseInt(RevActivityMap.get(s)));
-                        adapter.add(c);
-                    }
+                Collections.sort(tempList, String.CASE_INSENSITIVE_ORDER);
+                Log.v("MAPS", tempList.toString());
+                for (String s: tempList){
+                    CheckboxListViewItem c = new CheckboxListViewItem(s, 0,
+                            Integer.parseInt(RevActivityMap.get(s)));
+                    adapter.add(c);
+                }
                 } catch (JSONException e) {
                     Log.e("ERROR", "Server responded with incorrect JSON");
                 }
@@ -241,7 +241,9 @@ public class AddActivityBundle extends AppCompatActivity{
     }
 
     void submitBundle(ArrayList<Integer> pks){
+       // dumpBundle(pks);
         createNewBundle(pks);
+
     }
 
     void submitBundleMemberList(ArrayList<Integer> pks, int newBundlePK){

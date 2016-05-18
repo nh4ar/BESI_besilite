@@ -7,7 +7,7 @@
 
 
     <string name="pref_title_base_url">Base URL</string>
-    <string name="pref_default_base_url">http://inertia.ece.virginia.edu/</string>
+    <string name="pref_default_base_url">https://besistudy.org/</string>
     <string name="pref_summary_base_url">Set base url to query</string>
 
     <string name="pref_title_api_token">API Token</string>
