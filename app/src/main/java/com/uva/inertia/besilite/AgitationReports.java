@@ -174,19 +174,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         }
 
         String filename = uuid;
-        File folder = new File(getFilesDir(), "survey");
-        if (!folder.mkdirs()) {
-            Log.e("FILES", "Did not create folder");
-        }
-
-        File out = new File(folder, filename);
-        try {
-            FileWriter fw = new FileWriter(out);
-            fw.write(surveyDump.toString());
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileHelpers.writeStringToInternalStorage(surveyDump.toString(),"offline",uuid,getApplicationContext());
 
         return uuid;
     }

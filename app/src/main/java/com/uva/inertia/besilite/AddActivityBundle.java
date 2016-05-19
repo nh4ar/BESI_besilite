@@ -18,11 +18,13 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.UUID;
 
 public class AddActivityBundle extends AppCompatActivity{
 
@@ -209,44 +212,62 @@ public class AddActivityBundle extends AppCompatActivity{
         tempList.clear();
         ConvertedList.clear();
 
-        JsonArrayRequestWithToken activityListRequestArray = new JsonArrayRequestWithToken(base_url+activityEndpoint, api_token, new Response.Listener<JSONArray>() {
+        JsonArrayRequestWithToken activityListRequestArray = new JsonArrayRequestWithToken(base_url + activityEndpoint, api_token, new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray resp) {
                 Log.v("Test", resp.toString());
-                try {
-                    for (int i = 0; i < resp.length(); i++) {
-                        JSONObject o = (JSONObject) resp.get(i);
-                    ActivityMap.put(o.getString("pk"),o.getString("value"));
-                    RevActivityMap.put(o.getString("value"), o.getString("pk"));
-                    tempList.add(o.getString("value"));
-                }
+                buildCheckBoxList(resp);
+                FileHelpers.writeStringToInternalStorage(resp.toString(), "cache", "activityCache", getApplicationContext());
+                     }
 
-                Collections.sort(tempList, String.CASE_INSENSITIVE_ORDER);
-                Log.v("MAPS", tempList.toString());
-                for (String s: tempList){
-                    CheckboxListViewItem c = new CheckboxListViewItem(s, 0,
-                            Integer.parseInt(RevActivityMap.get(s)));
-                    adapter.add(c);
-                }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String cachedJson = FileHelpers.readStringFromInternalStorage("cache","activityCache",getApplicationContext());
+                try {
+                    JSONArray jArray = new JSONArray(cachedJson);
+                    buildCheckBoxList(jArray);
+                    addNew.setEnabled(false);
                 } catch (JSONException e) {
-                    Log.e("ERROR", "Server responded with incorrect JSON");
+                    e.printStackTrace();
                 }
             }
-
-
-        }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
+        });
 
         this.netQueue.add(activityListRequestArray);
+    }
+
+    void buildCheckBoxList(JSONArray jArray){
+        try {
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject o = (JSONObject) jArray.get(i);
+                ActivityMap.put(o.getString("pk"), o.getString("value"));
+                RevActivityMap.put(o.getString("value"), o.getString("pk"));
+                tempList.add(o.getString("value"));
+            }
+
+            Collections.sort(tempList, String.CASE_INSENSITIVE_ORDER);
+            Log.v("MAPS", tempList.toString());
+            for (String s : tempList) {
+                CheckboxListViewItem c = new CheckboxListViewItem(s, 0,
+                        Integer.parseInt(RevActivityMap.get(s)));
+                adapter.add(c);
+            }
+        } catch (JSONException e) {
+            Log.e("ERROR", "Server responded with incorrect JSON");
+        }
     }
 
     void submitBundle(ArrayList<Integer> pks){
        // dumpBundle(pks);
         createNewBundle(pks);
+        finish();
 
     }
 
-    void submitBundleMemberList(ArrayList<Integer> pks, int newBundlePK){
+    void submitBundleMemberList(ArrayList<Integer> pks, int newBundlePK, final String file_uuid){
         deploy_id = sharedPref.getString("pref_key_deploy_id","");
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token","");
@@ -276,6 +297,7 @@ public class AddActivityBundle extends AppCompatActivity{
                                     "Activity Log Submitted", Toast.LENGTH_SHORT);
                             toast.show();
                             //newActivVal.setText("");
+                            FileHelpers.deleteFileFromInternalStorage("offline",file_uuid,getApplicationContext());
                             finish();
 
                     }
@@ -293,6 +315,8 @@ public class AddActivityBundle extends AppCompatActivity{
         api_token = sharedPref.getString("pref_key_api_token","");
         endpoint="/api/v1/survey/activ/smart/";
 
+        final String uuid = UUID.randomUUID().toString();
+
         final ArrayList<Integer> pks_final = pks;
         //stuff ....
 
@@ -306,7 +330,32 @@ public class AddActivityBundle extends AppCompatActivity{
             } catch (JSONException e){
                 Log.e("ERROR", e.getMessage());
             }
-        Log.v("TEST",postObject.toString());
+            Log.v("TEST",postObject.toString());
+
+        try {
+            JSONObject postDump = new JSONObject(postObject.toString());
+            postDump.put("filetype","activityBundle");
+            JSONArray ja = new JSONArray();
+            for (int pk: pks){
+                JSONObject newBundleMember = new JSONObject();
+                try {
+                    newBundleMember.put("bundle", "offline-pk");
+                    newBundleMember.put("activity",pk);
+                    ja.put(newBundleMember);
+                } catch (JSONException e){
+                    //meh
+                }
+            }
+            postDump.put("activities",ja);
+
+            FileHelpers.writeStringToInternalStorage(postDump.toString(),"offline",uuid,getApplicationContext());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
             JsonObjectRequestWithToken requestNewBundle = new JsonObjectRequestWithToken( Request.Method.POST, base_url+endpoint,postObject, api_token, new Response.Listener<JSONObject>() {
 
                 @Override
@@ -314,7 +363,7 @@ public class AddActivityBundle extends AppCompatActivity{
                     try{
                         int newBundlePK = response.getInt("pk");
                         Log.v("TEST","woo created new bundle!");
-                        submitBundleMemberList(pks_final, newBundlePK);
+                        submitBundleMemberList(pks_final, newBundlePK, uuid);
                     } catch (org.json.JSONException e){
                         Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for new bundle", Toast.LENGTH_SHORT);
                         toast.show();

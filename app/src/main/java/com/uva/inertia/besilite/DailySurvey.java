@@ -150,19 +150,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         }
 
         String filename = uuid;
-        File folder = new File(getFilesDir(), "survey");
-        if (!folder.mkdirs()) {
-            Log.e("FILES", "Did not create folder");
-        }
-
-        File out = new File(folder, filename);
-        try {
-            FileWriter fw = new FileWriter(out);
-            fw.write(surveyDump.toString());
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileHelpers.writeStringToInternalStorage(surveyDump.toString(),"offline",filename,getApplicationContext());
 
         return uuid;
     }
@@ -272,15 +260,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                         Toast toast = Toast.makeText(getApplicationContext(), "Daily Report Submitted", Toast.LENGTH_SHORT);
                         toast.show();
 
-                        File folder = new File(getFilesDir(), "survey");
-                        if (!folder.mkdirs()) {
-                            Log.e("FILES", "Did not create folder");
-                        }
-
-                        File surveyFile = new File(folder, file_uuid);
-                        if(!surveyFile.delete()){
-                            Log.e("FILES","File failed to delete");
-                        }
+                        FileHelpers.deleteFileFromInternalStorage("offline",file_uuid,getApplicationContext());
 
                         finish();
                     } catch (org.json.JSONException e){
