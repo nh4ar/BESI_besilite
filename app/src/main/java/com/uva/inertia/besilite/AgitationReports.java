@@ -150,7 +150,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     public void createReport(){
 
         String file_uuid = dumpSurveyToFile();
-        createSubsurveys_Emo(file_uuid);
+        createSubsurveys_Obs(file_uuid);
         finish();
 
     }
@@ -177,29 +177,6 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         FileHelpers.writeStringToInternalStorage(surveyDump.toString(),"offline",uuid,getApplicationContext());
 
         return uuid;
-    }
-
-    private void createSubsurveys_Emo(final String file_uuid){
-        JSONObject subsurveyObject = new JSONObject();
-        Log.v("TEST", subsurveyObject.toString());
-        JsonObjectRequestWithToken requestNewPWDEmoSub = new JsonObjectRequestWithToken(
-                Request.Method.POST, base_url+EmotionEndpoint,subsurveyObject, api_token,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try{
-                            emoSurveyPK = response.getInt("id");
-                            Log.v("TEST","woo created emo subsurvey");
-                            createSubsurveys_Obs(file_uuid);
-                        } catch (org.json.JSONException e){
-                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for emo", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    }
-                }, NetworkErrorHandlers.toastHandler(getApplicationContext()));
-
-        this.netQueue.add(requestNewPWDEmoSub);
     }
 
     private void createSubsurveys_Obs(final String file_uuid){
@@ -236,7 +213,6 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
                 surveyObject.put("timestamp", df.format(new Date()));
                 surveyObject.put("observations", obsSurveyPK);
-                surveyObject.put("PWDEmotions", emoSurveyPK);
                 surveyObject.put("agitimestamp", pwdGen.get("agitimestamp"));
                 surveyObject.put("level", pwdGen.get("level"));
 
