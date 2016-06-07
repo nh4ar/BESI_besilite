@@ -205,7 +205,6 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
     private void createCompleteSurvey(final String file_uuid){
 
-        /////BACKEND DOESN'T CONTAIN PRIOR EMOTION??
             try {
                 JSONObject surveyObject = new JSONObject();
 
@@ -227,15 +226,9 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                                             "Agitation Report Submitted", Toast.LENGTH_SHORT);
                                     toast.show();
                                     Log.v("TEST", "full survey made");
-                                    File folder = new File(getFilesDir(), "survey");
-                                    if (!folder.mkdirs()) {
-                                        Log.e("FILES", "Did not create folder");
-                                    }
 
-                                    File surveyFile = new File(folder, file_uuid);
-                                    if(!surveyFile.delete()){
-                                        Log.e("FILES","File failed to delete");
-                                    }
+                                    FileHelpers.deleteFileFromInternalStorage("offline",file_uuid,getApplicationContext());
+
                                     finish();
                                 } catch (Exception e) {
                                     Toast toast = Toast.makeText(getApplicationContext(),
