@@ -4,7 +4,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.jfgaines.besiapp.AgitationChecklist"
     android:id="@+id/AgitationLayout"
     android:clickable="false"
     android:background="#E1BEE7">
@@ -57,8 +56,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Kicking"
-                        android:id="@+id/checkKicking"
+                        android:text="@string/OBS_Restlessness"
+                        android:id="@+id/checkRestlessness"
                         android:checked="false"
                         android:textSize="25dp"
                         android:layout_column="0"
@@ -70,8 +69,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hitting (including self)"
-                        android:id="@+id/checkHitting"
+                        android:text="@string/OBS_Ambulating"
+                        android:id="@+id/checkAmbulating"
                         android:checked="false"
                         android:layout_column="0"
                         android:textSize="25dp"
@@ -84,8 +83,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pacing"
-                        android:id="@+id/checkPacing"
+                        android:text="@string/OBS_Touching"
+                        android:id="@+id/checkTouching"
                         android:checked="false"
                         android:layout_column="0"
                         android:textSize="25dp"
@@ -98,8 +97,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Wandering"
-                        android:id="@+id/checkWandering"
+                        android:text="@string/OBS_Clothing"
+                        android:id="@+id/checkClothing"
                         android:button="@drawable/customcheckbox"
                         android:checked="false"
                         android:layout_column="0"
@@ -112,8 +111,8 @@
                     <CheckBox
                         android:layout_width="236dp"
                         android:layout_height="wrap_content"
-                        android:text="Disrobing"
-                        android:id="@+id/checkDisrobing"
+                        android:text="@string/OBS_Physical1"
+                        android:id="@+id/checkPhysical1"
                         android:button="@drawable/customcheckbox"
                         android:checked="false"
                         android:layout_column="0"
@@ -136,8 +135,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Scratching"
-                        android:id="@+id/checkScratching"
+                        android:text="@string/OBS_Physical2"
+                        android:id="@+id/checkPhysical2"
                         android:checked="false"
                         android:layout_marginLeft="10dp"
                         android:button="@drawable/customcheckbox"
@@ -149,8 +148,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Screaming or yelling"
-                        android:id="@+id/checkScreamingYelling"
+                        android:text="@string/OBS_OralFixation"
+                        android:id="@+id/checkOralFixation"
                         android:checked="false"
                         android:button="@drawable/customcheckbox"
                         android:layout_marginLeft="10dp"
@@ -163,8 +162,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Strange noises (crying or weird laughter)"
-                        android:id="@+id/checkStrangeNoises"
+                        android:text="@string/OBS_Repetition"
+                        android:id="@+id/checkRepetition"
                         android:checked="false"
                         android:layout_marginLeft="10dp"
                         android:button="@drawable/customcheckbox"
@@ -177,8 +176,8 @@
                     <CheckBox
                         android:layout_width="328dp"
                         android:layout_height="wrap_content"
-                        android:text="Repetitive sentences or questions"
-                        android:id="@+id/checkRepetitive"
+                        android:text="@string/OBS_Vocal1"
+                        android:id="@+id/checkVocal1"
                         android:checked="false"
                         android:layout_marginLeft="10dp"
                         android:textSize="25dp"
@@ -191,8 +190,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Biting"
-                        android:id="@+id/checkBiting"
+                        android:text="@string/OBS_Vocal2"
+                        android:id="@+id/checkVocal2"
                         android:checked="false"
                         android:layout_marginLeft="10dp"
                         android:button="@drawable/customcheckbox"
@@ -214,8 +213,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Spitting (including meals)"
-                        android:id="@+id/checkSpitting"
+                        android:text="@string/OBS_Lost"
+                        android:id="@+id/checkLost"
                         android:checked="false"
                         android:button="@drawable/customcheckbox"
                         android:layout_column="6"
@@ -226,10 +225,25 @@
                         android:paddingLeft="10dp" />
 
                     <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/OBS_Withdrawn"
+                        android:id="@+id/checkWithdrawn"
+                        android:checked="false"
+                        android:button="@drawable/customcheckbox"
+                        android:layout_column="6"
+                        android:textSize="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_marginTop="20dp" />
+
+                    <CheckBox
                         android:layout_width="309dp"
                         android:layout_height="wrap_content"
-                        android:text="Eating or drinking non-food substances"
-                        android:id="@+id/checkEatingNonFood"
+                        android:text="@string/OBS_Annoying"
+                        android:id="@+id/checkAnnoying"
                         android:checked="false"
                         android:layout_column="6"
                         android:textSize="25dp"
@@ -243,8 +257,8 @@
                     <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Handling things incorrectly"
-                        android:id="@+id/CheckHandling"
+                        android:text="@string/OBS_Shadowing"
+                        android:id="@+id/checkShadowing"
                         android:checked="false"
                         android:button="@drawable/customcheckbox"
                         android:layout_column="6"
@@ -258,8 +272,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tearing or breaking things"
-                        android:id="@+id/checkBreakingThings"
+                        android:text="@string/OBS_Communication"
+                        android:id="@+id/checkCommunication"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
@@ -273,19 +287,7 @@
                         android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Unable to find common places i.e. bathroom, bed room"
-                        android:id="@+id/checkUnableToFindCommonPlaces"
-                        android:checked="false"
-                        android:layout_column="6"
-                        android:textSize="25dp"
-                        android:layout_marginLeft="10dp"
-                        android:button="@drawable/customcheckbox"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="20dp"
-                        android:paddingLeft="10dp" />
+
 
                 </LinearLayout>
             </LinearLayout>

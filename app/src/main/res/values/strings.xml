@@ -32,6 +32,7 @@
     <string name="title_activity_agitation_reports">Agitation Report</string>
     <string name="title_activity_add_activity_bundle">Activity Log</string>
 
+    <!--Why are these here @neeraj-->
     <string-array name="country_names2">
         <item>Reading</item>
         <item>Walking</item>
@@ -40,7 +41,6 @@
         <item>Listening To Music</item>
         <item>Preparing Food</item>
     </string-array>
-
     <string-array name="country_codes2">
         <item>Reading</item>
         <item>Walking</item>
@@ -49,5 +49,22 @@
         <item>Listening To Music</item>
         <item>Preparing Food</item>
     </string-array>
+
+    <!--Strings for OBServation check boxes-->
+    <string name="OBS_Restlessness">_Restlessness</string>
+    <string name="OBS_Ambulating">_Ambulating</string>
+    <string name="OBS_Touching">_Touching</string>
+    <string name="OBS_Clothing">_Clothing</string>
+    <string name="OBS_Physical1">_Physical1</string>
+    <string name="OBS_Physical2">_Physical2</string>
+    <string name="OBS_OralFixation">_OralFixation</string>
+    <string name="OBS_Repetition">_Repetition</string>
+    <string name="OBS_Vocal1">_Vocal1</string>
+    <string name="OBS_Vocal2">_Vocal2</string>
+    <string name="OBS_Lost">_Lost</string>
+    <string name="OBS_Withdrawn">_Withdrawn</string>
+    <string name="OBS_Annoying">_Annoying</string>
+    <string name="OBS_Shadowing">_Shadowing</string>
+    <string name="OBS_Communication">_Communication</string>
 
 </resources>
