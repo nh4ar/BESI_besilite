@@ -68,9 +68,9 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
         pwdObs = ar.pwdObs;
 
         Restlessness = (CheckBox) rootView.findViewById(R.id.checkRestlessness);
-        Restlessness.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Restlessness"));
+        Restlessness.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Frustration"));
         Ambulating = (CheckBox) rootView.findViewById(R.id.checkAmbulating);
-        Ambulating.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Ambulating"));
+        Ambulating.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Ambulation"));
         Touching = (CheckBox) rootView.findViewById(R.id.checkTouching);
         Touching.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Touching"));
         Clothing = (CheckBox) rootView.findViewById(R.id.checkClothing);
@@ -93,8 +93,8 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
         Lost.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Lost"));
         Withdrawn = (CheckBox) rootView.findViewById(R.id.checkWithdrawn);
         Withdrawn.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Withdrawn"));
-        Annoying = (CheckBox) rootView.findViewById(R.id.checkAnnoying);
-        Annoying.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Annoying"));
+        //Annoying = (CheckBox) rootView.findViewById(R.id.checkAnnoying);
+        //Annoying.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Annoying"));
         Shadowing = (CheckBox) rootView.findViewById(R.id.checkShadowing);
         Shadowing.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Shadowing"));
         Communication = (CheckBox) rootView.findViewById(R.id.checkCommunication);

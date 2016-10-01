@@ -7,15 +7,15 @@
 
 
     <string name="pref_title_base_url">Base URL</string>
-    <string name="pref_default_base_url">https://besistudy.org/</string>
+    <string name="pref_default_base_url">https://172.25.203.142:8000</string>
     <string name="pref_summary_base_url">Set base url to query</string>
 
     <string name="pref_title_api_token">API Token</string>
-    <string name="pref_default_api_token">INVALIDTOKEN</string>
+    <string name="pref_default_api_token">879bbac9dc3adb9656c8c8111089cc83a9676f42</string>
     <string name="pref_summary_api_token">Set API access token</string>
 
     <string name="pref_title_deploy_id">Deploy ID</string>
-    <string name="pref_default_deploy_id">INVALIDID</string>
+    <string name="pref_default_deploy_id">0</string>
     <string name="pref_summary_deploy_id">Set deployment ID</string>
 
     <string name="title_activity_get_emotions">Get Emotions</string>
@@ -51,20 +51,20 @@
     </string-array>
 
     <!--Strings for OBServation check boxes-->
-    <string name="OBS_Restlessness">_Restlessness</string>
-    <string name="OBS_Ambulating">_Ambulating</string>
-    <string name="OBS_Touching">_Touching</string>
-    <string name="OBS_Clothing">_Clothing</string>
-    <string name="OBS_Physical1">_Physical1</string>
-    <string name="OBS_Physical2">_Physical2</string>
-    <string name="OBS_OralFixation">_OralFixation</string>
-    <string name="OBS_Repetition">_Repetition</string>
-    <string name="OBS_Vocal1">_Vocal1</string>
-    <string name="OBS_Vocal2">_Vocal2</string>
-    <string name="OBS_Lost">_Lost</string>
-    <string name="OBS_Withdrawn">_Withdrawn</string>
-    <string name="OBS_Annoying">_Annoying</string>
-    <string name="OBS_Shadowing">_Shadowing</string>
-    <string name="OBS_Communication">_Communication</string>
+    <string name="OBS_Frustration">Frustrated</string>
+    <string name="OBS_Ambulation">Pacing/Restless</string>
+    <string name="OBS_Touching">Handling things inappropriately</string>
+    <string name="OBS_Clothing">Inappropriate dressing/undressing</string>
+    <string name="OBS_Physical1">Pushing/Hitting</string>
+    <string name="OBS_Physical2">Biting/Scratching</string>
+    <string name="OBS_OralFixation">Eating/Drinking inappropriate substances</string>
+    <string name="OBS_Repetition">Repetitiveness</string>
+    <string name="OBS_Vocal1">Complaining/Whining</string>
+    <string name="OBS_Vocal2">Cursing/Shouting</string>
+    <string name="OBS_Lost">Wandering/Getting Lost</string>
+    <string name="OBS_Withdrawn">Quiet/Withdrawn</string>
+    <!--<string name="OBS_Annoying">_Annoying</string> Removed in updated list-->
+    <string name="OBS_Shadowing">Imitating/Shadowing</string>
+    <string name="OBS_Communication">Difficulty with language</string>
 
 </resources>
