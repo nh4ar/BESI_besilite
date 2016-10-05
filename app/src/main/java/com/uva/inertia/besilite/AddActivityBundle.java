@@ -69,6 +69,8 @@ public class AddActivityBundle extends AppCompatActivity{
         getSupportActionBar().setTitle("Activity Log");
         toolbar.setTitleTextColor(Color.BLACK);
         toolbar.setTitleTextAppearance(getApplicationContext(), R.style.AppTheme_Theme_Styled_ActionBar_TitleTextStyle);
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
