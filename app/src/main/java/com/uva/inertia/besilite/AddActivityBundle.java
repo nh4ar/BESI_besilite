@@ -34,6 +34,12 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
 
+import com.snowplowanalytics.snowplow.tracker.*;
+import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
+import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
+import com.snowplowanalytics.snowplow.tracker.emitter.RequestSecurity;
+import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
+
 public class AddActivityBundle extends AppCompatActivity{
 
     Button addNew;
@@ -72,9 +78,36 @@ public class AddActivityBundle extends AppCompatActivity{
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
+
+        ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+        // Create an Emitter
+        Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                .method(HttpMethod.POST) // Optional - Defines how we send the request
+                .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+
+                .build();
+
+
+        Subject s1 = new Subject.SubjectBuilder().build();
+        s1.setUserId(api_token);
+
+        // Make and return the Tracker object
+        Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addActivityPageTracker", "com.uva.inertia.besilite", getApplicationContext())
+                .base64(false) // Optional - Defines what protocol used to send events
+                .subject(s1)
+                .build()
+        );
+
+        t1.track(ScreenView.builder()
+                .name("Add Activity Page")
+                .id("addActivityBundle")
+                .build());
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
 
         addNew = (Button)findViewById(R.id.add_new_activity_button);
         submit = (Button)findViewById(R.id.submit_activity_bundle);

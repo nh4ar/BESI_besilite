@@ -24,6 +24,12 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.snowplowanalytics.snowplow.tracker.Emitter;
+import com.snowplowanalytics.snowplow.tracker.Subject;
+import com.snowplowanalytics.snowplow.tracker.Tracker;
+import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
+import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
+import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -371,6 +377,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         DailySurvey ds;
 
         Button nextButton;
+        SharedPreferences sharedPref;
 
 
         /**
@@ -394,6 +401,30 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                     container, false);
 
             ds = (DailySurvey) getActivity();
+
+            sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+            // Create an Emitter
+            Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                    .method(HttpMethod.POST) // Optional - Defines how we send the request
+                    .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                     // Optional - Defines what protocol used to send events
+                    .build();
+
+            Subject s1 = new Subject.SubjectBuilder().build();
+            s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+            // Make and return the Tracker object
+            Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "dailyCareEmoSurvey", "com.uva.inertia.besilite", getContext())
+                    .base64(false)
+                    .build()
+            );
+
+            t1.track(ScreenView.builder()
+                    .name("Caregiver Daily Emotion Survey")
+                    .id("caregiveremo")
+                    .build());
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
             HashMap<String, Boolean> cEmo = ds.caregiverEmotions;
 
             Isolated = (CheckBox) rootView.findViewById(R.id.checkIsolated);
@@ -478,6 +509,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
         HashMap<String, Boolean> hp = new HashMap<>();
         DailySurvey dailysurvey;
+        SharedPreferences sharedPref;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -527,6 +559,31 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pwd_emotions_survey, container, false);
+
+            sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+            ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+            // Create an Emitter
+            Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                    .method(HttpMethod.POST) // Optional - Defines how we send the request
+                    .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                    // Optional - Defines what protocol used to send events
+                    .build();
+
+            Subject s1 = new Subject.SubjectBuilder().build();
+            s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+            // Make and return the Tracker object
+            Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "dailyPWDEmoSurvey", "com.uva.inertia.besilite", getContext())
+                    .base64(false)
+                    .build()
+            );
+
+            t1.track(ScreenView.builder()
+                    .name("PWD Daily Emotion Survey")
+                    .id("PWDemo")
+                    .build());
+            ///////////////////////////////////////////////////////////////////////////////////////////
 
             dailysurvey = (DailySurvey) getActivity();
 
@@ -608,6 +665,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         CheckBox wakeUpEarly;
         CheckBox restlessOveractive;
         Button submitButton;
+        SharedPreferences sharedPref;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -627,6 +685,30 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pwd_sleep_survey, container, false);
+
+            sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+            // Create an Emitter
+            Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                    .method(HttpMethod.POST) // Optional - Defines how we send the request
+                    .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                    // Optional - Defines what protocol used to send events
+                    .build();
+
+            Subject s1 = new Subject.SubjectBuilder().build();
+            s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+            // Make and return the Tracker object
+            Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "dailyPWDSleepSurvey", "com.uva.inertia.besilite", getContext())
+                    .base64(false)
+                    .build()
+            );
+
+            t1.track(ScreenView.builder()
+                    .name("PWD Daily Sleep Survey")
+                    .id("PWDsleep")
+                    .build());
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
             ds = (DailySurvey) getActivity();
 
             Log.v("DAILYSURVEY", ds.pwdEmotions.toString());

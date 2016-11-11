@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+
 public class AddNewActivity extends AppCompatActivity {
 
     java.text.DateFormat[] dateFormats;
@@ -77,24 +79,16 @@ public class AddNewActivity extends AppCompatActivity {
     EditText newActivVal;
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new);
+
+//        Enable back button, why not there????
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.BLACK);
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
+        Log.v("WHY", ""+(getSupportActionBar() != null));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tz = TimeZone.getTimeZone("UTC");

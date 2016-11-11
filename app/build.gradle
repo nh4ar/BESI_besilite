@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -18,7 +19,11 @@ android {
         }
     }
 }
-
+repositories {
+    maven {
+        url "http://maven.snplow.com/releases"
+    }
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -26,4 +31,8 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.github.erd:android-volley:1.0.0'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    // Tracker Import
+    compile 'com.snowplowanalytics:snowplow-android-tracker:0.6.+@aar'
+
 }

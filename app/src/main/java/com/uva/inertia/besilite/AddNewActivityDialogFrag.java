@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +16,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.snowplowanalytics.snowplow.tracker.Emitter;
+import com.snowplowanalytics.snowplow.tracker.Subject;
+import com.snowplowanalytics.snowplow.tracker.Tracker;
+import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
+import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
+import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
+
 public class AddNewActivityDialogFrag extends DialogFragment{
 
     AddActivityBundle addbundle;
     String newAct;
+    SharedPreferences sharedPref;
 
     public AddNewActivityDialogFrag() {
         // Empty constructor required for DialogFragment
@@ -33,6 +43,34 @@ public class AddNewActivityDialogFrag extends DialogFragment{
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+
+        ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+        // Create an Emitter
+        Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getActivity())
+                .method(HttpMethod.POST) // Optional - Defines how we send the request
+                .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                // Optional - Defines what protocol used to send events
+                .build();
+
+        Subject s1 = new Subject.SubjectBuilder().build();
+        s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+        // Make and return the Tracker object
+        Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addNewActivityBundle", "com.uva.inertia.besilite", getActivity())
+                .base64(false)
+                .subject(s1)
+                .build()
+        );
+
+
+        t1.track(ScreenView.builder()
+                .name("Add New Activity Type")
+                .id("addNewActivity")
+                .build());
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
         String title = getArguments().getString("title");
 
         addbundle = (AddActivityBundle)getActivity();

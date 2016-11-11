@@ -7,8 +7,10 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -22,6 +24,13 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.snowplowanalytics.snowplow.tracker.Emitter;
+import com.snowplowanalytics.snowplow.tracker.Subject;
+import com.snowplowanalytics.snowplow.tracker.Tracker;
+import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
+import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
+import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,6 +69,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     Button next;
 
     RadioGroup agiLevelGroup;
+    SharedPreferences sharedPref;
 
     public static final int DATEPICKER_FRAGMENT=1; // adding this line
     public static final int TIMEPICKER_FRAGMENT=2; // adding this line
@@ -116,6 +126,35 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
                 showAgiTimePickerDialog(v);
             }
         });
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+        // Create an Emitter
+        Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                .method(HttpMethod.POST) // Optional - Defines how we send the request
+                .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                .build();
+
+        Subject s1 = new Subject.SubjectBuilder().build();
+        s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+        // Make and return the Tracker object
+        Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                .base64(false) // Optional - Defines what protocol used to send events
+                .subject(s1)
+                .build()
+        );
+
+        t1.track(ScreenView.builder()
+                .name("Add Agi Gen Info")
+                .id("addAgiGenInfo")
+                .build());
+
+
+//        t1.getSubject().setUserId(sharedPref.getString("pref_key_api_token", ""));
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
 
         df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
         tz = TimeZone.getTimeZone("UTC");

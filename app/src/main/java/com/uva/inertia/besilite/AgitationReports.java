@@ -20,6 +20,12 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.snowplowanalytics.snowplow.tracker.Emitter;
+import com.snowplowanalytics.snowplow.tracker.Subject;
+import com.snowplowanalytics.snowplow.tracker.Tracker;
+import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
+import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
+import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -91,8 +97,10 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
+
 
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token", "");
@@ -101,6 +109,31 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         ObservationEndpoint = "/api/v1/survey/obs/create/";
         EmotionEndpoint = "/api/v1/survey/emo/create/";
         AgitationEndpoint = "/api/v1/survey/agi/smart/";
+
+        ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+        // Create an Emitter
+        Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                .method(HttpMethod.POST) // Optional - Defines how we send the request
+                .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                .build();
+
+        Subject s1 = new Subject.SubjectBuilder().build();
+        s1.setUserId(api_token);
+
+        // Make and return the Tracker object
+        Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "agitationReport", "com.uva.inertia.besilite", getApplicationContext())
+                .base64(false) // Optional - Defines what protocol used to send events
+                .subject(s1)
+                .build()
+        );
+
+        t1.track(ScreenView.builder()
+                .name("Add New Agitation Report")
+                .id("addAgitationReport")
+                .build());
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (noSwipeViewPager) findViewById(R.id.container);

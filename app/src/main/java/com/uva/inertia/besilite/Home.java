@@ -16,6 +16,12 @@ import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.snowplowanalytics.snowplow.tracker.Emitter;
+import com.snowplowanalytics.snowplow.tracker.Subject;
+import com.snowplowanalytics.snowplow.tracker.Tracker;
+import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
+import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
+import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
 import java.util.ArrayList;
 
@@ -52,7 +58,28 @@ public class Home extends AppCompatActivity {
         final ImageView goToActivities = (ImageView) findViewById(R.id.go_to_activities);
         final Button goToAgiReports = (Button) findViewById(R.id.go_to_agi_report);
 
+        ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+        // Create an Emitter
+        Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                .method(HttpMethod.POST) // Optional - Defines how we send the request
+                .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                // Optional - Defines what protocol used to send events
+                .build();
 
+        Subject s1 = new Subject.SubjectBuilder().build();
+        s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+        // Make and return the Tracker object
+        Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "dailyPWDSleepSurvey", "com.uva.inertia.besilite", getApplicationContext())
+                .base64(false)
+                .subject(s1)
+                .build()
+        );
+
+        t1.track(ScreenView.builder()
+                .name("Home")
+                .id("home")
+                .build());
+        ///////////////////////////////////////////////////////////////////////////////////////////
         goToEmotions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

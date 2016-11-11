@@ -7,11 +7,11 @@
 
 
     <string name="pref_title_base_url">Base URL</string>
-    <string name="pref_default_base_url">https://172.25.203.142:8000</string>
+    <string name="pref_default_base_url">https://besistudy.org</string>
     <string name="pref_summary_base_url">Set base url to query</string>
 
     <string name="pref_title_api_token">API Token</string>
-    <string name="pref_default_api_token">879bbac9dc3adb9656c8c8111089cc83a9676f42</string>
+    <string name="pref_default_api_token">1a79ee75e7328538f9df96bdc7e22f9d17ae398e</string>
     <string name="pref_summary_api_token">Set API access token</string>
 
     <string name="pref_title_deploy_id">Deploy ID</string>
