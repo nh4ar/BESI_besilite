@@ -51,6 +51,7 @@
     </string-array>
 
     <!--Strings for OBServation check boxes-->
+    <!--
     <string name="OBS_Frustration">Frustrated</string>
     <string name="OBS_Ambulation">Pacing/Restless</string>
     <string name="OBS_Touching">Handling things inappropriately</string>
@@ -63,8 +64,24 @@
     <string name="OBS_Vocal2">Cursing/Shouting</string>
     <string name="OBS_Lost">Wandering/Getting Lost</string>
     <string name="OBS_Withdrawn">Quiet/Withdrawn</string>
-    <!--<string name="OBS_Annoying">_Annoying</string> Removed in updated list-->
     <string name="OBS_Shadowing">Imitating/Shadowing</string>
     <string name="OBS_Communication">Difficulty with language</string>
+    -->
 
+    <string name="OBS_Frustration">Pidgety</string>
+    <string name="OBS_Ambulation">Won\'t sit still</string>
+    <string name="OBS_Touching">Destroys things</string>
+    <string name="OBS_Clothing">Wearing clothes wrong</string>
+    <string name="OBS_Physical1">Hitting</string>
+    <string name="OBS_Physical2">Scratching</string>
+    <string name="OBS_OralFixation">Chews on things</string>
+    <string name="OBS_Repetition">Same question</string>
+    <string name="OBS_Vocal1">Complaining</string>
+    <string name="OBS_Vocal2">Shouting</string>
+    <string name="OBS_Lost">Getting lost at home</string>
+    <string name="OBS_Withdrawn">Stewing</string>
+    <string name="OBS_Shadowing">Imitating</string>
+    <string name="OBS_Communication">Word searching</string>
+
+    <!--<string name="OBS_Annoying">_Annoying</string> Removed in updated list-->
 </resources>
