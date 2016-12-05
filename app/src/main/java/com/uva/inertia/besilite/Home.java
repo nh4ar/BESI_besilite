@@ -83,6 +83,29 @@ public class Home extends AppCompatActivity {
         goToEmotions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "homeGoToEmotionsButton", "com.uva.inertia.besilite", getApplicationContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("Home -> Emotions")
+                        .id("goToEmotionsButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
                 Intent intent = new Intent(v.getContext(), DailySurvey.class);
                 startActivity(intent);
             }
@@ -91,6 +114,30 @@ public class Home extends AppCompatActivity {
         goToAgiReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "homeGoToAgiReportsButton", "com.uva.inertia.besilite", getApplicationContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("Home -> Agitation Report")
+                        .id("goToAgiReportsButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
+
                 Intent intent = new Intent(v.getContext(), AgitationReports.class);
                 startActivity(intent);
             }
@@ -99,6 +146,29 @@ public class Home extends AppCompatActivity {
         goToActivities.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "homeGoToActivitiesButton", "com.uva.inertia.besilite", getApplicationContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("Home -> Activities")
+                        .id("goToActivitiesButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
                 Intent intent = new Intent(v.getContext(), AddActivityBundle.class);
                 startActivity(intent);
             }

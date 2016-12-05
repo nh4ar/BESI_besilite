@@ -68,6 +68,10 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
     TabLayout tabLayout;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    static HashMap<String, Tracker> trackermap1, trackermap2, trackermap3;
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -337,13 +341,27 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     }
 
 
-    public static View.OnClickListener updateMapOnClick(final HashMap<String, Boolean> hm, final String key){
+    public static View.OnClickListener updateMapOnClick(final HashMap<String, Boolean> hm, final String key, final HashMap<String, Tracker> tmap)
+    {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CheckBox c = (CheckBox)v;
                 hm.put(key,c.isChecked());
                 Log.v("DAILYSURVEY","Click handler called from: " + hm.toString());
+
+                /////////////////////////////////ANALYTICS///////////////////////////////////////////
+                //tmap.get(key) is the Tracker associated with the check box
+                //when toggled, track an event ScreenView (for now, change to Structured event later?)
+                tmap.get(key).track(ScreenView.builder()
+                        .name(key + " box " + ((c.isChecked()) ? ("checked") : ("unchecked")))
+                        .id(key)
+                        .build()
+                );
+                Log.v("ONCLICK", key + " box " + ((c.isChecked()) ? ("checked") : ("unchecked")) + "\n\tTracker object = " + tmap.get(key));
+                Log.v("SNOWPLOWTRACKER", "appid=" + tmap.get(key).getAppId() + " namespace=" + tmap.get(key).getNamespace() + " hashCode=" + tmap.get(key).hashCode() + " subject=" + tmap.get(key).getSubject());
+                Log.v("ONCLICK", "tmap = " + tmap);
+                /////////////////////////////////////////////////////////////////////////////////////
             }
         };
     }
@@ -423,64 +441,154 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                     .name("Caregiver Daily Emotion Survey")
                     .id("caregiveremo")
                     .build());
+
+            Log.v("SNOWPLOW1", "t1 = " + t1);
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
+            ////////////////////////////////TRACKING CODE FOR CHECKBOXES///////////////////////////////
+
+            // Create an Emitter
+            Emitter echeck = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                    .method(HttpMethod.POST) // Optional - Defines how we send the request
+                    .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                    // Optional - Defines what protocol used to send events
+                    .build();
+
+            Subject scheck = new Subject.SubjectBuilder().build();
+            scheck.setUserId(sharedPref.getString("pref_key_api_token", ""));
+            // K is the same key given to cEmo HashMap
+            // V is the Tracker class.  At the creation of each checkbox, the associated Tracker is
+            // initialized (Tracker.init...)
+            trackermap1 = new HashMap<String, Tracker>();
+
+            //on each click, the track event will also be called after the onClick method executes.
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            String[] keys = {
+                    "Isolated",
+                    "Exhausted",
+                    "Worried",
+                    "Frustrated",
+                    "Discouraged",
+                    "Rested",
+                    "Busy",
+                    "HangingInThere",
+                    "Okay",
+                    "Calm",
+                    "Satisfied",
+                    "Hopeful",
+                    "Motivated",
+                    "Confident",
+                    "InControl"
+            };
+
+            int iteratorIndex = -1;
+
             ///////////////////////////////////////////////////////////////////////////////////////////
 
             HashMap<String, Boolean> cEmo = ds.caregiverEmotions;
 
             Isolated = (CheckBox) rootView.findViewById(R.id.checkIsolated);
-            Isolated.setOnClickListener(updateMapOnClick(cEmo,"Isolated"));
+            Isolated.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
+
+//            trackermap.put(keys[iteratorIndex], Tracker.init(new Tracker.TrackerBuilder(echeck, keys[iteratorIndex], "com.uva.inertia.besilite", getContext()).base64(false).build()));
+//            trackermap.put("Isolated")
+
+            /*
+            Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "dailyCareEmoSurvey", "com.uva.inertia.besilite", getContext())
+                    .base64(false)
+                    .build()
+            );
+
+            t1.track(ScreenView.builder()
+                    .name("Caregiver Daily Emotion Survey")
+                    .id("caregiveremo")
+                    .build());
+            //*/
 
             Exhausted = (CheckBox) rootView.findViewById(R.id.checkExhausted);
-            Exhausted.setOnClickListener(updateMapOnClick(cEmo,"Exhausted"));
+            Exhausted.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Worried = (CheckBox) rootView.findViewById(R.id.checkWorried);
-            Worried.setOnClickListener(updateMapOnClick(cEmo,"Worried"));
+            Worried.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Frustrated = (CheckBox) rootView.findViewById(R.id.checkFrustrated);
-            Frustrated.setOnClickListener(updateMapOnClick(cEmo,"Frustrated"));
+            Frustrated.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Discouraged = (CheckBox) rootView.findViewById(R.id.checkDiscouraged);
-            Discouraged.setOnClickListener(updateMapOnClick(cEmo,"Discouraged"));
+            Discouraged.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Rested = (CheckBox) rootView.findViewById(R.id.checkRested);
-            Rested.setOnClickListener(updateMapOnClick(cEmo,"Rested"));
+            Rested.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Busy = (CheckBox) rootView.findViewById(R.id.checkBusy);
-            Busy.setOnClickListener(updateMapOnClick(cEmo,"Busy"));
+            Busy.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             HangingInThere = (CheckBox) rootView.findViewById(R.id.checkHangingInThere);
-            HangingInThere.setOnClickListener(updateMapOnClick(cEmo,"HangingInThere"));
+            HangingInThere.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Okay = (CheckBox) rootView.findViewById(R.id.checkOkay);
-            Okay.setOnClickListener(updateMapOnClick(cEmo,"Okay"));
+            Okay.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Calm = (CheckBox) rootView.findViewById(R.id.checkCalm);
-            Calm.setOnClickListener(updateMapOnClick(cEmo,"Calm"));
+            Calm.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Satisfied = (CheckBox) rootView.findViewById(R.id.checkSatisfied);
-            Satisfied.setOnClickListener(updateMapOnClick(cEmo,"Satisfied"));
+            Satisfied.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Hopeful = (CheckBox) rootView.findViewById(R.id.checkHopeful);
-            Hopeful.setOnClickListener(updateMapOnClick(cEmo,"Hopeful"));
+            Hopeful.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Motivated  = (CheckBox) rootView.findViewById(R.id.checkMotivated );
-            Motivated.setOnClickListener(updateMapOnClick(cEmo, "Motivated"));
+            Motivated.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             Confident = (CheckBox) rootView.findViewById(R.id.checkConfident);
-            Confident.setOnClickListener(updateMapOnClick(cEmo,"Confident"));
+            Confident.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             InControl = (CheckBox) rootView.findViewById(R.id.checkInControl);
-            InControl.setOnClickListener(updateMapOnClick(cEmo,"InControl"));
+            InControl.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
             nextButton = (Button) rootView.findViewById(R.id.caregiver_emo_next);
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                    // Create an Emitter
+                    Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                            .method(HttpMethod.POST) // Optional - Defines how we send the request
+                            .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                            // Optional - Defines what protocol used to send events
+                            .build();
+
+                    Subject subject = new Subject.SubjectBuilder().build();
+                    subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                    // Make and return the Tracker object
+                    Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "dailySurveyCaregiver", "com.uva.inertia.besilite", getContext())
+                            .base64(false)
+                            .subject(subject)
+                            .build()
+                    );
+
+                    tracker.track(ScreenView.builder()
+                            .name("Daily Report / Caregiver -> Next")
+                            .id("dailySurveyCaregiverNextButton")
+                            .build());
+                    ///////////////////////////////////////////////////////////////////////////////////////////
+
                     ((DailySurvey) getActivity()).selectPage(1);
                 }
             });
 
 
+            /////////////////////////////////////////////////////////////////////////////////////////
+            for(iteratorIndex = 0; iteratorIndex < keys.length; iteratorIndex++)    {
+                trackermap1.put(keys[iteratorIndex], Tracker.init(new Tracker.TrackerBuilder(echeck,
+                        keys[iteratorIndex], "com.uva.inertia.besilite", getContext())
+                        .base64(false)
+                        .build())
+                );
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////
             return rootView;
         }
     }
@@ -585,67 +693,145 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                     .build());
             ///////////////////////////////////////////////////////////////////////////////////////////
 
+            ////////////////////////////////TRACKING CODE FOR CHECKBOXES///////////////////////////////
+
+            // Create an Emitter
+            Emitter echeck = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                    .method(HttpMethod.POST) // Optional - Defines how we send the request
+                    .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                    // Optional - Defines what protocol used to send events
+                    .build();
+
+            Subject scheck = new Subject.SubjectBuilder().build();
+            scheck.setUserId(sharedPref.getString("pref_key_api_token", ""));
+            // K is the same key given to cEmo HashMap
+            // V is the Tracker class.  At the creation of each checkbox, the associated Tracker is
+            // initialized (Tracker.init...)
+            trackermap2 = new HashMap<String, Tracker>();
+
+            //on each click, the track event will also be called after the onClick method executes.
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            String[] keys = {
+                    "ShortTemper",
+                    "Tearfulness",
+                    "LackReactionToPleasantEvents",
+                    "Worrying",
+                    "Frightened",
+                    "TalkLess",
+                    "AppetiteLoss",
+                    "LossInterestInUsualActivities",
+                    "SadExpression",
+                    "Suicidal",
+                    "TroublePayingAttention",
+                    "LackEnergy",
+                    "SlowReaction",
+                    "SlowSpeech",
+                    "Physical",
+                    "LowSelfEsteem",
+                    "AnticipationOfWorst"
+            };
+
+            int iteratorIndex = -1;
+            // keys[++iteratorIndex], trackermap));
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
             dailysurvey = (DailySurvey) getActivity();
 
             ShortTempered = (CheckBox)rootView.findViewById(R.id.checkShortTempered);
-            ShortTempered.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"ShortTemper"));
+            ShortTempered.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             Tearful = (CheckBox)rootView.findViewById(R.id.checkTearfulness);
-            Tearful.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"Tearfulness"));
+            Tearful.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             LackReact = (CheckBox)rootView.findViewById(R.id.checkLackOfReact);
-            LackReact.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"LackReactionToPleasantEvents"));
+            LackReact.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             VeryWorried = (CheckBox)rootView.findViewById(R.id.checkVeryWorried);
-            VeryWorried.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"Worrying"));
+            VeryWorried.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             Frightened = (CheckBox)rootView.findViewById(R.id.checkFrightened);
-            Frightened.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"Frightened"));
+            Frightened.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             TalkLess = (CheckBox)rootView.findViewById(R.id.checkLessTalk);
-            TalkLess.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"TalkLess"));
+            TalkLess.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             AppetiteLoss = (CheckBox)rootView.findViewById(R.id.checkAppetiteLoss);
-            AppetiteLoss.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"AppetiteLoss"));
+            AppetiteLoss.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             LessInterest = (CheckBox)rootView.findViewById(R.id.checkLessInterest);
-            LessInterest.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"LossInterestInUsualActivities"));
+            LessInterest.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             SadExpression = (CheckBox)rootView.findViewById(R.id.checkSadExpression);
-            SadExpression.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"SadExpression"));
+            SadExpression.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             Suicidal = (CheckBox)rootView.findViewById(R.id.checkSuicidal);
-            Suicidal.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "Suicidal"));
+            Suicidal.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             TroubleConcentrating = (CheckBox)rootView.findViewById(R.id.checkTroubleConcen);
-            TroubleConcentrating.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "TroublePayingAttention"));
+            TroubleConcentrating.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             LackEnergy = (CheckBox)rootView.findViewById(R.id.checkLackEnergy);
-            LackEnergy.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "LackEnergy"));
+            LackEnergy.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             SlowMove = (CheckBox)rootView.findViewById(R.id.checkSlowMove);
-            SlowMove.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "SlowReaction"));
+            SlowMove.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             SlowSpeech =(CheckBox)rootView.findViewById(R.id.checkSlowSpeech);
-            SlowSpeech.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "SlowSpeech"));
+            SlowSpeech.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             PhysicalComplaints =  (CheckBox)rootView.findViewById(R.id.checkPhysicalComplaints);
-            PhysicalComplaints.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "Physical"));
+            PhysicalComplaints.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             LowEsteem =(CheckBox)rootView.findViewById(R.id.checkLowEsteem);
-            LowEsteem.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, "LowSelfEsteem"));
+            LowEsteem.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             WorstAnticipate = (CheckBox)rootView.findViewById(R.id.checkWorstAnticipate);
-            WorstAnticipate.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions,"AnticipationOfWorst"));
+            WorstAnticipate.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
             nextButton = (Button) rootView.findViewById(R.id.pwd_mood_next);
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                    // Create an Emitter
+                    Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                            .method(HttpMethod.POST) // Optional - Defines how we send the request
+                            .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                            // Optional - Defines what protocol used to send events
+                            .build();
+
+                    Subject subject = new Subject.SubjectBuilder().build();
+                    subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                    // Make and return the Tracker object
+                    Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "dailySurveyPM", "com.uva.inertia.besilite", getContext())
+                            .base64(false)
+                            .subject(subject)
+                            .build()
+                    );
+
+                    tracker.track(ScreenView.builder()
+                            .name("Daily Report / Participant Mood -> Next")
+                            .id("dailySurveyPMNextButton")
+                            .build());
+                    ///////////////////////////////////////////////////////////////////////////////////////////
+
                     ((DailySurvey) getActivity()).selectPage(2);
                     Log.v("DAILYSURVEY", ((DailySurvey) getActivity()).pwdEmotions.toString());
                 }
             });
+
+
+            /////////////////////////////////////////////////////////////////////////////////////////
+            for(iteratorIndex = 0; iteratorIndex < keys.length; iteratorIndex++)    {
+                trackermap2.put(keys[iteratorIndex], Tracker.init(new Tracker.TrackerBuilder(echeck,
+                        keys[iteratorIndex], "com.uva.inertia.besilite", getContext())
+                        .base64(false)
+                        .build())
+                );
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////
+
 
             return rootView;
 
@@ -670,6 +856,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         /**
          * Returns a new instance of this fragment for the given section
          * number.
+         *
          */
         public static PWDSleepFragment newInstance() {
             PWDSleepFragment fragment = new PWDSleepFragment();
@@ -709,6 +896,41 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
                     .build());
             ///////////////////////////////////////////////////////////////////////////////////////////
 
+            ////////////////////////////////TRACKING CODE FOR CHECKBOXES///////////////////////////////
+
+            // Create an Emitter
+            Emitter echeck = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                    .method(HttpMethod.POST) // Optional - Defines how we send the request
+                    .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                    // Optional - Defines what protocol used to send events
+                    .build();
+
+            Subject scheck = new Subject.SubjectBuilder().build();
+            scheck.setUserId(sharedPref.getString("pref_key_api_token", ""));
+            // K is the same key given to cEmo HashMap
+            // V is the Tracker class.  At the creation of each checkbox, the associated Tracker is
+            // initialized (Tracker.init...)
+            trackermap3 = new HashMap<String, Tracker>();
+
+            //on each click, the track event will also be called after the onClick method executes.
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            String[] keys = {
+                    "MultipleBathroomVisits",
+                    "BadDreams",
+                    "MoreNaps",
+                    "DifficultyFallingAsleep",
+                    "WakeUpFrequently",
+                    "WakeUpEarly",
+                    "RestlessOveractive"
+            };
+
+            int iteratorIndex = -1;
+            // keys[++iteratorIndex], trackermap));
+            //copy paste above line to replace the text after slpQ,
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
+
             ds = (DailySurvey) getActivity();
 
             Log.v("DAILYSURVEY", ds.pwdEmotions.toString());
@@ -716,33 +938,74 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             HashMap<String, Boolean> slpQ = ds.pwdSleepQal;
 
             multiBathroom =(CheckBox)rootView.findViewById(R.id.checkMultipleBathroomVisits);
-            multiBathroom.setOnClickListener(updateMapOnClick(slpQ,"MultipleBathroomVisits"));
+            multiBathroom.setOnClickListener(updateMapOnClick(slpQ, keys[++iteratorIndex], trackermap3));
 
             badDreams =(CheckBox)rootView.findViewById(R.id.checkBadDreams);
-            badDreams.setOnClickListener(updateMapOnClick(slpQ,"BadDreams"));
+            badDreams.setOnClickListener(updateMapOnClick(slpQ, keys[++iteratorIndex], trackermap3));
 
             moreNaps =(CheckBox)rootView.findViewById(R.id.checkMoreNaps);
-            moreNaps.setOnClickListener(updateMapOnClick(slpQ,"MoreNaps"));
+            moreNaps.setOnClickListener(updateMapOnClick(slpQ, keys[++iteratorIndex], trackermap3));
 
             diffFallingAsleep =(CheckBox)rootView.findViewById(R.id.checkDifficultyFallingAsleep);
-            diffFallingAsleep.setOnClickListener(updateMapOnClick(slpQ,"DifficultyFallingAsleep"));
+            diffFallingAsleep.setOnClickListener(updateMapOnClick(slpQ, keys[++iteratorIndex], trackermap3));
 
             wakeUpFreq =(CheckBox)rootView.findViewById(R.id.checkWakeUpFrequently);
-            wakeUpFreq.setOnClickListener(updateMapOnClick(slpQ,"WakeUpFrequently"));
+            wakeUpFreq.setOnClickListener(updateMapOnClick(slpQ, keys[++iteratorIndex], trackermap3));
 
             wakeUpEarly =(CheckBox)rootView.findViewById(R.id.checkWakeUpEarly);
-            wakeUpEarly.setOnClickListener(updateMapOnClick(slpQ,"WakeUpEarly"));
+            wakeUpEarly.setOnClickListener(updateMapOnClick(slpQ, keys[++iteratorIndex], trackermap3));
 
             restlessOveractive =(CheckBox)rootView.findViewById(R.id.checkRestlessOveractive);
-            restlessOveractive.setOnClickListener(updateMapOnClick(slpQ,"RestlessOveractive"));
+            restlessOveractive.setOnClickListener(updateMapOnClick(slpQ, keys[++iteratorIndex], trackermap3));
 
             submitButton = (Button) rootView.findViewById(R.id.daily_survey_submit);
             submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                    // Create an Emitter
+                    Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                            .method(HttpMethod.POST) // Optional - Defines how we send the request
+                            .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                            // Optional - Defines what protocol used to send events
+                            .build();
+
+                    Subject subject = new Subject.SubjectBuilder().build();
+                    subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                    // Make and return the Tracker object
+                    Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "dailySurveyPS", "com.uva.inertia.besilite", getContext())
+                            .base64(false)
+                            .subject(subject)
+                            .build()
+                    );
+
+                    tracker.track(ScreenView.builder()
+                            .name("Daily Report / Participant Sleep -> Submit")
+                            .id("dailySurveyPSSubmitButton")
+                            .build());
+                    ///////////////////////////////////////////////////////////////////////////////////////////
+
+
                     ((DailySurvey) getActivity()).createSurveys();
                 }
             });
+
+
+            /////////////////////////////////////////////////////////////////////////////////////////
+            for(iteratorIndex = 0; iteratorIndex < keys.length; iteratorIndex++)    {
+//                trackermap.put(keys[iteratorIndex], Tracker.init(new Tracker.TrackerBuilder(echeck,
+//                        keys[iteratorIndex], "com.uva.inertia.besilite", getContext())
+//                        .base64(false)
+//                        .build())
+//                );
+                Emitter etemp = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext()).build();
+                Subject stemp = new Subject.SubjectBuilder().context(getContext()).build();
+                Tracker temp = Tracker.init(new Tracker.TrackerBuilder(etemp, keys[iteratorIndex], "com.uva.inertia.besilite", getContext()).subject(stemp).base64(false).build());
+                Log.v("TRACKERINIT", iteratorIndex + ": temp=" + temp + "  key=" + keys[iteratorIndex]);
+                trackermap3.put(keys[iteratorIndex], temp);
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////
+
 
             return rootView;
         }

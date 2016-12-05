@@ -115,6 +115,29 @@ public class AddActivityBundle extends AppCompatActivity{
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "addNewActivityButton", "com.uva.inertia.besilite", getApplicationContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("AddActivityBundle -> Add new activity")
+                        .id("addNewActivityButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
                 AddNewActivityDialogFrag newAct = AddNewActivityDialogFrag.newInstance("newAct");
                 newAct.show(getFragmentManager(), "fragment_add_activity");
             }
@@ -123,6 +146,30 @@ public class AddActivityBundle extends AppCompatActivity{
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "submitActivitiesBundleButton", "com.uva.inertia.besilite", getApplicationContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("AddActivityBundle -> Submit")
+                        .id("submitActivitiesBundleButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
+
                 ArrayList<Integer> arr = getCheckedActivityList();
                 if (arr.size() > 0)
                     submitBundle(arr);
