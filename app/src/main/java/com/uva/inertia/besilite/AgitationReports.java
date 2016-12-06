@@ -199,6 +199,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
             surveyDump.put("obsSubsurvey", obsSubsurvey);
             surveyDump.put("agitimestamp", pwdGen.get("agitimestamp"));
             surveyDump.put("level", pwdGen.get("level"));
+            surveyDump.put("agiloc",pwdGen.get("agiloc"));
 
             //file type for parser
             surveyDump.put("filetype", "agiReport");
@@ -247,6 +248,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                 surveyObject.put("observations", obsSurveyPK);
                 surveyObject.put("agitimestamp", pwdGen.get("agitimestamp"));
                 surveyObject.put("level", pwdGen.get("level"));
+                surveyObject.put("agiloc",pwdGen.get("agiloc"));
 
                 Log.v("TEST", surveyObject.toString());
                 JsonObjectRequestWithToken postNewAgiSurvey = new JsonObjectRequestWithToken(

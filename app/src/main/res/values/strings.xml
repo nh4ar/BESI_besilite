@@ -50,6 +50,14 @@
         <item>Preparing Food</item>
     </string-array>
 
+    <string-array name="room_names">
+        <item>Kitchen</item>
+        <item>Bedroom</item>
+        <item>Bathroom</item>
+        <item>Living Room</item>
+        <item>Entryway</item>
+    </string-array>
+
     <!--Strings for OBServation check boxes-->
     <!--
     <string name="OBS_Frustration">Frustrated</string>

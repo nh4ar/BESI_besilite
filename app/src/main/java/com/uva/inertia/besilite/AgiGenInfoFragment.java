@@ -18,10 +18,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -109,6 +112,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
         Button dater = (Button)rootView.findViewById(R.id.agi_date);
         Button timer = (Button)rootView.findViewById(R.id.agi_time);
+        Spinner loc_spinner =  (Spinner)rootView.findViewById(R.id.loc_spinner);
 
         ar = (AgitationReports) getActivity();
         pwdGen = ar.pwdGen;
@@ -124,6 +128,27 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onClick(View v) {
                 showAgiTimePickerDialog(v);
+            }
+        });
+
+        final ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(getContext(), R.array.room_names, android.R.layout.simple_spinner_item);
+
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        loc_spinner.setAdapter(spinner_adapter);
+
+        loc_spinner.setSelection(0);
+
+        loc_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pwdGen.put("agiloc", spinner_adapter.getItem(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+                pwdGen.put("agiloc", "NA");
             }
         });
 

@@ -9,69 +9,25 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="#E1BEE7">
 
+    <Button
+        android:layout_width="400dp"
+        android:layout_height="100dp"
+        android:text="Next"
+        android:id="@+id/agi_gen_info_next"
+        android:background="@drawable/loginbtnanimate"
+        android:textSize="36dp"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_alignTop="@+id/agiLevelGrp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/agi_gen"
         android:layout_gravity="top|center">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/relativeLayout"
-            android:layout_marginBottom="10dp">
-
-            <Button
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:text="Set Agitation Time"
-                android:id="@+id/agi_time"
-                android:layout_below="@+id/agi_date"
-                android:layout_alignRight="@+id/agi_date"
-                android:layout_alignEnd="@+id/agi_date"
-                android:background="@drawable/buttonanimate"
-                android:textSize="24dp" />
-
-            <Button
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:text="Set Agitation Date"
-                android:id="@+id/agi_date"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/buttonanimate"
-                android:textSize="24dp"
-                android:layout_marginBottom="40dp" />
-
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/agi_date_viewer"
-                android:layout_toRightOf="@+id/agi_time"
-                android:layout_toEndOf="@+id/agi_time"
-                android:layout_alignTop="@+id/agi_date"
-                android:layout_marginTop="10dp"
-                android:text="date"
-                android:layout_marginLeft="20dp"
-                android:textSize="32sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="time"
-                android:id="@+id/agi_time_viewer"
-                android:layout_toRightOf="@+id/agi_time"
-                android:layout_toEndOf="@+id/agi_time"
-                android:layout_alignTop="@+id/agi_time"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:textSize="32sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -237,20 +193,97 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativeLayout"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="81dp"
+            android:layout_marginStart="81dp">
 
-    <Button
-        android:layout_width="400dp"
-        android:layout_height="100dp"
-        android:text="Next"
-        android:id="@+id/agi_gen_info_next"
-        android:background="@drawable/loginbtnanimate"
-        android:textSize="36dp"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_alignTop="@+id/agiLevelGrp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="Set Agitation Time"
+                android:id="@+id/agi_time"
+                android:layout_below="@+id/agi_date"
+                android:layout_alignRight="@+id/agi_date"
+                android:layout_alignEnd="@+id/agi_date"
+                android:background="@drawable/buttonanimate"
+                android:textSize="24dp" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="Set Agitation Date"
+                android:id="@+id/agi_date"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/buttonanimate"
+                android:textSize="24dp"
+                android:layout_marginBottom="40dp" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/agi_date_viewer"
+                android:layout_toRightOf="@+id/agi_time"
+                android:layout_toEndOf="@+id/agi_time"
+                android:layout_alignTop="@+id/agi_date"
+                android:layout_marginTop="10dp"
+                android:text="date"
+                android:layout_marginLeft="20dp"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="time"
+                android:id="@+id/agi_time_viewer"
+                android:layout_toRightOf="@+id/agi_time"
+                android:layout_toEndOf="@+id/agi_time"
+                android:layout_alignTop="@+id/agi_time"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="400dp"
+            android:layout_marginLeft="88dp"
+            android:layout_marginStart="88dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/relativeLayout"
+            android:layout_toEndOf="@+id/relativeLayout"
+            android:layout_marginTop="63dp">
+
+            <Spinner
+                android:layout_width="400dp"
+                android:id="@+id/loc_spinner"
+                android:layout_height="50dp"
+                android:layout_below="@+id/textView18"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:backgroundTint="@color/blue"
+                android:background="@drawable/customcheckbox"
+                tools:style="@style/Widget.AppCompat.Spinner" />
+
+            <TextView
+                android:text="Location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView18"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </FrameLayout>
