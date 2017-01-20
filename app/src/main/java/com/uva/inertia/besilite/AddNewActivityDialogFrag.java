@@ -84,12 +84,60 @@ public class AddNewActivityDialogFrag extends DialogFragment{
             public void onClick(DialogInterface dialog, int which) {
                 passItAlong(input.getText().toString());
                 dialog.dismiss();
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getActivity())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addNewActivityDialogFrag", "com.uva.inertia.besilite", getActivity())
+                        .base64(false)
+                        .subject(s1)
+                        .build()
+                );
+
+
+                t1.track(ScreenView.builder()
+                        .name("Add New Activity Textfield Add Button")
+                        .id("addNewActivityTextfieldAddButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
             }
         });
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getActivity())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addNewActivityDialogFrag", "com.uva.inertia.besilite", getActivity())
+                        .base64(false)
+                        .subject(s1)
+                        .build()
+                );
+
+
+                t1.track(ScreenView.builder()
+                        .name("Add New Activity Textfield Cancel Button")
+                        .id("addNewActivityTextfieldCancelButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
             }
         });
 

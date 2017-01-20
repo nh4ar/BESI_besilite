@@ -117,6 +117,30 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onClick(View v) {
                 showAgiDatePickerDialog(v);
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "agitationReport", "com.uva.inertia.besilite", getContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("Agitation Report -> Date Picker")
+                        .id("agitationReportDatePickerButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                Log.v("ONCLICK", "dater clicked");
             }
         });
 
@@ -124,6 +148,30 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onClick(View v) {
                 showAgiTimePickerDialog(v);
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "agitationReport", "com.uva.inertia.besilite", getContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("Agitation Report -> Time Picker")
+                        .id("agitationReportTimePickerButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                Log.v("ONCLICK", "timer clicked");
             }
         });
 
@@ -223,6 +271,31 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
                 pwdGen.put("level", "" + (level));
                 agiLevelViewer.setText("" + level);
 
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "agitationReport", "com.uva.inertia.besilite", getContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("Agitation Report -> Radio Button Level " + level)
+                        .id("agitationReportRadioButtonLevel" + level)
+                        .build());
+
+                Log.v("CHECKED", "Radio Button Level " + level + " checked");
+                ///////////////////////////////////////////////////////////////////////////////////////////
             }
         });
 
@@ -261,7 +334,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         calendar.set(Calendar.DAY_OF_MONTH, day);
         agidate = calendar.getTime();
         Log.v("PICKER", agidate.toString());
-        selDate.setText(dateFormats[0].format(agidate));
+        selDate.setText(dateFormats[0].format(agidate)
+         );
         updateMapDatetime();
     }
 

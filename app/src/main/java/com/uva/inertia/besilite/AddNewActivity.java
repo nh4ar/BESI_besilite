@@ -119,6 +119,7 @@ public class AddNewActivity extends AppCompatActivity {
         addNewActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v("BUTTON PRESS", "addNewActivity clicked");
                 String temp = newActivVal.getText().toString();
                 if (ActivityList.contains(temp)){
                     Context context = getApplicationContext();
