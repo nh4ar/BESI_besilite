@@ -25,7 +25,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="515dp"
         android:id="@+id/agi_gen"
         android:layout_gravity="top|center">
 
@@ -33,9 +33,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/relativeLayout2"
-            android:layout_below="@+id/relativeLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp">
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="74dp">
 
             <TextView
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -186,10 +187,12 @@
                 android:id="@+id/agi_level_viewer"
                 android:textSize="36sp"
                 android:textIsSelectable="false"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="75dp"
                 android:textStyle="bold"
-                android:layout_below="@+id/textView" />
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="18dp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/textView"
+                android:layout_toEndOf="@+id/textView" />
 
         </RelativeLayout>
 
@@ -200,29 +203,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="81dp"
-            android:layout_marginStart="81dp">
-
-            <Button
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:text="Set Agitation Time"
-                android:id="@+id/agi_time"
-                android:layout_below="@+id/agi_date"
-                android:layout_alignRight="@+id/agi_date"
-                android:layout_alignEnd="@+id/agi_date"
-                android:background="@drawable/buttonanimate"
-                android:textSize="24dp" />
-
-            <Button
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:text="Set Agitation Date"
-                android:id="@+id/agi_date"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/buttonanimate"
-                android:textSize="24dp"
-                android:layout_marginBottom="40dp" />
+            android:layout_marginTop="25dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -251,28 +232,39 @@
                 android:layout_marginLeft="20dp"
                 android:textSize="32sp"
                 android:textStyle="bold" />
+
+            <Button
+                android:text="Agitation Time"
+                android:id="@+id/agi_time"
+                android:background="@drawable/buttonanimate"
+                android:textSize="24dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="44dp"
+                android:layout_width="250dp"
+                android:layout_below="@+id/agi_date"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:text="Agitation Date"
+                android:id="@+id/agi_date"
+                android:background="@drawable/buttonanimate"
+                android:textSize="24dp"
+                android:layout_height="50dp"
+                android:layout_width="250dp"
+                android:layout_marginTop="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_width="600dp"
             android:layout_height="wrap_content"
-            android:layout_width="400dp"
-            android:layout_marginLeft="88dp"
-            android:layout_marginStart="88dp"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/relativeLayout"
-            android:layout_toEndOf="@+id/relativeLayout"
-            android:layout_marginTop="63dp">
-
-            <Spinner
-                android:layout_width="400dp"
-                android:id="@+id/loc_spinner"
-                android:layout_height="50dp"
-                android:layout_below="@+id/textView18"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:backgroundTint="@color/blue"
-                android:background="@drawable/customcheckbox"
-                tools:style="@style/Widget.AppCompat.Spinner" />
+            android:layout_above="@+id/relativeLayout2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="32dp">
 
             <TextView
                 android:text="Location"
@@ -281,7 +273,21 @@
                 android:id="@+id/textView18"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:id="@+id/loc_spinner"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/blue"
+                android:background="@drawable/customcheckbox"
+                tools:style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="250dp"
+                android:layout_marginLeft="83dp"
+                android:layout_marginStart="83dp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/textView18"
+                android:layout_toEndOf="@+id/textView18" />
         </RelativeLayout>
 
     </RelativeLayout>
