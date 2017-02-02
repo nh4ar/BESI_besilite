@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -36,6 +37,7 @@ import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
 import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -245,6 +247,21 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
         selDate.setText(dateFormats[0].format(agidate));
         selTime.setText(dateFormats[1].format(agidate));
+
+        ///CODE TO VIEW MEMENTO LOGS
+        final ListView listView1 = (ListView)( rootView.findViewById(R.id.listView1) );
+
+        ArrayList<String> mementoData1 = new ArrayList<String>();
+        mementoData1.add("test0");
+        mementoData1.add("test1");
+        mementoData1.add("test2");
+        mementoData1.add("test3");
+
+        //create adapter for listView1
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
+        listView1.setAdapter(adapter1);
+        // http://stackoverflow.com/questions/8215308/using-context-in-a-fragment
+        /////////////////////
 
 
         next = (Button)rootView.findViewById(R.id.agi_gen_info_next);
