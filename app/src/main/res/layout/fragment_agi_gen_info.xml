@@ -145,9 +145,11 @@
                 android:layout_alignParentStart="true"
                 android:footerDividersEnabled="false"
                 android:layout_height="200dp"
-                android:layout_width="300dp" />
+                android:layout_width="400dp"
+                android:layout_margin="10dp"
+                android:scrollbars="none"   />
 
-            <Button
+            <!--<Button
                 android:layout_width="wrap_content"
                 android:layout_height="75dp"
                 android:id="@+id/button12"
@@ -168,26 +170,27 @@
                 android:layout_alignParentEnd="true"
                 android:text="▼"
                 android:background="@drawable/buttonanimate" />
+            -->
 
             <Button
-                android:text="Delete"
+                android:text="▼"
                 android:layout_height="75dp"
-                android:id="@+id/button9"
+                android:id="@+id/button_scrolldown"
                 android:background="@drawable/buttonanimate"
                 android:layout_alignBottom="@+id/listView1"
-                android:layout_alignRight="@+id/button11"
-                android:layout_alignEnd="@+id/button11"
-                android:layout_width="150dp" />
+                android:layout_alignRight="@+id/button_scrollup"
+                android:layout_alignEnd="@+id/button_scrollup"
+                android:layout_width="100dp" />
 
             <Button
-                android:text="LOAD"
-                android:layout_width="150dp"
-                android:id="@+id/button11"
+                android:text="▲"
+                android:id="@+id/button_scrollup"
                 android:background="@drawable/buttonanimate"
                 android:layout_alignTop="@+id/listView1"
                 android:layout_toRightOf="@+id/listView1"
                 android:layout_toEndOf="@+id/listView1"
-                android:layout_height="75dp" />
+                android:layout_height="75dp"
+                android:layout_width="100dp" />
 
         </RelativeLayout>
 

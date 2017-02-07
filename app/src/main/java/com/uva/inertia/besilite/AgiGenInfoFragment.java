@@ -16,6 +16,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,6 +43,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.TimeZone;
 
 
@@ -71,7 +74,11 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     TextView agiLevelViewer;
     int level;
 
-    Button next;
+    int lvposition;
+
+    ListView listView1;
+
+    Button next, scrollup, scrolldown;
 
     RadioGroup agiLevelGroup;
     SharedPreferences sharedPref;
@@ -249,19 +256,62 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         selTime.setText(dateFormats[1].format(agidate));
 
         ///CODE TO VIEW MEMENTO LOGS
-        final ListView listView1 = (ListView)( rootView.findViewById(R.id.listView1) );
+        listView1 = (ListView)( rootView.findViewById(R.id.listView1) );
+        listView1.setFastScrollEnabled(false);
+        listView1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return (event.getAction() == MotionEvent.ACTION_MOVE);
+            }
+            //http://stackoverflow.com/questions/4338185/how-to-get-a-non-scrollable-listview
+        });
 
-        ArrayList<String> mementoData1 = new ArrayList<String>();
+
+        final ArrayList<String> mementoData1 = new ArrayList<String>();
+        final LinkedList<String> inListView = new LinkedList<String>();
+        int listViewPos = 0;
         mementoData1.add("test0");
         mementoData1.add("test1");
         mementoData1.add("test2");
         mementoData1.add("test3");
+        mementoData1.add("test4");
+        mementoData1.add("test5");
+        mementoData1.add("test6");
+        mementoData1.add("test7");
+//        mementoData1.
 
+        lvposition = 0;
+
+        String test = FileHelpers.readStringFromInternalStorage("Download/", "memento.txt", rootView.getContext());
+        Log.v("T3st", "read test: " + test);
         //create adapter for listView1
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
+//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, inListView);
         listView1.setAdapter(adapter1);
         // http://stackoverflow.com/questions/8215308/using-context-in-a-fragment
-        /////////////////////
+
+        scrollup = (Button)rootView.findViewById(R.id.button_scrollup);
+        scrollup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                listView1.smoothScrollByOffset(-1);
+//                listView1.smoothScrollToPosition(listView1.getSelectedItemPosition() - 1);
+//                listView1.scroll
+                scrollListView(listView1, mementoData1, inListView, lvposition, -1);
+            }
+        });
+
+        scrolldown = (Button)rootView.findViewById(R.id.button_scrolldown);
+        scrolldown.setOnClickListener(new View.OnClickListener()    {
+            @Override
+            public void onClick(View v) {
+//                listView1.smoothScrollByOffset(1);
+//                listView1.smoothScrollToPosition(listView1.getSelectedItemPosition() + 1);
+                scrollListView(listView1, mementoData1, inListView, lvposition, 1);
+            }
+        });
+
+        /////////////////////////////////////////////////////////////////////////////////
 
 
         next = (Button)rootView.findViewById(R.id.agi_gen_info_next);
@@ -349,6 +399,27 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         return rootView;
 
     }
+
+    /////
+
+    public void scrollListView(ListView lv, List<String> masterList, LinkedList<String> viewList, int position, int offset)
+    {
+        //check to see if it's out of bounds
+        if(position < 0 || position >= masterList.size() || (position + offset) < 0 || (position + offset >= masterList.size()))   {
+            return;
+        }
+        viewList = new LinkedList<String>();
+
+        int elementsShown = 4;
+
+        for(int i = 0; i < elementsShown; i++) {
+            viewList.add(masterList.get(position + offset + i));
+        }
+
+        lvposition = position + offset;
+    }
+    /////
+
 
 
     /**
