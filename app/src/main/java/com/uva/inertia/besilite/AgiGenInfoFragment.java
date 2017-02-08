@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -75,6 +77,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     int level;
 
     int lvposition;
+
+    int maxposition;
 
     ListView listView1;
 
@@ -257,6 +261,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
         ///CODE TO VIEW MEMENTO LOGS
         listView1 = (ListView)( rootView.findViewById(R.id.listView1) );
+
+        //DISABLE SCROLLING BY TOUCH
         listView1.setFastScrollEnabled(false);
         listView1.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -265,28 +271,68 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             }
             //http://stackoverflow.com/questions/4338185/how-to-get-a-non-scrollable-listview
         });
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                view.setSelected(true);
+            }
+        });
+
+        // NEXT 33 LINES FROM http://stackoverflow.com/questions/4432261/list-view-snap-to-item
+        // SCROLLING WITH SNAPPING TO NEAREST ITEM
+        listView1.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                // TODO Auto-generated method stub
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    View itemView = view.getChildAt(0);
+                    int top = Math.abs(itemView.getTop());
+                    int bottom = Math.abs(itemView.getBottom());
+                    int scrollBy = top >= bottom ? bottom : -top;
+                    if (scrollBy == 0) {
+                        return;
+                    }
+                    smoothScrollDeferred(scrollBy, (ListView)view);
+                }
+            }
+
+            private void smoothScrollDeferred(final int scrollByF, final ListView viewF) {
+                final Handler h = new Handler();
+                h.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        viewF.smoothScrollBy(scrollByF, 200);
+                    }
+                });
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
 
 
-        final ArrayList<String> mementoData1 = new ArrayList<String>();
-        final LinkedList<String> inListView = new LinkedList<String>();
+        ArrayList<String> mementoData1 = new ArrayList<String>();
+//        LinkedList<String> inListView = new LinkedList<String>();
         int listViewPos = 0;
-        mementoData1.add("test0");
-        mementoData1.add("test1");
-        mementoData1.add("test2");
-        mementoData1.add("test3");
-        mementoData1.add("test4");
-        mementoData1.add("test5");
-        mementoData1.add("test6");
-        mementoData1.add("test7");
-//        mementoData1.
+        for(int test = 0; test < 20; test++) {
+            mementoData1.add("sample data " + test);
+        }
 
+//        Log.v("inListView", .toArray().toString());
+        //SET POSITION VARIABLES
         lvposition = 0;
+        maxposition = mementoData1.size();
+
 
         String test = FileHelpers.readStringFromInternalStorage("Download/", "memento.txt", rootView.getContext());
         Log.v("T3st", "read test: " + test);
         //create adapter for listView1
-//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, inListView);
+        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
+//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, inListView);
         listView1.setAdapter(adapter1);
         // http://stackoverflow.com/questions/8215308/using-context-in-a-fragment
 
@@ -296,8 +342,27 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             public void onClick(View v) {
 //                listView1.smoothScrollByOffset(-1);
 //                listView1.smoothScrollToPosition(listView1.getSelectedItemPosition() - 1);
+                listView1.smoothScrollBy(-50, 300);
+                listView1.smoothScrollToPosition(listView1.getFirstVisiblePosition());
+                //the smoothScrollToPosition is used to make the elements "snap" to the top & bottom edges
+
+//                listView1.smoothScrollToPositionFromTop((lvposition <= 0) ? lvposition : (--lvposition), 150, 250);
+
 //                listView1.scroll
-                scrollListView(listView1, mementoData1, inListView, lvposition, -1);
+
+//                lvposition = (lvposition <= 0) ? lvposition : lvposition - 1;
+//                listView1.scroll
+//                scrollListView(listView1, mementoData1, inListView, lvposition, -1);
+
+            }
+
+        });
+        scrollup.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+//                listView1.smoothScrollToPosition(0);
+                listView1.smoothScrollBy(-50 * adapter1.getCount(), 200 * adapter1.getCount());
+                return true;
             }
         });
 
@@ -306,8 +371,32 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onClick(View v) {
 //                listView1.smoothScrollByOffset(1);
+                listView1.smoothScrollBy(50, 300);
+                listView1.smoothScrollToPosition(listView1.getLastVisiblePosition());
+                //the smoothScrollToPosition is used to make the elements "snap" to the top & bottom edges
+
+//                listView1.smoothScrollToPositionFromTop((lvposition >= maxposition - 1) ? lvposition : (++lvposition), 150, 250);
+
 //                listView1.smoothScrollToPosition(listView1.getSelectedItemPosition() + 1);
-                scrollListView(listView1, mementoData1, inListView, lvposition, 1);
+//                scrollListView(listView1, mementoData1, inListView, lvposition, 1);
+
+//                listView1.smoothScrollToPosition(lvposition + 1, lvposition);
+
+//                lvposition++;
+
+//                Log.v("inListView", "before removeFirst: " + inListView.toArray().toString());
+//                inListView.removeFirst();
+//                Log.v("inListView", "after removeFirst: " + inListView.toArray().toString());
+//                inListView.addLast("testADD");
+//                Log.v("inListView", "after addLast: " + inListView.toArray().toString());
+            }
+        });
+        scrolldown.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+//                listView1.smoothScrollToPosition(adapter1.getCount());
+                listView1.smoothScrollBy(50 * adapter1.getCount(), 200 * adapter1.getCount());
+                return true;
             }
         });
 
@@ -418,6 +507,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
         lvposition = position + offset;
     }
+
+//    public void loadInitialListView()
     /////
 
 

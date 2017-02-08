@@ -130,7 +130,8 @@
             android:layout_marginLeft="117dp"
             android:layout_marginStart="117dp"
             android:layout_alignTop="@+id/relativeLayout"
-            android:layout_toRightOf="@+id/relativeLayout">
+            android:layout_toRightOf="@+id/relativeLayout"
+            android:layout_alignBottom="@+id/relativeLayout2">
 
             <TextView
                 android:text="Memento Data"
@@ -143,12 +144,14 @@
                 android:layout_below="@+id/textView4"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:footerDividersEnabled="false"
                 android:layout_height="200dp"
-                android:layout_width="400dp"
                 android:layout_margin="10dp"
-                android:scrollbars="none"   />
-
+                android:scrollbars="none"
+                android:footerDividersEnabled="false"
+                android:requiresFadingEdge="vertical"
+                android:fadingEdgeLength="5dp"
+                android:layout_width="300dp" />
+            <!--android:background="?android:attr/activatedBackgroundIndicator"-->
             <!--<Button
                 android:layout_width="wrap_content"
                 android:layout_height="75dp"
@@ -173,16 +176,6 @@
             -->
 
             <Button
-                android:text="▼"
-                android:layout_height="75dp"
-                android:id="@+id/button_scrolldown"
-                android:background="@drawable/buttonanimate"
-                android:layout_alignBottom="@+id/listView1"
-                android:layout_alignRight="@+id/button_scrollup"
-                android:layout_alignEnd="@+id/button_scrollup"
-                android:layout_width="100dp" />
-
-            <Button
                 android:text="▲"
                 android:id="@+id/button_scrollup"
                 android:background="@drawable/buttonanimate"
@@ -191,6 +184,38 @@
                 android:layout_toEndOf="@+id/listView1"
                 android:layout_height="75dp"
                 android:layout_width="100dp" />
+
+            <Button
+                android:text="▼"
+                android:layout_height="75dp"
+                android:id="@+id/button_scrolldown"
+                android:background="@drawable/buttonanimate"
+                android:layout_width="100dp"
+                android:layout_alignBottom="@+id/listView1"
+                android:layout_toRightOf="@+id/listView1"
+                android:layout_toEndOf="@+id/listView1" />
+
+            <Button
+                android:text="Delete"
+                android:id="@+id/button_delete"
+                android:background="@drawable/buttonanimate"
+                android:layout_height="75dp"
+                android:layout_width="140dp"
+                android:layout_alignBaseline="@+id/button_scrolldown"
+                android:layout_alignBottom="@+id/button_scrolldown"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:text="Load"
+                android:id="@+id/button_load"
+                android:background="@drawable/buttonanimate"
+                android:layout_height="75dp"
+                android:layout_width="135dp"
+                android:layout_alignBaseline="@+id/button_scrollup"
+                android:layout_alignBottom="@+id/button_scrollup"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 
