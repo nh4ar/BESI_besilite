@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="background_pink">#E1BEE7</color>
     <color name="colorPrimary">#33acc1</color>
     <color name="colorPrimaryDark">#80deea</color>
     <color name="colorAccent">#1d1c20</color>
@@ -10,4 +11,8 @@
     <color name="orange">#000</color>
     <color name="blue">#ececec</color>
     <color name="purple">#D6D6F5</color>
+    <color name="black">#000000</color>
+    <color name="customlistitem1_default_color">#E1BEE7</color>
+    <color name="customlistitem1_pressed_color">#1eaccc</color>
+    <!--#45cae8-->
 </resources>

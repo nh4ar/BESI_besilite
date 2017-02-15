@@ -10,11 +10,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -39,8 +41,13 @@ import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
 import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
 import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -91,6 +98,16 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     public static final int TIMEPICKER_FRAGMENT=2; // adding this line
 
 
+    // MEMENTO ///
+    private File besiDir, besiFile;
+    private String mementoTxtString = "";
+    private ArrayList<String> mementoAL;
+
+    private int customListItem1Height = 40;     //in pixels
+    private int scrollTime = 300;               //in milliseconds
+    private int fastScrollTime = 200;           //in milliseconds
+    //////////////
+
 
     public AgiGenInfoFragment() {
         // Required empty public constructor
@@ -114,8 +131,55 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             };
         }
 
+        Log.v("TEST onCreate", "onCreate started");
 
+        // get dir
+        besiDir = new File(Environment.getExternalStorageDirectory(), "BESI");
+        //make sure it's created
+        besiDir.mkdir();
+        // FileName
+        besiFile = new File(besiDir, "memento.txt");
+
+        mementoTxtString = readFileToString(besiFile);
+        mementoAL = stringToList(mementoTxtString);
+
+        for(String s : mementoAL)   {
+            Log.v("mementoAL jjp5nw", s);
+        }
     }
+
+        ///*
+        // MOVE METHOD TO BOTTOM OF FILE AFTER DONE DEBUGGING
+    private static String readFileToString(File file) {
+//        Log.i(rootView.getLocalClassName(), "Reading from File jjp5nw");
+        String ret = "";
+        StringBuilder sb = new StringBuilder();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+//            sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+                sb.append('\n');
+            }
+            reader.close();
+        }
+        catch (IOException e) {
+//            Log.i(getLocalClassName(), "Read Error jjp5nw");
+            //You'll need to add proper error handling here
+            return "IOException ERROR STRING";
+        }
+        return sb.toString();
+    }
+
+    private static ArrayList<String> stringToList(String textfile)
+    {
+//        ArrayList<String> ret = new ArrayList<String>();
+        String[] temp = textfile.split("\n");
+        return (new ArrayList<String>(Arrays.asList(temp)));
+//        return (Arrays.asList(temp));//(new ArrayList<String>(Arrays.asList(temp)));
+    }
+    //*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -275,6 +339,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 view.setSelected(true);
+
+                // http://stackoverflow.com/questions/16189651/android-listview-selected-item-stay-highlighted
             }
         });
 
@@ -331,7 +397,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         String test = FileHelpers.readStringFromInternalStorage("Download/", "memento.txt", rootView.getContext());
         Log.v("T3st", "read test: " + test);
         //create adapter for listView1
-        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
+//        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
+        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1, mementoAL);
 //        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, inListView);
         listView1.setAdapter(adapter1);
         // http://stackoverflow.com/questions/8215308/using-context-in-a-fragment
@@ -342,7 +409,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             public void onClick(View v) {
 //                listView1.smoothScrollByOffset(-1);
 //                listView1.smoothScrollToPosition(listView1.getSelectedItemPosition() - 1);
-                listView1.smoothScrollBy(-50, 300);
+                listView1.smoothScrollBy(-1 * customListItem1Height, scrollTime);
                 listView1.smoothScrollToPosition(listView1.getFirstVisiblePosition());
                 //the smoothScrollToPosition is used to make the elements "snap" to the top & bottom edges
 
@@ -361,7 +428,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public boolean onLongClick(View v) {
 //                listView1.smoothScrollToPosition(0);
-                listView1.smoothScrollBy(-50 * adapter1.getCount(), 200 * adapter1.getCount());
+                listView1.smoothScrollBy(-1 * customListItem1Height * adapter1.getCount(), fastScrollTime * adapter1.getCount());
                 return true;
             }
         });
@@ -371,7 +438,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onClick(View v) {
 //                listView1.smoothScrollByOffset(1);
-                listView1.smoothScrollBy(50, 300);
+                listView1.smoothScrollBy(customListItem1Height, scrollTime);
                 listView1.smoothScrollToPosition(listView1.getLastVisiblePosition());
                 //the smoothScrollToPosition is used to make the elements "snap" to the top & bottom edges
 
@@ -395,7 +462,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public boolean onLongClick(View v) {
 //                listView1.smoothScrollToPosition(adapter1.getCount());
-                listView1.smoothScrollBy(50 * adapter1.getCount(), 200 * adapter1.getCount());
+                listView1.smoothScrollBy(customListItem1Height * adapter1.getCount(), fastScrollTime * adapter1.getCount());
                 return true;
             }
         });
