@@ -49,8 +49,7 @@
                 android:layout_marginTop="10dp"
                 android:text="date"
                 android:layout_marginLeft="20dp"
-                android:textSize="32sp"
-                android:textStyle="bold" />
+                android:textSize="32sp" />
 
             <TextView
                 android:layout_width="200dp"
@@ -63,8 +62,7 @@
                 android:layout_alignTop="@+id/agi_time"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
-                android:textSize="32sp"
-                android:textStyle="bold" />
+                android:textSize="32sp" />
 
             <Button
                 android:text="Agitation Time"
@@ -89,135 +87,6 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="600dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/relativeLayout2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="32dp">
-
-            <TextView
-                android:text="Location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView18"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <Spinner
-                android:id="@+id/loc_spinner"
-                android:layout_height="50dp"
-                android:backgroundTint="@color/blue"
-                android:background="@drawable/customcheckbox"
-                tools:style="@style/Widget.AppCompat.Spinner"
-                android:layout_width="250dp"
-                android:layout_marginLeft="83dp"
-                android:layout_marginStart="83dp"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/textView18"
-                android:layout_toEndOf="@+id/textView18" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="31dp"
-            android:layout_marginLeft="117dp"
-            android:layout_marginStart="117dp"
-            android:layout_alignTop="@+id/relativeLayout"
-            android:layout_toRightOf="@+id/relativeLayout"
-            android:layout_alignBottom="@+id/relativeLayout2">
-
-            <TextView
-                android:text="Memento Data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView4" />
-
-            <ListView
-                android:id="@+id/listView1"
-                android:layout_below="@+id/textView4"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_height="200dp"
-                android:layout_margin="10dp"
-                android:scrollbars="none"
-                android:footerDividersEnabled="false"
-                android:requiresFadingEdge="vertical"
-                android:fadingEdgeLength="5dp"
-                android:layout_width="300dp"
-                />
-            <!--android:background="?android:attr/activatedBackgroundIndicator"-->
-            <!--<Button
-                android:layout_width="wrap_content"
-                android:layout_height="75dp"
-                android:id="@+id/button12"
-                android:text="▲"
-                android:layout_alignBaseline="@+id/button11"
-                android:layout_alignBottom="@+id/button11"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/buttonanimate" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="75dp"
-                android:id="@+id/button"
-                android:layout_alignBaseline="@+id/button9"
-                android:layout_alignBottom="@+id/button9"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:text="▼"
-                android:background="@drawable/buttonanimate" />
-            -->
-
-            <Button
-                android:text="▲"
-                android:id="@+id/button_scrollup"
-                android:background="@drawable/buttonanimate"
-                android:layout_alignTop="@+id/listView1"
-                android:layout_toRightOf="@+id/listView1"
-                android:layout_toEndOf="@+id/listView1"
-                android:layout_height="75dp"
-                android:layout_width="100dp" />
-
-            <Button
-                android:text="▼"
-                android:layout_height="75dp"
-                android:id="@+id/button_scrolldown"
-                android:background="@drawable/buttonanimate"
-                android:layout_width="100dp"
-                android:layout_alignBottom="@+id/listView1"
-                android:layout_toRightOf="@+id/listView1"
-                android:layout_toEndOf="@+id/listView1" />
-
-            <Button
-                android:text="Clear"
-                android:id="@+id/button_clear"
-                android:background="@drawable/buttonanimate"
-                android:layout_height="75dp"
-                android:layout_width="140dp"
-                android:layout_alignBaseline="@+id/button_scrolldown"
-                android:layout_alignBottom="@+id/button_scrolldown"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <Button
-                android:text="Load"
-                android:id="@+id/button_load"
-                android:background="@drawable/buttonanimate"
-                android:layout_height="75dp"
-                android:layout_width="135dp"
-                android:layout_alignBaseline="@+id/button_scrollup"
-                android:layout_alignBottom="@+id/button_scrollup"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -256,7 +125,7 @@
                     android:text="1"
                     android:id="@+id/agiLevel1"
                     android:checked="true"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -268,7 +137,7 @@
                     android:id="@+id/agiLevel2"
                     android:button="@drawable/customradio"
                     android:checked="false"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -280,7 +149,7 @@
                     android:button="@drawable/customradio"
                     android:id="@+id/agiLevel3"
                     android:checked="false"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -292,7 +161,7 @@
                     android:id="@+id/agiLevel4"
                     android:button="@drawable/customradio"
                     android:checked="false"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -304,7 +173,7 @@
                     android:id="@+id/agiLevel5"
                     android:button="@drawable/customradio"
                     android:checked="false"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -316,7 +185,7 @@
                     android:id="@+id/agiLevel6"
                     android:button="@drawable/customradio"
                     android:checked="false"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -328,7 +197,7 @@
                     android:id="@+id/agiLevel7"
                     android:button="@drawable/customradio"
                     android:checked="false"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -340,7 +209,7 @@
                     android:id="@+id/agiLevel8"
                     android:button="@drawable/customradio"
                     android:checked="false"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -352,7 +221,7 @@
                     android:id="@+id/agiLevel9"
                     android:checked="false"
                     android:button="@drawable/customradio"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -364,7 +233,7 @@
                     android:id="@+id/agiLevel10"
                     android:checked="false"
                     android:button="@drawable/customradio"
-                    android:textSize="42sp"
+                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingLeft="10dp" />
@@ -385,6 +254,145 @@
                 android:layout_toRightOf="@+id/textView"
                 android:layout_toEndOf="@+id/textView" />
 
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mementoLayout"
+            android:layout_alignTop="@+id/relativeLayout"
+            android:layout_alignRight="@+id/relativeLayout2"
+            android:layout_alignEnd="@+id/relativeLayout2"
+            android:layout_alignBottom="@+id/relativeLayout5"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:text="Memento Data" />
+
+            <ListView
+                android:id="@+id/listView1"
+                android:layout_below="@+id/textView4"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:scrollbars="none"
+                android:footerDividersEnabled="false"
+                android:requiresFadingEdge="vertical"
+                android:fadingEdgeLength="3dp"
+                android:layout_width="300dp"
+                />
+            <!-- android:background="@drawable/listview_border"
+                android:padding="2dp"-->
+            <!--android:background="?android:attr/activatedBackgroundIndicator"-->
+            <!--<Button
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"
+                android:id="@+id/button12"
+                android:text="▲"
+                android:layout_alignBaseline="@+id/button11"
+                android:layout_alignBottom="@+id/button11"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/buttonanimate" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"
+                android:id="@+id/button"
+                android:layout_alignBaseline="@+id/button9"
+                android:layout_alignBottom="@+id/button9"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:text="▼"
+                android:background="@drawable/buttonanimate" />
+            -->
+
+            <Button
+                android:text="▲"
+                android:id="@+id/button_scrollup"
+                android:background="@drawable/buttonanimate"
+                android:layout_alignTop="@+id/listView1"
+                android:layout_toRightOf="@+id/listView1"
+                android:layout_toEndOf="@+id/listView1"
+                android:layout_height="98dp"
+                android:layout_width="50dp" />
+
+            <Button
+                android:text="▼"
+                android:layout_height="98dp"
+                android:id="@+id/button_scrolldown"
+                android:background="@drawable/buttonanimate"
+                android:layout_width="50dp"
+                android:layout_alignBottom="@+id/listView1"
+                android:layout_toRightOf="@+id/listView1"
+                android:layout_toEndOf="@+id/listView1" />
+
+            <!--
+            <Button
+                android:text="Clear"
+                android:id="@+id/button_clear"
+                android:background="@drawable/buttonanimate"
+                android:layout_height="75dp"
+                android:layout_width="140dp"
+                android:layout_alignBaseline="@+id/button_scrolldown"
+                android:layout_alignBottom="@+id/button_scrolldown"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+                -->
+            <!--
+            <Button
+                android:text="Load"
+                android:id="@+id/button_load"
+                android:background="@drawable/buttonanimate"
+                android:layout_height="75dp"
+                android:layout_width="135dp"
+                android:layout_alignBaseline="@+id/button_scrollup"
+                android:layout_alignBottom="@+id/button_scrollup"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+            -->
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:text="Location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView18"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textSize="32sp"
+                android:textStyle="normal|bold" />
+
+            <Spinner
+                android:id="@+id/loc_spinner"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/blue"
+                android:background="@drawable/customcheckbox"
+                tools:style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="250dp"
+                android:layout_marginLeft="83dp"
+                android:layout_marginStart="83dp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/textView18"
+                android:layout_toEndOf="@+id/textView18" />
         </RelativeLayout>
 
     </RelativeLayout>

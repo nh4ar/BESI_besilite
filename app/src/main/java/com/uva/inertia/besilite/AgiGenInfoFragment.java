@@ -103,7 +103,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     private String mementoTxtString = "";
     private ArrayList<String> mementoAL;
 
-    private int customListItem1Height = 40;     //in pixels
+    private int customListItem1Height = 66;     //in pixels
     private int scrollTime = 300;               //in milliseconds
     private int fastScrollTime = 200;           //in milliseconds
     //////////////
@@ -256,9 +256,9 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             }
         });
 
-        final ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(getContext(), R.array.room_names, android.R.layout.simple_spinner_item);
+        final ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(getContext(), R.array.room_names, R.layout.custom_spinner_item_1);//android.R.layout.simple_spinner_item);
 
-        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_adapter.setDropDownViewResource(R.layout.custom_spinner_item_1);//android.R.layout.simple_spinner_dropdown_item);
 
         loc_spinner.setAdapter(spinner_adapter);
 
@@ -429,6 +429,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             public boolean onLongClick(View v) {
 //                listView1.smoothScrollToPosition(0);
                 listView1.smoothScrollBy(-1 * customListItem1Height * adapter1.getCount(), fastScrollTime * adapter1.getCount());
+
                 return true;
             }
         });
