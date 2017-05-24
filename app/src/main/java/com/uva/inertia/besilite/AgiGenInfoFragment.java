@@ -34,6 +34,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.snowplowanalytics.snowplow.tracker.Emitter;
 import com.snowplowanalytics.snowplow.tracker.Subject;
 import com.snowplowanalytics.snowplow.tracker.Tracker;
@@ -41,14 +44,20 @@ import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
 import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
 import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -89,7 +98,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
     ListView listView1;
 
-    Button next, scrollup, scrolldown;
+    Button back, next, scrollup, scrolldown;
 
     RadioGroup agiLevelGroup;
     SharedPreferences sharedPref;
@@ -106,7 +115,15 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     private int customListItem1Height = 66;     //in pixels
     private int scrollTime = 300;               //in milliseconds
     private int fastScrollTime = 200;           //in milliseconds
+
+    private String deploy_id, base_url, api_token, activityEndpoint, endpoint;
+    RequestQueue netQueue;
+
+    private ArrayList<String> mementoEventsFromServer, mementoEventsFromCache;
+
+    private ArrayAdapter<String> adapter1;
     //////////////
+
 
 
     public AgiGenInfoFragment() {
@@ -124,6 +141,11 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // added for getting Memento data from the server
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        netQueue = NetworkSingleton.getInstance(this.getContext()).getRequestQueue();
+
         if (getArguments() != null) {
             dateFormats = new java.text.DateFormat[] {
                     java.text.DateFormat.getDateInstance(),
@@ -133,6 +155,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
         Log.v("TEST onCreate", "onCreate started");
 
+
+        //        /* OLD VERSION, USED TO RETRIEVE MEMENTO EVENTS FROM LOCAL memento.txt FILE.  USE NEW VERSION BELOW WHICH PULLS FROM SERVER
         // get dir
         besiDir = new File(Environment.getExternalStorageDirectory(), "BESI");
         //make sure it's created
@@ -143,9 +167,118 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         mementoTxtString = readFileToString(besiFile);
         mementoAL = stringToList(mementoTxtString);
 
-        for(String s : mementoAL)   {
-            Log.v("mementoAL jjp5nw", s);
+        //*/
+
+        pullMementoEventListFromServer();       // this method takes time to complete since it adds a network request into netQueue.  mementoEventsFromServer arraylist will probably not be instantiated until later. the method fills the arrayadapter dynamically
+
+        Log.v("mementoEFS jjp5nw", "AL = " + mementoEventsFromServer);
+//        mementoAL = mementoEvents;
+//        while(mementoEventsFromServer == null) {}   //delay program while the mementoEvents is null
+
+//        for(String s : mementoAL)   {
+//            Log.v("mementoAL jjp5nw", s);
+//        }
+
+
+
+        Log.v("memento jjp5nw", "getMementoEventList() finished.");
+
+
+    }
+
+    private void pullMementoEventListFromServer()
+    {
+        ArrayList<String> ret = new ArrayList<String>();
+        ArrayList<String> events;
+
+        //final View rootView =  inflater.inflate(R.layout.fragment_agi_gen_info, container, false);
+        deploy_id = sharedPref.getString("pref_key_deploy_id","");
+        base_url = sharedPref.getString("pref_key_base_url", "");
+        api_token = sharedPref.getString("pref_key_api_token","");
+//        activityEndpoint="/api/v1/survey/fields/smart/a/";
+        activityEndpoint="/api/v1/memento/e/smart/";    //from C:/Users/John/Dropbox/Documents/RESEARCH/INERTIA/ben/api_v1/urls.py
+
+//        adapter.clear();
+//        tempList.clear();
+//        ConvertedList.clear();
+
+        //  /*
+        JsonArrayRequestWithToken eventsListRequestArray = new JsonArrayRequestWithToken(base_url + activityEndpoint, api_token, new Response.Listener<JSONArray>() {
+//        Log.v("mementoEL jjp5nw", "activityListRequestArray");
+
+            @Override
+            public void onResponse(JSONArray resp) {
+                Log.v("onResponse jjp5nw", resp.toString());
+//                buildCheckBoxList(resp);
+                Log.v("onResponse jjp5nw", "before calling getMementoEventsArray");
+                mementoEventsFromServer = getMementoEventsArray(resp);
+                Log.v("onResponse jjp5nw", "after calling getMementoEventsArray");
+                Log.v("onResponse jjp5nw", "ArrayList events = " + mementoEventsFromServer);
+
+                // dynamically add the events to the adapter that is attached to the listview.
+                adapter1.clear();
+                for(String event : mementoEventsFromServer) {
+                    adapter1.add(event);
+                    Log.v("adapter1 jjp5nw", event + " added to adapter1");
+                }
+
+                FileHelpers.writeStringToInternalStorage(resp.toString(), "cache", "mementoCache", getContext());
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.v("onErrorResponse jjp5nw", error.toString());
+                String cachedJson = FileHelpers.readStringFromInternalStorage("cache", "mementoCache", getContext());
+                try {
+                    JSONArray cacheArray = new JSONArray(cachedJson);
+
+                    mementoEventsFromCache = getMementoEventsArray(cacheArray);
+                    adapter1.clear();
+                    for(String event : mementoEventsFromCache) {
+                        adapter1.add(event);
+                        Log.v("adapter1 jjp5nw", event + " added to adapter1");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        //*/
+
+        this.netQueue.add(eventsListRequestArray);
+
+
+    }
+
+    private ArrayList<String> getMementoEventsArray(JSONArray jArray)
+    {
+        ArrayList<String> ret = new ArrayList<String>();
+        try {
+            //sample output from server: [{"pk":14,"deployment":"testuser","datetime":"2017-05-19T20:21:40Z","unread":true},{"pk":15,"deployment":"testuser","datetime":"2017-05-19T16:21:46Z","unread":true},{"pk":16,"deployment":"testuser","datetime":"2017-05-19T20:21:54Z","unread":true}]
+            //https://stackoverflow.com/questions/35939337/how-to-convert-date-in-particular-format-in-android
+            //example datetime format: 2017-05-19T20:21:40Z
+            SimpleDateFormat fileSDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            SimpleDateFormat viewSDF = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+            Log.v("getMEArray jjp5nw", "created sdf1, sdf2");
+            for(int i = 0; i < jArray.length(); i++)  {
+                JSONObject event = (JSONObject)(jArray.get(i));
+                Log.v("getMEArray jjp5nw", "event.getString(\"datetime\") = " + event.getString("datetime"));
+                Date eventTime = fileSDF.parse(event.getString("datetime"));
+                String formattedEventTime = viewSDF.format(eventTime);
+                Log.v("getMEArray jjp5nw", formattedEventTime);
+                ret.add(formattedEventTime);
+            }
+            Log.v("getMEArray jjp5nw", "length of jArray: " + jArray.length());
+        }   catch(JSONException e) {
+            Log.e("ERROR jjp5nw", "Server responded with incorrect JSON");
+        }   catch(ParseException e) {
+            Log.e("ERROR jjp5nw", "ParseException in sdf parse call");
         }
+        Collections.sort(ret, String.CASE_INSENSITIVE_ORDER);
+        Collections.reverse(ret);
+        return ret;
     }
 
         ///*
@@ -338,7 +471,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                view.setSelected(true);
+//                view.setSelected(true);       // UNCOMMENT THIS LINE IN ORDER TO SELECT ITEMS AGAIN.
+                // relevant files: customlistitem1_bg_key.xml, custom_list_item_1.xml
 
                 // http://stackoverflow.com/questions/16189651/android-listview-selected-item-stay-highlighted
             }
@@ -396,10 +530,13 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
         String test = FileHelpers.readStringFromInternalStorage("Download/", "memento.txt", rootView.getContext());
         Log.v("T3st", "read test: " + test);
+
         //create adapter for listView1
 //        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
-        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1, mementoAL);
+//        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1, mementoAL);
+        adapter1 = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1);//, mementoEventsFromServer);
 //        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, inListView);
+
         listView1.setAdapter(adapter1);
         // http://stackoverflow.com/questions/8215308/using-context-in-a-fragment
 
@@ -470,6 +607,14 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
         /////////////////////////////////////////////////////////////////////////////////
 
+
+        back = (Button)rootView.findViewById(R.id.agi_gen_info_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AgitationReports) getActivity()).onBackPressed();
+            }
+        });
 
         next = (Button)rootView.findViewById(R.id.agi_gen_info_next);
         next.setOnClickListener(new View.OnClickListener() {

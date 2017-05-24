@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -306,22 +306,53 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:layout_width="400dp"
-            android:layout_height="100dp"
-            android:text="Next"
-            android:id="@+id/pwd_mood_next"
-            android:textSize="36dp"
-            android:textAllCaps="false"
-            android:background="@drawable/loginbtnanimate"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/linearLayout10"
-            android:layout_alignEnd="@+id/linearLayout10"
-            android:layout_gravity="center_horizontal"
-            android:textStyle="bold"
-            android:visibility="visible"
-            android:layout_marginBottom="80dp" />
+        <GridLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="1"
+            android:columnCount="2">
 
+            <Button
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_width="400dp"
+                android:layout_height="75dp"
+                android:text="Back"
+                android:id="@+id/pwd_mood_back"
+                android:textSize="36dp"
+                android:textAllCaps="false"
+                android:background="@drawable/buttonanimate"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/linearLayout10"
+                android:layout_alignEnd="@+id/linearLayout10"
+                android:layout_gravity="left|top"
+                android:textStyle="bold"
+                android:visibility="visible"
+                android:layout_marginBottom="80dp"
+                android:layout_marginLeft="120dp"/>
+
+            <Button
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_width="400dp"
+                android:layout_height="75dp"
+                android:text="Next"
+                android:id="@+id/pwd_mood_next"
+                android:textSize="36dp"
+                android:textAllCaps="false"
+                android:background="@drawable/loginbtnanimate"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/linearLayout10"
+                android:layout_alignEnd="@+id/linearLayout10"
+                android:layout_gravity="right|top"
+                android:textStyle="bold"
+                android:visibility="visible"
+                android:layout_marginBottom="80dp"
+                android:layout_marginRight="120dp"/>
+
+         </GridLayout>
     </LinearLayout>
 
     <ImageView
@@ -330,9 +361,12 @@
         android:id="@+id/imageView5"
         android:layout_gravity="top|right"
         android:src="@drawable/pwd"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
+        android:layout_marginRight="50dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="50dp" />
-
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="590dp"
+         />
+<!--android:layout_marginBottom="548dp"-->
 </RelativeLayout>

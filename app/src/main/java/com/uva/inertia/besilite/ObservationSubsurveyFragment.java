@@ -94,6 +94,40 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
+        Button backBtn = (Button) rootView.findViewById(R.id.backFromObs);
+
+        backBtn.setOnClickListener(new View.OnClickListener()   {
+            @Override
+            public void onClick(View v)
+            {
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "agitationReportObservations", "com.uva.inertia.besilite", getContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("Agitation Report / Observation -> Back")
+                        .id("agitationReportObsBackButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
+                //
+                ((AgitationReports) getActivity()).selectPage(0);
+            }
+        });
+
         Button confirmBtn = (Button) rootView.findViewById(R.id.submitOnObs);
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {

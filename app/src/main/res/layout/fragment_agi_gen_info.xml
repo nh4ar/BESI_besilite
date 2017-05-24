@@ -9,20 +9,45 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@color/background_pink">
 
-    <Button
-        android:layout_width="400dp"
-        android:layout_height="100dp"
-        android:text="Next"
-        android:id="@+id/agi_gen_info_next"
-        android:background="@drawable/loginbtnanimate"
-        android:textSize="36dp"
-        android:textAllCaps="false"
-        android:textStyle="bold"
+    <GridLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="1"
+        android:columnCount="2"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="40dp"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_alignTop="@+id/agiLevelGrp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp" />
-
+        >
+        <Button
+            android:layout_width="400dp"
+            android:layout_height="75dp"
+            android:text="Back"
+            android:id="@+id/agi_gen_info_back"
+            android:background="@drawable/buttonanimate"
+            android:textSize="36dp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:layout_gravity="left|top"
+            android:layout_alignTop="@+id/agiLevelGrp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:layout_marginLeft="120dp"/>
+        <Button
+            android:layout_width="400dp"
+            android:layout_height="75dp"
+            android:text="Next"
+            android:id="@+id/agi_gen_info_next"
+            android:background="@drawable/loginbtnanimate"
+            android:textSize="36dp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:layout_gravity="right|top"
+            android:layout_alignTop="@+id/agiLevelGrp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:layout_marginRight="120dp"/>
+    </GridLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="515dp"
@@ -273,22 +298,21 @@
                 android:id="@+id/textView4"
                 android:textSize="24dp"
                 android:textStyle="bold"
-                android:text="Memento Data" />
+                android:text="Events from Pebble Watch" />
 
             <ListView
                 android:id="@+id/listView1"
-                android:layout_below="@+id/textView4"
+                android:layout_width="300dp"
+                android:layout_height="204dp"
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentStart="true"
-                android:layout_height="200dp"
+                android:layout_below="@+id/textView4"
                 android:layout_margin="10dp"
-                android:scrollbars="none"
+                android:fadingEdgeLength="3dp"
                 android:footerDividersEnabled="false"
                 android:requiresFadingEdge="vertical"
-                android:fadingEdgeLength="3dp"
-                android:layout_width="300dp"
-                />
+                android:scrollbars="none" />
             <!-- android:background="@drawable/listview_border"
                 android:padding="2dp"-->
             <!--android:background="?android:attr/activatedBackgroundIndicator"-->

@@ -394,7 +394,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
         DailySurvey ds;
 
-        Button nextButton;
+        Button backButton, nextButton;
         SharedPreferences sharedPref;
 
 
@@ -548,6 +548,39 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             InControl = (CheckBox) rootView.findViewById(R.id.checkInControl);
             InControl.setOnClickListener(updateMapOnClick(cEmo, keys[++iteratorIndex], trackermap1));
 
+            backButton = (Button) rootView.findViewById(R.id.caregiver_emo_back);
+            backButton.setOnClickListener(new View.OnClickListener()    {
+                @Override
+                public void onClick(View v)
+                {
+                    ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                    // Create an Emitter
+                    Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                            .method(HttpMethod.POST) // Optional - Defines how we send the request
+                            .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                            // Optional - Defines what protocol used to send events
+                            .build();
+
+                    Subject subject = new Subject.SubjectBuilder().build();
+                    subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                    // Make and return the Tracker object
+                    Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "dailySurveyCaregiver", "com.uva.inertia.besilite", getContext())
+                            .base64(false)
+                            .subject(subject)
+                            .build()
+                    );
+
+                    tracker.track(ScreenView.builder()
+                            .name("Daily Report / Caregiver -> Back")
+                            .id("dailySurveyCaregiverBackButton")
+                            .build());
+                    ///////////////////////////////////////////////////////////////////////////////////////////
+
+//                    ((DailySurvey) getActivity()).selectPage(0);
+                    ((DailySurvey)getActivity()).onBackPressed();
+                }
+
+            });
             nextButton = (Button) rootView.findViewById(R.id.caregiver_emo_next);
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -613,7 +646,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         CheckBox LowEsteem;
         CheckBox WorstAnticipate;
         Button getChecks;
-        Button nextButton;
+        Button backButton, nextButton;
 
         HashMap<String, Boolean> hp = new HashMap<>();
         DailySurvey dailysurvey;
@@ -789,6 +822,38 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
             WorstAnticipate = (CheckBox)rootView.findViewById(R.id.checkWorstAnticipate);
             WorstAnticipate.setOnClickListener(updateMapOnClick(dailysurvey.pwdEmotions, keys[++iteratorIndex], trackermap2));
 
+            backButton = (Button) rootView.findViewById(R.id.pwd_mood_back);
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                    // Create an Emitter
+                    Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                            .method(HttpMethod.POST) // Optional - Defines how we send the request
+                            .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                            // Optional - Defines what protocol used to send events
+                            .build();
+
+                    Subject subject = new Subject.SubjectBuilder().build();
+                    subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                    // Make and return the Tracker object
+                    Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "dailySurveyPM", "com.uva.inertia.besilite", getContext())
+                            .base64(false)
+                            .subject(subject)
+                            .build()
+                    );
+
+                    tracker.track(ScreenView.builder()
+                            .name("Daily Report / Participant Mood -> Back")
+                            .id("dailySurveyPMBackButton")
+                            .build());
+                    ///////////////////////////////////////////////////////////////////////////////////////////
+
+                    ((DailySurvey) getActivity()).selectPage(0);
+//                    Log.v("DAILYSURVEY", ((DailySurvey) getActivity()).pwdEmotions.toString());
+                }
+            });
+
             nextButton = (Button) rootView.findViewById(R.id.pwd_mood_next);
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -850,7 +915,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         CheckBox wakeUpFreq;
         CheckBox wakeUpEarly;
         CheckBox restlessOveractive;
-        Button submitButton;
+        Button backButton, submitButton;
         SharedPreferences sharedPref;
 
         /**
@@ -957,6 +1022,38 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
 
             restlessOveractive =(CheckBox)rootView.findViewById(R.id.checkRestlessOveractive);
             restlessOveractive.setOnClickListener(updateMapOnClick(slpQ, keys[++iteratorIndex], trackermap3));
+
+            backButton = (Button) rootView.findViewById(R.id.daily_survey_back);
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                    // Create an Emitter
+                    Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                            .method(HttpMethod.POST) // Optional - Defines how we send the request
+                            .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                            // Optional - Defines what protocol used to send events
+                            .build();
+
+                    Subject subject = new Subject.SubjectBuilder().build();
+                    subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                    // Make and return the Tracker object
+                    Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "dailySurveyPS", "com.uva.inertia.besilite", getContext())
+                            .base64(false)
+                            .subject(subject)
+                            .build()
+                    );
+
+                    tracker.track(ScreenView.builder()
+                            .name("Daily Report / Participant Sleep -> Back")
+                            .id("dailySurveyPSBackButton")
+                            .build());
+                    ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+                    ((DailySurvey) getActivity()).selectPage(1);
+                }
+            });
 
             submitButton = (Button) rootView.findViewById(R.id.daily_survey_submit);
             submitButton.setOnClickListener(new View.OnClickListener() {
