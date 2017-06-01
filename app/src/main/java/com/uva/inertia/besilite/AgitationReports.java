@@ -93,6 +93,9 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         toolbar.setTitleTextColor(Color.BLACK);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_black_24dp);        // THIS LINE WILL CHANGE THE LEFT-MOST ICON IN THE TOOLBAR.  TOOK LOTS OF GOOGLING: https://stackoverflow.com/questions/9252354/how-to-customize-the-back-button-on-actionbar (answer by hitman snipe) ~jjp5nw
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -170,6 +173,34 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if(id == android.R.id.home) {
+            Log.v("agiReport jjp5nw", "home pressed");
+
+            ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+            // Create an Emitter
+            Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                    .method(HttpMethod.POST) // Optional - Defines how we send the request
+                    .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                    .build();
+
+            Subject s1 = new Subject.SubjectBuilder().build();
+            s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+            // Make and return the Tracker object
+            Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getApplicationContext())
+                    .base64(false) // Optional - Defines what protocol used to send events
+                    .subject(s1)
+                    .build()
+            );
+
+            t1.track(ScreenView.builder()
+                    .name("Agitation Report -> Toolbar -> Home")
+                    .id("agitationReportHomeButton")
+                    .build());
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
         }
 
         return super.onOptionsItemSelected(item);

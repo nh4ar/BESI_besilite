@@ -1,5 +1,6 @@
 package com.uva.inertia.besilite;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -32,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import com.snowplowanalytics.snowplow.tracker.*;
@@ -42,6 +45,7 @@ import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
 public class AddActivityBundle extends AppCompatActivity{
 
+    Button back;
     Button addNew;
     Button submit;
 
@@ -54,6 +58,9 @@ public class AddActivityBundle extends AppCompatActivity{
     CaseInsensitiveArrayList ActivityList;
     ArrayList<CheckboxListViewItem> ConvertedList;
     ArrayList<CheckboxListViewItem> ConvertedListCopy;
+//    ArrayList<Integer> checkedItems;\
+
+    Map<Integer, Boolean> checkedItems;
 
     Map<String,String> ActivityMap = new HashMap<>();
     Map<String,String> RevActivityMap = new HashMap<>();
@@ -67,7 +74,7 @@ public class AddActivityBundle extends AppCompatActivity{
     RequestQueue netQueue;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_activity_bundle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,6 +84,7 @@ public class AddActivityBundle extends AppCompatActivity{
         toolbar.setTitleTextAppearance(getApplicationContext(), R.style.AppTheme_Theme_Styled_ActionBar_TitleTextStyle);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_black_24dp);        // THIS LINE WILL CHANGE THE LEFT-MOST ICON IN THE TOOLBAR.  TOOK LOTS OF GOOGLING: https://stackoverflow.com/questions/9252354/how-to-customize-the-back-button-on-actionbar (answer by hitman snipe) ~jjp5nw
 
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -108,9 +116,40 @@ public class AddActivityBundle extends AppCompatActivity{
                 .build());
         ///////////////////////////////////////////////////////////////////////////////////////////
 
-
+        back = (Button)findViewById(R.id.back_activity_button);
         addNew = (Button)findViewById(R.id.add_new_activity_button);
         submit = (Button)findViewById(R.id.submit_activity_bundle);
+
+        back.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
+                        // Optional - Defines what protocol used to send events
+                        .build();
+
+                Subject subject = new Subject.SubjectBuilder().build();
+                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
+                // Make and return the Tracker object
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "backFromActivitiesButton", "com.uva.inertia.besilite", getApplicationContext())
+                        .base64(false)
+                        .subject(subject)
+                        .build()
+                );
+
+                tracker.track(ScreenView.builder()
+                        .name("AddActivityBundle -> Back")
+                        .id("backFromActivitiesButton")
+                        .build());
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                (AddActivityBundle.this).onBackPressed();
+            }
+        });
+
 
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +176,8 @@ public class AddActivityBundle extends AppCompatActivity{
                         .id("addNewActivityButton")
                         .build());
                 ///////////////////////////////////////////////////////////////////////////////////////////
-
+                checkedItems = getCheckedActivityMap();
+                Log.v("addnew jjp5nw", "checkedItems = " + checkedItems.toString());
                 AddNewActivityDialogFrag newAct = AddNewActivityDialogFrag.newInstance("newAct");
                 newAct.show(getFragmentManager(), "fragment_add_activity");
             }
@@ -202,7 +242,49 @@ public class AddActivityBundle extends AppCompatActivity{
 
         mListView.setAdapter(adapter);
         getActivityList();
+
+        checkedItems = getCheckedActivityMap();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == android.R.id.home) {
+            Log.v("activityLog jjp5nw", "home pressed");
+
+            ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+            // Create an Emitter
+            Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                    .method(HttpMethod.POST) // Optional - Defines how we send the request
+                    .option(BufferOption.Single) // Optional - x`Defines how many events we bundle in a POST\
+                    .build();
+
+            Subject s1 = new Subject.SubjectBuilder().build();
+            s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+            // Make and return the Tracker object
+            Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "activityLog", "com.uva.inertia.besilite", getApplicationContext())
+                    .base64(false) // Optional - Defines what protocol used to send events
+                    .subject(s1)
+                    .build()
+            );
+
+            t1.track(ScreenView.builder()
+                    .name("activityLog -> Toolbar -> Home")
+                    .id("activityLogHomeButton")
+                    .build());
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     public ArrayList<CheckboxListViewItem> generateCheckboxes(CaseInsensitiveArrayList ar){
         ArrayList<CheckboxListViewItem> ret = new ArrayList<>();
@@ -213,7 +295,8 @@ public class AddActivityBundle extends AppCompatActivity{
     }
 
     public void onFinishNewActDialog(String temp){
-        if (ActivityList.contains(temp)){
+        if (ActivityList.contains(temp))    {
+//        if(adapter.getPosition(new CheckboxListViewItem()))
             Context context = getApplicationContext();
             CharSequence text = "This field already exists";
             int duration = Toast.LENGTH_SHORT;
@@ -322,7 +405,10 @@ public class AddActivityBundle extends AppCompatActivity{
     }
 
     void buildCheckBoxList(JSONArray jArray){
+        int pk = -314;
         try {
+//            checkedItems = getCheckedActivityMap();
+
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject o = (JSONObject) jArray.get(i);
                 ActivityMap.put(o.getString("pk"), o.getString("value"));
@@ -332,17 +418,34 @@ public class AddActivityBundle extends AppCompatActivity{
 
             Collections.sort(tempList, String.CASE_INSENSITIVE_ORDER);
             Log.v("MAPS", tempList.toString());
+//            for(String s : tempList)    {
+//
+//            }
             for (String s : tempList) {
-                CheckboxListViewItem c = new CheckboxListViewItem(s, 0,
-                        Integer.parseInt(RevActivityMap.get(s)));
+                pk = Integer.parseInt(RevActivityMap.get(s));
+                CheckboxListViewItem c;
+                try {
+                    Log.v("bcbl new jjp5nw", "checkedItems = " + checkedItems.toString());
+                    c = new CheckboxListViewItem(s, (checkedItems.get(pk) ? 1 : 0), pk);
+                }   catch(Exception e)  {
+                    c = new CheckboxListViewItem(s, 0, pk);
+                }
+//                CheckboxListViewItem c = new CheckboxListViewItem(s, 0, pk);
+
                 adapter.add(c);
+                ActivityList.add(s);        // added for duplicate checking in onFinishNewDialog
             }
         } catch (JSONException e) {
             Log.e("ERROR", "Server responded with incorrect JSON");
+        } catch (Exception e)   {
+            Log.v("bcbl jjp5nw", "pk = " + pk);
+            Log.v("bcbl jjp5nw", "checkedItems = " + checkedItems.toString());
         }
     }
 
     void submitBundle(ArrayList<Integer> pks){
+        checkedItems = new TreeMap<Integer, Boolean>();
+
        // dumpBundle(pks);
         createNewBundle(pks);
         finish();
@@ -465,6 +568,18 @@ public class AddActivityBundle extends AppCompatActivity{
             if (c.getValue() == 1){
                 ret.add(c.getPK());
             }
+        }
+
+        return ret;
+    }
+
+    public Map<Integer, Boolean> getCheckedActivityMap()
+    {
+        Map<Integer, Boolean> ret = new TreeMap<Integer, Boolean>();
+
+        for(int i = 0; i < adapter.getCount(); i++) {
+            CheckboxListViewItem c = adapter.getItem(i);
+            ret.put(c.getPK(), ((c.getValue() == 1) ? (true) : (false)));
         }
 
         return ret;

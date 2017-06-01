@@ -310,7 +310,7 @@
                 android:id="@+id/caregiver_emo_next"
                 android:textSize="36dp"
                 android:textAllCaps="false"
-                android:background="@drawable/loginbtnanimate"
+                android:background="@drawable/buttonanimate"
                 android:layout_gravity="right|top"
                 android:textStyle="bold"
                 android:visibility="visible"

@@ -342,7 +342,7 @@
                 android:id="@+id/pwd_mood_next"
                 android:textSize="36dp"
                 android:textAllCaps="false"
-                android:background="@drawable/loginbtnanimate"
+                android:background="@drawable/buttonanimate"
                 android:layout_alignParentBottom="true"
                 android:layout_alignRight="@+id/linearLayout10"
                 android:layout_alignEnd="@+id/linearLayout10"

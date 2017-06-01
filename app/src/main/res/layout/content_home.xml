@@ -11,39 +11,17 @@
     android:background="#E1BEE7">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="false"
-        android:id="@+id/linearLayout"
         android:layout_alignParentBottom="false"
-        android:visibility="invisible">
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:weightSum="1">
 
-        <ImageView
-            style="@style/SubIconView"
-            android:id="@+id/imageView"
-            android:src="@drawable/exit"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="false" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Exit"
-            android:id="@+id/textView10"
-            android:textSize="36dp"
-            android:textStyle="bold"
-            android:layout_below="@+id/imageView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#010101" />
     </LinearLayout>
 
     <LinearLayout

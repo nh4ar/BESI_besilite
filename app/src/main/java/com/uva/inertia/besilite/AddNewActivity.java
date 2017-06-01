@@ -90,6 +90,7 @@ public class AddNewActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         Log.v("WHY", ""+(getSupportActionBar() != null));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_black_24dp);        // THIS LINE WILL CHANGE THE LEFT-MOST ICON IN THE TOOLBAR.  TOOK LOTS OF GOOGLING: https://stackoverflow.com/questions/9252354/how-to-customize-the-back-button-on-actionbar (answer by hitman snipe) ~jjp5nw
 
         tz = TimeZone.getTimeZone("UTC");
 

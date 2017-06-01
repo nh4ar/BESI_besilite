@@ -5,11 +5,13 @@
     android:padding="2dp"
     android:textSize="24dp"
     android:textColor="@color/black"
-    android:height="66dp"
-    android:textAlignment="center"
-    android:gravity="center"
+    android:height="44dp"
+    android:gravity="left"
     android:background="@drawable/customlistitem1_bg_key">
 
+    <!--
+    android:textAlignment="left"-->
+    <!--android:height="66dp"-->
     <!--
         android:padding="9dp"
         android:textSize="15sp"

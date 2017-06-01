@@ -38,7 +38,7 @@
             android:layout_height="75dp"
             android:text="Next"
             android:id="@+id/agi_gen_info_next"
-            android:background="@drawable/loginbtnanimate"
+            android:background="@drawable/buttonanimate"
             android:textSize="36dp"
             android:textAllCaps="false"
             android:textStyle="bold"
@@ -48,267 +48,265 @@
             android:layout_marginBottom="60dp"
             android:layout_marginRight="120dp"/>
     </GridLayout>
+
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="515dp"
         android:id="@+id/agi_gen"
+        android:layout_width="match_parent"
+        android:layout_height="515dp"
         android:layout_gravity="top|center">
 
         <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/relativeLayout"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_marginTop="25dp">
 
             <TextView
+                android:id="@+id/agi_date_viewer"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/agi_date_viewer"
-                android:layout_toRightOf="@+id/agi_time"
-                android:layout_toEndOf="@+id/agi_time"
                 android:layout_alignTop="@+id/agi_date"
-                android:layout_marginTop="10dp"
-                android:text="date"
                 android:layout_marginLeft="20dp"
-                android:textSize="32sp" />
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/agi_time"
+                android:layout_toRightOf="@+id/agi_time"
+                android:text="date"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/agi_time_viewer"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="time"
-                android:id="@+id/agi_time_viewer"
-                android:layout_toRightOf="@+id/agi_time"
-                android:layout_toEndOf="@+id/agi_time"
                 android:layout_alignTop="@+id/agi_time"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
-                android:textSize="32sp" />
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/agi_time"
+                android:layout_toRightOf="@+id/agi_time"
+                android:text="time"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="24sp" />
 
             <Button
-                android:text="Agitation Time"
                 android:id="@+id/agi_time"
-                android:background="@drawable/buttonanimate"
-                android:textSize="24dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="44dp"
                 android:layout_width="250dp"
-                android:layout_below="@+id/agi_date"
+                android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/agi_date"
+                android:layout_marginTop="44dp"
+                android:background="@drawable/buttonanimate"
+                android:text="Agitation Time"
+                android:textSize="24dp" />
 
             <Button
-                android:text="Agitation Date"
                 android:id="@+id/agi_date"
-                android:background="@drawable/buttonanimate"
-                android:textSize="24dp"
-                android:layout_height="50dp"
                 android:layout_width="250dp"
-                android:layout_marginTop="25dp"
-                android:layout_alignParentTop="true"
+                android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/buttonanimate"
+                android:text="Agitation Date"
+                android:textSize="24dp" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/relativeLayout2"
-            android:layout_marginBottom="44dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="75dp">
 
             <TextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Agitation Level:"
-                android:id="@+id/textView"
-                android:textSize="36sp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="20dp"
+                android:text="Agitation Level:"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
             <RadioGroup
+                android:id="@+id/agiLevelGrp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_below="@+id/textView"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/agiLevelGrp">
+                android:orientation="horizontal">
 
                 <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/customradio"
-                    android:text="1"
                     android:id="@+id/agiLevel1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customradio"
                     android:checked="true"
-                    android:textSize="38sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
+                    android:paddingLeft="10dp"
+                    android:text="1"
+                    android:textSize="24sp" />
 
                 <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2"
                     android:id="@+id/agiLevel2"
-                    android:button="@drawable/customradio"
-                    android:checked="false"
-                    android:textSize="38sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
-
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:button="@drawable/customradio"
+                    android:checked="false"
+                    android:paddingLeft="10dp"
+                    android:text="2"
+                    android:textSize="24sp" />
+
+                <RadioButton
                     android:id="@+id/agiLevel3"
-                    android:checked="false"
-                    android:textSize="38sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
-
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customradio"
+                    android:checked="false"
+                    android:paddingLeft="10dp"
+                    android:text="3"
+                    android:textSize="24sp" />
+
+                <RadioButton
                     android:id="@+id/agiLevel4"
-                    android:button="@drawable/customradio"
-                    android:checked="false"
-                    android:textSize="38sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
-
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customradio"
+                    android:checked="false"
+                    android:paddingLeft="10dp"
+                    android:text="4"
+                    android:textSize="24sp" />
+
+                <RadioButton
                     android:id="@+id/agiLevel5"
-                    android:button="@drawable/customradio"
-                    android:checked="false"
-                    android:textSize="38sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
-
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="6"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customradio"
+                    android:checked="false"
+                    android:paddingLeft="10dp"
+                    android:text="5"
+                    android:textSize="24sp" />
+
+                <RadioButton
                     android:id="@+id/agiLevel6"
-                    android:button="@drawable/customradio"
-                    android:checked="false"
-                    android:textSize="38sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
-
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="7"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customradio"
+                    android:checked="false"
+                    android:paddingLeft="10dp"
+                    android:text="6"
+                    android:textSize="24sp" />
+
+                <RadioButton
                     android:id="@+id/agiLevel7"
-                    android:button="@drawable/customradio"
-                    android:checked="false"
-                    android:textSize="38sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
-
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="8"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customradio"
+                    android:checked="false"
+                    android:paddingLeft="10dp"
+                    android:text="7"
+                    android:textSize="24sp" />
+
+                <RadioButton
                     android:id="@+id/agiLevel8"
-                    android:button="@drawable/customradio"
-                    android:checked="false"
-                    android:textSize="38sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
-
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customradio"
+                    android:checked="false"
+                    android:paddingLeft="10dp"
+                    android:text="8"
+                    android:textSize="24sp" />
+
+                <RadioButton
                     android:id="@+id/agiLevel9"
-                    android:checked="false"
-                    android:button="@drawable/customradio"
-                    android:textSize="38sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
-
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10"
-                    android:id="@+id/agiLevel10"
-                    android:checked="false"
-                    android:button="@drawable/customradio"
-                    android:textSize="38sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:paddingLeft="10dp" />
+                    android:button="@drawable/customradio"
+                    android:checked="false"
+                    android:paddingLeft="10dp"
+                    android:text="9"
+                    android:textSize="24sp" />
+
+                <RadioButton
+                    android:id="@+id/agiLevel10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/customradio"
+                    android:checked="false"
+                    android:paddingLeft="10dp"
+                    android:text="10"
+                    android:textSize="24sp" />
             </RadioGroup>
 
             <TextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/agi_level_viewer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/agi_level_viewer"
-                android:textSize="36sp"
-                android:textIsSelectable="false"
-                android:textStyle="bold"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="18dp"
                 android:layout_marginStart="18dp"
-                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/textView"
                 android:layout_toRightOf="@+id/textView"
-                android:layout_toEndOf="@+id/textView" />
+                android:text="New Text"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textIsSelectable="false"
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/mementoLayout"
-            android:layout_alignTop="@+id/relativeLayout"
-            android:layout_alignRight="@+id/relativeLayout2"
-            android:layout_alignEnd="@+id/relativeLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignBottom="@+id/relativeLayout5"
+            android:layout_alignEnd="@+id/relativeLayout2"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="30dp">
+            android:layout_alignRight="@+id/relativeLayout2"
+            android:layout_alignTop="@+id/relativeLayout">
 
             <TextView
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView4"
+                android:text="Events from Watch"
                 android:textSize="24dp"
-                android:textStyle="bold"
-                android:text="Events from Pebble Watch" />
+                android:textStyle="bold" />
 
             <ListView
                 android:id="@+id/listView1"
-                android:layout_width="300dp"
-                android:layout_height="204dp"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
+                android:layout_width="400dp"
+                android:layout_height="142dp"
                 android:layout_below="@+id/textView4"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:fadingEdgeLength="3dp"
                 android:footerDividersEnabled="false"
                 android:requiresFadingEdge="vertical"
@@ -340,24 +338,26 @@
             -->
 
             <Button
-                android:text="▲"
                 android:id="@+id/button_scrollup"
-                android:background="@drawable/buttonanimate"
+                android:layout_width="50dp"
+                android:layout_height="65dp"
                 android:layout_alignTop="@+id/listView1"
-                android:layout_toRightOf="@+id/listView1"
                 android:layout_toEndOf="@+id/listView1"
-                android:layout_height="98dp"
-                android:layout_width="50dp" />
+                android:layout_toRightOf="@+id/listView1"
+                android:background="@drawable/buttonanimate"
+                android:text="▲"
+                android:textSize="20dp" />
 
             <Button
-                android:text="▼"
-                android:layout_height="98dp"
                 android:id="@+id/button_scrolldown"
-                android:background="@drawable/buttonanimate"
                 android:layout_width="50dp"
+                android:layout_height="65dp"
                 android:layout_alignBottom="@+id/listView1"
+                android:layout_toEndOf="@+id/listView1"
                 android:layout_toRightOf="@+id/listView1"
-                android:layout_toEndOf="@+id/listView1" />
+                android:background="@drawable/buttonanimate"
+                android:text="▼"
+                android:textSize="20dp" />
 
             <!--
             <Button
@@ -386,37 +386,38 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="600dp"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="50dp">
+            android:layout_below="@+id/relativeLayout"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="60dp">
 
             <TextView
-                android:text="Location"
+                android:id="@+id/textView18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView18"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:textSize="32sp"
+                android:layout_alignParentTop="true"
+                android:text="Location"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="28sp"
                 android:textStyle="normal|bold" />
 
             <Spinner
                 android:id="@+id/loc_spinner"
-                android:layout_height="50dp"
-                android:backgroundTint="@color/blue"
-                android:background="@drawable/customcheckbox"
-                tools:style="@style/Widget.AppCompat.Spinner"
                 android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="83dp"
                 android:layout_marginStart="83dp"
-                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/textView18"
                 android:layout_toRightOf="@+id/textView18"
-                android:layout_toEndOf="@+id/textView18" />
+                android:background="@drawable/customcheckbox"
+                android:backgroundTint="@color/blue"
+                tools:style="@style/Widget.AppCompat.Spinner" />
         </RelativeLayout>
 
     </RelativeLayout>

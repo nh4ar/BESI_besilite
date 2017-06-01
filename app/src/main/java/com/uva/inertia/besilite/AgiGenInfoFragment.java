@@ -112,7 +112,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     private String mementoTxtString = "";
     private ArrayList<String> mementoAL;
 
-    private int customListItem1Height = 66;     //in pixels
+    private int customListItem1Height = 44;     //in pixels
     private int scrollTime = 300;               //in milliseconds
     private int fastScrollTime = 200;           //in milliseconds
 
@@ -260,7 +260,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             //https://stackoverflow.com/questions/35939337/how-to-convert-date-in-particular-format-in-android
             //example datetime format: 2017-05-19T20:21:40Z
             SimpleDateFormat fileSDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            SimpleDateFormat viewSDF = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+            SimpleDateFormat viewSDF = new SimpleDateFormat("M/dd/yyyy h:mm a EEE");
             Log.v("getMEArray jjp5nw", "created sdf1, sdf2");
             for(int i = 0; i < jArray.length(); i++)  {
                 JSONObject event = (JSONObject)(jArray.get(i));
@@ -401,12 +401,64 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 pwdGen.put("agiloc", spinner_adapter.getItem(position).toString());
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Location Select -> " + spinner_adapter.getItem(position).toString() + " selected")
+                        .id("agitationReportLocationSpinner")
+                        .build());
+
+
+//        t1.getSubject().setUserId(sharedPref.getString("pref_key_api_token", ""));
+                ///////////////////////////////////////////////////////////////////////////////////////////
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
                 pwdGen.put("agiloc", "NA");
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Location Select -> Nothing selected")
+                        .id("agitationReportLocationSpinner")
+                        .build());
+
+
+//        t1.getSubject().setUserId(sharedPref.getString("pref_key_api_token", ""));
+                ///////////////////////////////////////////////////////////////////////////////////////////
             }
         });
 
@@ -558,6 +610,30 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 //                listView1.scroll
 //                scrollListView(listView1, mementoData1, inListView, lvposition, -1);
 
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Memento -> Scroll Up onClick()")
+                        .id("agitationReportMementoScrollUpOnClick")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
             }
 
         });
@@ -566,6 +642,30 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             public boolean onLongClick(View v) {
 //                listView1.smoothScrollToPosition(0);
                 listView1.smoothScrollBy(-1 * customListItem1Height * adapter1.getCount(), fastScrollTime * adapter1.getCount());
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Memento -> Scroll Up onLongClick()")
+                        .id("agitationReportMementoScrollUpLongClick")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
 
                 return true;
             }
@@ -594,6 +694,30 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 //                Log.v("inListView", "after removeFirst: " + inListView.toArray().toString());
 //                inListView.addLast("testADD");
 //                Log.v("inListView", "after addLast: " + inListView.toArray().toString());
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Memento -> Scroll Down onClick()")
+                        .id("agitationReportMementoScrollDownOnClick")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
             }
         });
         scrolldown.setOnLongClickListener(new View.OnLongClickListener() {
@@ -601,6 +725,31 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             public boolean onLongClick(View v) {
 //                listView1.smoothScrollToPosition(adapter1.getCount());
                 listView1.smoothScrollBy(customListItem1Height * adapter1.getCount(), fastScrollTime * adapter1.getCount());
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Memento -> Scroll Down onLongClick()")
+                        .id("agitationReportMementoScrollDownLongClick")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
                 return true;
             }
         });
@@ -613,6 +762,30 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onClick(View v) {
                 ((AgitationReports) getActivity()).onBackPressed();
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Back")
+                        .id("agitationReportBackButton")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
             }
         });
 
@@ -621,6 +794,30 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onClick(View v) {
                 ((AgitationReports) getActivity()).selectPage(1);
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Next")
+                        .id("agitationReportNextButton")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
             }
         });
 

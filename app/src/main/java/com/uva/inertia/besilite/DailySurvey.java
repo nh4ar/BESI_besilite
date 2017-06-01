@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -97,6 +98,7 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_black_24dp);        // THIS LINE WILL CHANGE THE LEFT-MOST ICON IN THE TOOLBAR.  TOOK LOTS OF GOOGLING: https://stackoverflow.com/questions/9252354/how-to-customize-the-back-button-on-actionbar (answer by hitman snipe) ~jjp5nw
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
@@ -129,6 +131,43 @@ public class DailySurvey extends AppCompatActivity implements ConfirmFragment.On
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == android.R.id.home) {
+            Log.v("dailySurvey jjp5nw", "home pressed");
+
+            ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+            // Create an Emitter
+            Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
+                    .method(HttpMethod.POST) // Optional - Defines how we send the request
+                    .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                    .build();
+
+            Subject s1 = new Subject.SubjectBuilder().build();
+            s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+            // Make and return the Tracker object
+            Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "dailySurvey", "com.uva.inertia.besilite", getApplicationContext())
+                    .base64(false) // Optional - Defines what protocol used to send events
+                    .subject(s1)
+                    .build()
+            );
+
+            t1.track(ScreenView.builder()
+                    .name("dailySurvey -> Toolbar -> Home")
+                    .id("dailySurveyHomeButton")
+                    .build());
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void OnConfirmClicked() {

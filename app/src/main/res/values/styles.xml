@@ -9,11 +9,13 @@
         <item name="android:colorBackground">@color/colorPrimary</item>
         <item name="android:textSize">36sp</item>
         <item name="android:actionBarStyle">@style/AppTheme.Theme.Styled.ActionBar</item>
+        <item name="homeAsUpIndicator">@drawable/exit</item>
     </style>
 
     <style name="AppTheme.Theme.Styled.ActionBar">
         <item name="android:titleTextStyle">@style/AppTheme.Theme.Styled.ActionBar.TitleTextStyle
         </item>
+        <!--<item name="android:icon">@drawable/caregivericon</item>-->
     </style>
 
     <style name="AppTheme.Theme.Styled.ActionBar.TitleTextStyle" parent="@android:style/Widget.TextView">
@@ -37,11 +39,22 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!--<item name="android:textSize">90dp</item>-->
+        <item name="android:logo">@drawable/exit</item>
+        <item name="android:icon">@drawable/exit</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!--<item name="android:icon">@drawable/caregivericon</item>-->
+        <item name="android:logo">@drawable/exit</item>
+        <item name="android:icon">@drawable/exit</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:logo">@drawable/exit</item>
+        <item name="android:icon">@drawable/exit</item>
+
+    </style>
 
     <style name="SubIconView">
         <item name="android:layout_width">75dp</item>
