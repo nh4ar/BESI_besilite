@@ -77,20 +77,20 @@
     <string name="OBS_Communication">Difficulty with language</string>
     -->
 
-    <string name="OBS_Frustration">Fidgety</string>
-    <string name="OBS_Ambulation">Won\'t sit still</string>
-    <string name="OBS_Touching">Destroys things</string>
-    <string name="OBS_Clothing">Wearing clothes wrong</string>
-    <string name="OBS_Physical1">Hitting</string>
-    <string name="OBS_Physical2">Scratching</string>
-    <string name="OBS_OralFixation">Chews on things</string>
-    <string name="OBS_Repetition">Same question</string>
-    <string name="OBS_Vocal1">Complaining</string>
-    <string name="OBS_Vocal2">Shouting</string>
-    <string name="OBS_Lost">Getting lost at home</string>
-    <string name="OBS_Withdrawn">Stewing</string>
-    <string name="OBS_Shadowing">Imitating</string>
-    <string name="OBS_Communication">Word searching</string>
+    <string name="OBS_Frustration">Restless</string>
+    <string name="OBS_Ambulation">Pacing/Wandering</string>
+    <string name="OBS_Touching">Tearing/Breaking</string>
+    <string name="OBS_Clothing">Inappropriate dressing</string>
+    <string name="OBS_Physical1">Kicking/Pushing</string>
+    <string name="OBS_Physical2">Spitting/Biting</string>
+    <string name="OBS_OralFixation">Inappropriate Eating/Drinking</string>
+    <string name="OBS_Repetition">Repetitive talking</string>
+    <string name="OBS_Vocal1">Complaining/Whining</string>
+    <string name="OBS_Vocal2">Screaming/Shouting</string>
+    <string name="OBS_Lost">Unable to find places</string>
+    <string name="OBS_Withdrawn">Mood changes</string>
+    <string name="OBS_Shadowing">Copying/Imitating</string>
+    <string name="OBS_Communication">Language difficulty</string>
 
     <!--<string name="OBS_Annoying">_Annoying</string> Removed in updated list-->
 </resources>
