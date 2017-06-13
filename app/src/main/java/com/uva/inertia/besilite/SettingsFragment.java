@@ -30,7 +30,6 @@ public class SettingsFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);
 
@@ -58,7 +57,11 @@ public class SettingsFragment extends PreferenceFragment {
                                         //As per http://stackoverflow.com/questions/9292954/how-to-make-a-copy-of-a-file-in-android
                                         File f = filesIt.next();
                                         fin = new FileInputStream(f);
-                                        File out = new File(Environment.getExternalStoragePublicDirectory("BESI"), f.getName() + ".json");
+                                        File path = new File(Environment.getExternalStorageDirectory(),"BESI");
+                                        if (!path.mkdirs()){
+                                            Log.e("FILES", "Failed to create BESI export folder");
+                                        };
+                                        File out = new File(path, f.getName() + ".json");
                                         fou = new FileOutputStream(out);
                                         FileChannel inChan = fin.getChannel();
                                         FileChannel outChan = fou.getChannel();
