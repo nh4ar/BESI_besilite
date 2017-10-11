@@ -46,7 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-
+//test of new branch phase3a-dev
 public class AddNewActivity extends AppCompatActivity {
 
     java.text.DateFormat[] dateFormats;

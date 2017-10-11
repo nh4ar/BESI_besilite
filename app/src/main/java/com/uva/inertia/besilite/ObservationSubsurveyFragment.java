@@ -178,6 +178,7 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
         OralFixation = (CheckBox) rootView.findViewById(R.id.checkOralFixation);
         OralFixation.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "OralFixation"));
         Repetition = (CheckBox) rootView.findViewById(R.id.checkRepetition);
+
         Repetition.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Repetition"));
         Repetition = (CheckBox) rootView.findViewById(R.id.checkRepetition);
         Repetition.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Repetition"));
