@@ -335,12 +335,14 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
             switch (position) {
                 case 0:
                     return AgiGenInfoFragment.newInstance();
-                //case 1:
-                  //  return RadioPWDEmotionSubsurveyFragment.newInstance();
+//                case 1:
+//                    return RadioPWDEmotionSubsurveyFragment.newInstance();
                 case 1:
                     return ObservationSubsurveyFragment.newInstance();
-//                case 2:
+                case 2:
 //                    return ConfirmFragment.newInstance(position + 1);
+//                    return RadioPWDEmotionSubsurveyFragment.newInstance();
+                    return NotificationsFragment.newInstance();
             }
             return null;
         }
@@ -348,7 +350,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -360,8 +362,9 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                   //  return "EMOTION";
                 case 1:
                     return "Observations";
-//                case 2:
-//                    return "Submit";
+//                    return "Anything I want";
+                case 2:
+                    return "Notifications";
             }
             return null;
         }

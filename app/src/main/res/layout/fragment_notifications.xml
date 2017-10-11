@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
         <LinearLayout
@@ -25,8 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Please select all that apply."
-                android:id="@+id/textView11"
+                android:text="Notifications"
+                android:id="@+id/textView_notifications"
                 android:textStyle="bold"
                 android:textSize="36dp"
                 android:layout_alignParentTop="true"
@@ -309,7 +308,7 @@
             <Button
                 android:layout_row="0"
                 android:layout_column="0"
-                android:id="@+id/backFromObs"
+                android:id="@+id/backFromNotifs"
                 android:layout_width="400dp"
                 android:layout_height="75dp"
                 android:layout_gravity="left|top"
@@ -326,23 +325,7 @@
             <Button
                 android:layout_row="0"
                 android:layout_column="1"
-                android:id="@+id/obsNextToNotifs"
-                android:layout_width="400dp"
-                android:layout_height="75dp"
-                android:layout_gravity="right|top"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="120dp"
-                android:background="@drawable/buttonanimate"
-                android:text="Next"
-                android:textAllCaps="false"
-                android:textSize="36dp"
-                android:textStyle="bold" />
-            <!--
-            <Button
-                android:layout_row="0"
-                android:layout_column="1"
-                android:id="@+id/submitOnObs"
+                android:id="@+id/submitOnNotifs"
                 android:layout_width="400dp"
                 android:layout_height="75dp"
                 android:layout_gravity="right|top"
@@ -354,7 +337,6 @@
                 android:textAllCaps="false"
                 android:textSize="36dp"
                 android:textStyle="bold" />
-              -->
         </GridLayout>
 
         <!--android:layout_alignParentEnd="true"

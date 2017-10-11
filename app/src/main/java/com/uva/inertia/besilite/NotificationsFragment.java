@@ -19,7 +19,8 @@ import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 import java.util.HashMap;
 
 
-public class ObservationSubsurveyFragment extends android.support.v4.app.Fragment {
+public class NotificationsFragment extends android.support.v4.app.Fragment
+{
 
     AgitationReports ar;
     HashMap<String, Boolean> pwdObs;
@@ -47,22 +48,24 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ObservationSubsurveyFragment newInstance() {
-        ObservationSubsurveyFragment fragment = new ObservationSubsurveyFragment();
+    public static NotificationsFragment newInstance()
+    {
+        NotificationsFragment fragment = new NotificationsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public ObservationSubsurveyFragment() {
+    public NotificationsFragment()
+    {
     }
 
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_observation_subsurvey, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
         ar = (AgitationReports) getActivity();
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -94,7 +97,7 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
-        Button backBtn = (Button) rootView.findViewById(R.id.backFromObs);
+        Button backBtn = (Button) rootView.findViewById(R.id.backFromNotifs);
 
         backBtn.setOnClickListener(new View.OnClickListener()   {
             @Override
@@ -111,26 +114,26 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
                 Subject subject = new Subject.SubjectBuilder().build();
                 subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
                 // Make and return the Tracker object
-                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "agitationReportObservations", "com.uva.inertia.besilite", getContext())
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "agitationReportNotifications", "com.uva.inertia.besilite", getContext())
                         .base64(false)
                         .subject(subject)
                         .build()
                 );
 
                 tracker.track(ScreenView.builder()
-                        .name("Agitation Report / Observation -> Back")
-                        .id("agitationReportObsBackButton")
+                        .name("Agitation Report / Notifications -> Back")
+                        .id("agitationReportNotifsBackButton")
                         .build());
                 ///////////////////////////////////////////////////////////////////////////////////////////
 
                 //
-                ((AgitationReports) getActivity()).selectPage(0);
+                ((AgitationReports) getActivity()).selectPage(1);
             }
         });
 
-                Button nextBtn = (Button) rootView.findViewById(R.id.obsNextToNotifs);
+        Button confirmBtn = (Button) rootView.findViewById(R.id.submitOnNotifs);
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ////////////////////////Android Analytics Tracking Code////////////////////////////////////
@@ -144,57 +147,22 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
                 Subject subject = new Subject.SubjectBuilder().build();
                 subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
                 // Make and return the Tracker object
-                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "agitationReportObservations", "com.uva.inertia.besilite", getContext())
+                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "agitationReportNotifications", "com.uva.inertia.besilite", getContext())
                         .base64(false)
                         .subject(subject)
                         .build()
                 );
 
                 tracker.track(ScreenView.builder()
-                        .name("Agitation Report / Observation -> Next")
-                        .id("agitationReportObsNextButton")
+                        .name("Agitation Report / Notifications -> Submit")
+                        .id("agitationReportNotifsSubmitButton")
                         .build());
                 ///////////////////////////////////////////////////////////////////////////////////////////
 
-//                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
-//                mListener.OnConfirmClicked();
-                ((AgitationReports) getActivity()).selectPage(2);
+                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
+                mListener.OnConfirmClicked();
             }
         });
-
-//        Button confirmBtn = (Button) rootView.findViewById(R.id.submitOnObs);
-//
-//        confirmBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
-//                // Create an Emitter
-//                Emitter emitter = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
-//                        .method(HttpMethod.POST) // Optional - Defines how we send the request
-//                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST
-//                        // Optional - Defines what protocol used to send events
-//                        .build();
-//
-//                Subject subject = new Subject.SubjectBuilder().build();
-//                subject.setUserId(sharedPref.getString("pref_key_api_token", ""));
-//                // Make and return the Tracker object
-//                Tracker tracker = Tracker.init(new Tracker.TrackerBuilder(emitter, "agitationReportObservations", "com.uva.inertia.besilite", getContext())
-//                        .base64(false)
-//                        .subject(subject)
-//                        .build()
-//                );
-//
-//                tracker.track(ScreenView.builder()
-//                        .name("Agitation Report / Observation -> Submit")
-//                        .id("agitationReportObsSubmitButton")
-//                        .build());
-//                ///////////////////////////////////////////////////////////////////////////////////////////
-//
-////                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
-////                mListener.OnConfirmClicked();
-//                ((AgitationReports) getActivity()).selectPage(2);
-//            }
-//        });
 
         pwdObs = ar.pwdObs;
 
@@ -235,3 +203,4 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
         return rootView;
     }
 }
+
