@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.util.Log;
 
 import com.snowplowanalytics.snowplow.tracker.Emitter;
 import com.snowplowanalytics.snowplow.tracker.Subject;
@@ -48,6 +49,7 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
      * number.
      */
     public static ObservationSubsurveyFragment newInstance() {
+        Log.v("jjp5nw", "ObservationSubsurveyFragment newInstance() called");
         ObservationSubsurveyFragment fragment = new ObservationSubsurveyFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -55,6 +57,7 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
     }
 
     public ObservationSubsurveyFragment() {
+        Log.v("jjp5nw", "ObservationSubsurvey constructor called");
     }
 
 
@@ -62,6 +65,7 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.v("jjp5nw", "ObservationSubsurveyFragment onCreateView() called");
         View rootView = inflater.inflate(R.layout.fragment_observation_subsurvey, container, false);
         ar = (AgitationReports) getActivity();
 
@@ -159,6 +163,8 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
 //                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
 //                mListener.OnConfirmClicked();
                 ((AgitationReports) getActivity()).selectPage(2);
+
+                Log.v("101117", "jjp5nw nextBtn pressed");
             }
         });
 

@@ -128,10 +128,12 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
     public AgiGenInfoFragment() {
         // Required empty public constructor
+        Log.v("jjp5nw", "AgiGenInfoFragment constructor called");
     }
 
 
     public static AgiGenInfoFragment newInstance() {
+        Log.v("jjp5nw", "AgiGenInfoFragment newInstance() called");
         AgiGenInfoFragment fragment = new AgiGenInfoFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -141,6 +143,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.v("jjp5nw", "AgiGenInfoFragment onCreate() called");
 
         // added for getting Memento data from the server
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
@@ -188,6 +192,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
     private void pullMementoEventListFromServer()
     {
+        Log.v("jjp5nw", "AgiGenInfoFragment pullMementoEventListFromServer() called");
         ArrayList<String> ret = new ArrayList<String>();
         ArrayList<String> events;
 
@@ -254,6 +259,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
     private ArrayList<String> getMementoEventsArray(JSONArray jArray)
     {
+        Log.v("jjp5nw", "AgiGenInfoFragment getMementoEventsArray() called");
         ArrayList<String> ret = new ArrayList<String>();
         try {
             //sample output from server: [{"pk":14,"deployment":"testuser","datetime":"2017-05-19T20:21:40Z","unread":true},{"pk":15,"deployment":"testuser","datetime":"2017-05-19T16:21:46Z","unread":true},{"pk":16,"deployment":"testuser","datetime":"2017-05-19T20:21:54Z","unread":true}]
@@ -284,6 +290,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         ///*
         // MOVE METHOD TO BOTTOM OF FILE AFTER DONE DEBUGGING
     private static String readFileToString(File file) {
+        Log.v("jjp5nw", "AgiGenInfoFragment readFileToString() called");
 //        Log.i(rootView.getLocalClassName(), "Reading from File jjp5nw");
         String ret = "";
         StringBuilder sb = new StringBuilder();
@@ -307,6 +314,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
 
     private static ArrayList<String> stringToList(String textfile)
     {
+        Log.v("jjp5nw", "AgiGenInfoFragment stringToList() called");
 //        ArrayList<String> ret = new ArrayList<String>();
         String[] temp = textfile.split("\n");
         return (new ArrayList<String>(Arrays.asList(temp)));
@@ -317,6 +325,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Log.v("jjp5nw", "AgiGenInfoFragment onCreateView() called");
         // Inflate the layout for this fragment
         final View rootView =  inflater.inflate(R.layout.fragment_agi_gen_info, container, false);
 

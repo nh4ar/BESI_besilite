@@ -3,6 +3,7 @@ package com.uva.inertia.besilite;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,23 +24,6 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 {
 
     AgitationReports ar;
-    HashMap<String, Boolean> pwdObs;
-
-    CheckBox Restlessness;
-    CheckBox Ambulating;
-    CheckBox Touching;
-    CheckBox Clothing;
-    CheckBox Physical1;
-    CheckBox Physical2;
-    CheckBox OralFixation;
-    CheckBox Repetition;
-    CheckBox Vocal1;
-    CheckBox Vocal2;
-    CheckBox Lost;
-    CheckBox Withdrawn;
-    CheckBox Annoying;
-    CheckBox Shadowing;
-    CheckBox Communication;
 
     ConfirmFragment.OnConfirmClickedListener mListener;
 
@@ -50,6 +34,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
      */
     public static NotificationsFragment newInstance()
     {
+        Log.v("jjp5nw", "NotificationsFragment newInstance() called");
         NotificationsFragment fragment = new NotificationsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -58,6 +43,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 
     public NotificationsFragment()
     {
+        Log.v("jjp5nw", "NotificationsFragment constructor called");
     }
 
 
@@ -65,10 +51,28 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
+        Log.v("jjp5nw", "NotificationsFragment onCreateView() called");
+        final View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
         ar = (AgitationReports) getActivity();
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///*
 
         ////////////////////////Android Analytics Tracking Code////////////////////////////////////
         // Create an Emitter
@@ -83,15 +87,15 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
         s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
 
         // Make and return the Tracker object
-        Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "agiRepObservations", "com.uva.inertia.besilite", getContext())
+        Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "agiRepNotifications", "com.uva.inertia.besilite", getContext())
                 .base64(false)
                 .subject(s1)
                 .build()
         );
 
         t1.track(ScreenView.builder()
-                .name("Agitation Report Observation Survey")
-                .id("agiReportObsSurvey")
+                .name("Agitation Report Notifications")
+                .id("agiReportNotifs")
                 .build());
 
 
@@ -163,42 +167,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 mListener.OnConfirmClicked();
             }
         });
-
-        pwdObs = ar.pwdObs;
-
-        Restlessness = (CheckBox) rootView.findViewById(R.id.checkRestlessness);
-        Restlessness.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Frustration"));
-        Ambulating = (CheckBox) rootView.findViewById(R.id.checkAmbulating);
-        Ambulating.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Ambulation"));
-        Touching = (CheckBox) rootView.findViewById(R.id.checkTouching);
-        Touching.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Touching"));
-        Clothing = (CheckBox) rootView.findViewById(R.id.checkClothing);
-        Clothing.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Clothing"));
-        Physical1 = (CheckBox) rootView.findViewById(R.id.checkPhysical1);
-        Physical1.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Physical1"));
-        Physical2 = (CheckBox) rootView.findViewById(R.id.checkPhysical2);
-        Physical2.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Physical2"));
-        OralFixation = (CheckBox) rootView.findViewById(R.id.checkOralFixation);
-        OralFixation.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "OralFixation"));
-        Repetition = (CheckBox) rootView.findViewById(R.id.checkRepetition);
-
-        Repetition.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Repetition"));
-        Repetition = (CheckBox) rootView.findViewById(R.id.checkRepetition);
-        Repetition.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Repetition"));
-        Vocal1 = (CheckBox) rootView.findViewById(R.id.checkVocal1);
-        Vocal1.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Vocal1"));
-        Vocal2 = (CheckBox) rootView.findViewById(R.id.checkVocal2);
-        Vocal2.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Vocal2"));
-        Lost = (CheckBox) rootView.findViewById(R.id.checkLost);
-        Lost.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Lost"));
-        Withdrawn = (CheckBox) rootView.findViewById(R.id.checkWithdrawn);
-        Withdrawn.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Withdrawn"));
-        //Annoying = (CheckBox) rootView.findViewById(R.id.checkAnnoying);
-        //Annoying.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Annoying"));
-        Shadowing = (CheckBox) rootView.findViewById(R.id.checkShadowing);
-        Shadowing.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Shadowing"));
-        Communication = (CheckBox) rootView.findViewById(R.id.checkCommunication);
-        Communication.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Communication"));
+//*/
 
         return rootView;
     }

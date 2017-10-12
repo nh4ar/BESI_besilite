@@ -42,6 +42,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
+    final int NUMBER_OF_TABS = 3;
 
     String base_url;
     String api_token;
@@ -141,6 +142,8 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         // Set up the ViewPager with the sections adapter.
         mViewPager = (noSwipeViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        // https://stackoverflow.com/questions/28576198/android-tab-fragment-not-calling-oncreateview-switching-from-tab2-to-tab1/28576429
+        mViewPager.setOffscreenPageLimit(NUMBER_OF_TABS);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -208,11 +211,12 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
     @Override
     public void OnConfirmClicked() {
+        Log.v("jjp5nw", "AgitationReports OnConfirmClicked() called");
         createReport();
     }
 
     public void createReport(){
-
+        Log.v("jjp5nw", "AgitationReports createReport() called");
         String file_uuid = dumpSurveyToFile();
         createSubsurveys_Obs(file_uuid);
         finish();
@@ -221,6 +225,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
 
     private String dumpSurveyToFile(){
+        Log.v("jjp5nw", "AgitationReports dumpSurveyToFile() called");
         String uuid = UUID.randomUUID().toString();
         JSONObject surveyDump = new JSONObject();
         JSONObject obsSubsurvey = new JSONObject(pwdObs);
@@ -332,6 +337,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            Log.v("jjp5nw", "AgitationReports getItem(" + position + ")");
             switch (position) {
                 case 0:
                     return AgiGenInfoFragment.newInstance();
