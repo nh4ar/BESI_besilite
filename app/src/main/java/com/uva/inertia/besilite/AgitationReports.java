@@ -51,7 +51,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     String EmotionEndpoint;
     String ObservationEndpoint;
     String AgitationEndpoint;
-
+    String NotificationEndpoint;
 
     SharedPreferences sharedPref;
     RequestQueue netQueue;
@@ -59,6 +59,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     HashMap<String, Boolean> pwdObs;
     HashMap<String, Boolean> pwdEmo;
     HashMap<String, String> pwdGen;
+    HashMap<Integer, Boolean> pwdNotif;
 
     java.text.DateFormat df;
     TimeZone tz;
@@ -66,6 +67,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     //int agiSurveyPK;
     int obsSurveyPK;
     int emoSurveyPK;
+    int notifSurveyPK;
 
     TabLayout tabLayout;
 
@@ -114,6 +116,9 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         EmotionEndpoint = "/api/v1/survey/emo/create/";
         AgitationEndpoint = "/api/v1/survey/agi/smart/";
 
+        // NEW NOTIFICATION ENDPOINT FOR SENDING INFORMATION TO SERVER
+        NotificationEndpoint = "/api/v1/survey/notif/create/";
+
         ////////////////////////Android Analytics Tracking Code////////////////////////////////////
         // Create an Emitter
         Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getApplicationContext())
@@ -152,6 +157,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         pwdObs = new HashMap<>();
         pwdEmo = new HashMap<>();
         pwdGen = new HashMap<>();
+        pwdNotif = new HashMap<>();
 
         df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
         tz = TimeZone.getTimeZone("UTC");
@@ -218,6 +224,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     public void createReport(){
         Log.v("jjp5nw", "AgitationReports createReport() called");
         String file_uuid = dumpSurveyToFile();
+        createSubsurveys_Notif(file_uuid);
         createSubsurveys_Obs(file_uuid);
         finish();
 
@@ -247,6 +254,31 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
         FileHelpers.writeStringToInternalStorage(surveyDump.toString(),"offline",uuid,getApplicationContext());
 
         return uuid;
+    }
+
+    private void createSubsurveys_Notif(final String file_uuid) {
+        Log.v("jjp5nw", "createSubsurveys_Notif(" + file_uuid + ") called");
+        JSONObject subsurveyObject = new JSONObject(pwdNotif);
+        Log.v("jjp5nw", subsurveyObject.toString());
+
+        JsonObjectRequestWithToken requestNewPWDNotifSub = new JsonObjectRequestWithToken(
+                Request.Method.POST, base_url + NotificationEndpoint, subsurveyObject, api_token,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        try {
+                            notifSurveyPK = response.getInt("id");
+                            Log.v("jjp5nw", "created notif subsurvey");
+                        }   catch(org.json.JSONException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for obs", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                }, NetworkErrorHandlers.toastHandler(getApplicationContext())
+        );
+
+        this.netQueue.add(requestNewPWDNotifSub);
     }
 
     private void createSubsurveys_Obs(final String file_uuid){

@@ -39,7 +39,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     Question[] questions;
 //    HashMap<Button, String> questionAnswers;\
 
-
+    HashMap<Integer, Boolean> pwdNotif;
 
 
     /**
@@ -108,6 +108,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
         Log.v("jjp5nw", "NotificationsFragment onCreateView() called");
         final View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
         ar = (AgitationReports) getActivity();
+        pwdNotif = ar.pwdNotif;
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -250,8 +251,14 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 setQuestionState(questions[1], true);
                 setQuestionState(questions[2], true);
 
-                ((Button)v).setSelected(true);
+                v.setSelected(true);
                 questions[0].getButtons().get(1).setSelected(false);
+
+//                Log.v("jjp5nw", questions[0].getQuestionId() + "");
+//                Log.v("jjp5nw", questions[0].getAnswer() + "");
+                for(int i = 0; i < questions.length; i++)   {
+                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                }
 
 
                 // for submit button enabled
@@ -268,8 +275,14 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 setQuestionState(questions[1], false);
                 setQuestionState(questions[2], false);
 
-                ((Button)v).setSelected(true);
+                v.setSelected(true);
                 questions[0].getButtons().get(0).setSelected(false);
+
+                for(int i = 0; i < questions.length; i++)   {
+//                    Log.v("jjp5nw", "pwdNotif putting " + questions[i] + " at i = " + i + " into the map.");
+                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+//                    Log.v("jjp5nw", "pwdNotif put successful.");
+                }
 
                 // for submit button enabled
                 confirmBtn.setEnabled(allQuestionsAnswered());
@@ -283,9 +296,12 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 Log.v("jjp5nw", "btnQ2Yes clicked");
                 questions[1].setAnswer(true);
 
-//                ((Button)v).setPressed(true);
-                ((Button)v).setSelected(true);
+                v.setSelected(true);
                 questions[1].getButtons().get(1).setSelected(false);
+
+                for(int i = 0; i < questions.length; i++)   {
+                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                }
 
                 // for submit button enabled
                 confirmBtn.setEnabled(allQuestionsAnswered());
@@ -299,8 +315,12 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 Log.v("jjp5nw", "btnQ2No clicked");
                 questions[1].setAnswer(false);
 
-                ((Button)v).setSelected(true);
+                v.setSelected(true);
                 questions[1].getButtons().get(0).setSelected(false);
+
+                for(int i = 0; i < questions.length; i++)   {
+                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                }
 
                 // for submit button enabled
                 confirmBtn.setEnabled(allQuestionsAnswered());
@@ -314,8 +334,12 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 Log.v("jjp5nw", "btnQ3Yes clicked");
                 questions[2].setAnswer(true);
 
-                ((Button)v).setSelected(true);
+                v.setSelected(true);
                 questions[2].getButtons().get(1).setSelected(false);
+
+                for(int i = 0; i < questions.length; i++)   {
+                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                }
 
                 // for submit button enabled
                 confirmBtn.setEnabled(allQuestionsAnswered());
@@ -329,25 +353,17 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 Log.v("jjp5nw", "btnQ3No clicked");
                 questions[2].setAnswer(false);
 
-                ((Button)v).setSelected(true);
+                v.setSelected(true);
                 questions[2].getButtons().get(0).setSelected(false);
+
+                for(int i = 0; i < questions.length; i++)   {
+                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                }
 
                 // for submit button enabled
                 confirmBtn.setEnabled(allQuestionsAnswered());
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
 
         return rootView;
     }
@@ -397,6 +413,7 @@ class Question
 
     public void setUnanswered()
     {
+        this.setAnswer(false);
         this.answered = false;
     }
 
