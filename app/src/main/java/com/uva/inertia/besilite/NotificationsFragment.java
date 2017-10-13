@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.snowplowanalytics.snowplow.tracker.Emitter;
 import com.snowplowanalytics.snowplow.tracker.Subject;
@@ -17,17 +19,28 @@ import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
 import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
 import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class NotificationsFragment extends android.support.v4.app.Fragment
 {
+    final int NUMBER_OF_QUESTIONS = 3;
 
     AgitationReports ar;
 
     ConfirmFragment.OnConfirmClickedListener mListener;
 
     SharedPreferences sharedPref;
+
+//    boolean[] questionAnswers;
+    Question[] questions;
+//    HashMap<Button, String> questionAnswers;\
+
+
+
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -47,6 +60,24 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     }
 
 
+    private void setButtonState(Button button, boolean enabled)
+    {
+        button.setEnabled(enabled);
+    }
+
+    private void setButtonState(List<Button> listOfButtons, boolean enabled)
+    {
+        for(Button button : listOfButtons)  {
+            button.setEnabled(enabled);
+        }
+    }
+
+    private void setQuestionState(Question question, boolean enabled)
+    {
+        Log.v("jjp5nw", "setQuestionState(" + question + ", " + enabled + ") called");
+        setButtonState(question.getButtons(), enabled);
+        question.getTextView().setTextColor(getResources().getColor((enabled) ? (R.color.question_textview_enabled) : (R.color.question_textview_disabled)));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -57,10 +88,88 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+        ////////////////////////////////////////////////////////////////
+        Button btnQ1Yes, btnQ1No, btnQ2Yes, btnQ2No, btnQ3Yes, btnQ3No;
+
+        btnQ1Yes = (Button) rootView.findViewById(R.id.btn_notif_q1_yes);
+        btnQ1No = (Button) rootView.findViewById(R.id.btn_notif_q1_no);
+        btnQ2Yes = (Button) rootView.findViewById(R.id.btn_notif_q2_yes);
+        btnQ2No = (Button) rootView.findViewById(R.id.btn_notif_q2_no);
+        btnQ3Yes = (Button) rootView.findViewById(R.id.btn_notif_q3_yes);
+        btnQ3No = (Button) rootView.findViewById(R.id.btn_notif_q3_no);
 
 
+        questions = new Question[NUMBER_OF_QUESTIONS];
+
+        questions[0] = new Question(1, "event", (new ArrayList<Button>()), (TextView)rootView.findViewById(R.id.textView_notif_question1));
+        questions[1] = new Question(2, "accurate", (new ArrayList<Button>()), (TextView)rootView.findViewById(R.id.textView_notif_question2));
+        questions[2] = new Question(3, "helpful", (new ArrayList<Button>()), (TextView)rootView.findViewById(R.id.textView_notif_question3));
+
+        questions[0].addButton(btnQ1Yes);
+        questions[0].addButton(btnQ1No);
+        questions[1].addButton(btnQ2Yes);
+        questions[1].addButton(btnQ2No);
+        questions[2].addButton(btnQ3Yes);
+        questions[2].addButton(btnQ3No);
 
 
+        btnQ1Yes.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ1Yes clicked");
+                questions[0].setAnswer(true);
+                setQuestionState(questions[1], true);
+                setQuestionState(questions[2], true);
+            }
+        });
+
+        btnQ1No.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ1No clicked");
+                questions[0].setAnswer(false);
+                setQuestionState(questions[1], false);
+                setQuestionState(questions[2], false);
+            }
+        });
+
+        btnQ2Yes.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ2Yes clicked");
+                questions[1].setAnswer(true);
+            }
+        });
+
+        btnQ2No.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ2No clicked");
+                questions[1].setAnswer(false);
+            }
+        });
+
+        btnQ3Yes.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ3Yes clicked");
+                questions[2].setAnswer(true);
+            }
+        });
+
+        btnQ3No.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ3No clicked");
+                questions[2].setAnswer(false);
+            }
+        });
 
 
 
@@ -173,3 +282,63 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     }
 }
 
+class Question
+{
+    private List<Button> buttons;
+    private boolean answer;
+    private int id;
+    private String name;
+
+    private TextView textView;
+
+    public Question(int id, String name, List<Button> buttons, TextView textView)
+    {
+        this(id, name, false, buttons, textView);
+    }
+
+    public Question(int id, String name, boolean answer, List<Button> buttons, TextView textView)
+    {
+        this.id = id;
+        this.name = name;
+        this.answer = answer;
+        this.buttons = buttons;
+        this.textView = textView;
+    }
+
+    public int getQuestionId()
+    {
+        return this.id;
+    }
+
+
+    public void setAnswer(boolean answer)
+    {
+        this.answer = answer;
+    }
+
+    public boolean getAnswer()
+    {
+        return this.answer;
+    }
+
+    public boolean addButton(Button button)
+    {
+        return this.buttons.add(button);
+    }
+
+    public TextView getTextView()
+    {
+        return this.textView;
+    }
+
+    public List<Button> getButtons()
+    {
+        return this.buttons;
+    }
+
+    public String toString()
+    {
+        return "(Question, {id: " + this.id + " , name: " + this.name + "})";
+    }
+
+}

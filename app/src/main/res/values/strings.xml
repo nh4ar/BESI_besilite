@@ -32,6 +32,18 @@
     <string name="title_activity_agitation_reports">Agitation Report</string>
     <string name="title_activity_add_activity_bundle">Activity Log</string>
 
+
+    <!-- START Strings for NotificationsFragment -->
+    <string name="notifications_question1">Was there a notification for this event?</string>
+    <string name="notifications_question2">Was the notification accurate?</string>
+    <string name="notifications_question3">Was the notification helpful?</string>
+
+    <string name="notifications_btn_yes">Yes</string>
+    <string name="notifications_btn_no">No</string>
+    <!-- END Strings for NotificationsFragment -->
+
+
+
     <!--Why are these here @neeraj-->
     <string-array name="country_names2">
         <item>Reading</item>

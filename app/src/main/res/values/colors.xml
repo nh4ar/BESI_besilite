@@ -15,4 +15,7 @@
     <color name="customlistitem1_default_color">#E1BEE7</color>
     <color name="customlistitem1_pressed_color">#1eaccc</color>
     <!--#45cae8-->
+
+    <color name="question_textview_enabled">#666666</color>
+    <color name="question_textview_disabled">#AAAAAA</color>
 </resources>

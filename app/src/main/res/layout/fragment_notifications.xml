@@ -57,9 +57,38 @@
 
                     <TextView
                         android:id="@+id/textView_notif_question1"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Was there a notification for this event?" />
+                        android:text="@string/notifications_question1"
+                        android:textSize="@dimen/notif_textview_q_textsize"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/btn_notif_q1_yes"
+                            android:layout_width="@dimen/notif_btn_yes_layout_width"
+                            android:layout_height="@dimen/notif_btn_yes_layout_height"
+                            android:layout_marginBottom="@dimen/notif_btn_yes_layout_marginBottom"
+                            android:layout_marginTop="@dimen/notif_btn_yes_layout_marginTop"
+                            android:layout_marginLeft="@dimen/notif_btn_yes_layout_marginLeft"
+                            android:background="@drawable/buttonanimate"
+                            android:text="@string/notifications_btn_yes"
+                            android:textSize="@dimen/notif_btn_yes_textSize"
+                            android:textStyle="bold" />
+                        <Button
+                            android:id="@+id/btn_notif_q1_no"
+                            android:layout_width="@dimen/notif_btn_no_layout_width"
+                            android:layout_height="@dimen/notif_btn_no_layout_height"
+                            android:layout_marginBottom="@dimen/notif_btn_no_layout_marginBottom"
+                            android:layout_marginTop="@dimen/notif_btn_no_layout_marginTop"
+                            android:layout_marginLeft="@dimen/notif_btn_no_layout_marginLeft"
+                            android:background="@drawable/buttonanimate"
+                            android:text="@string/notifications_btn_no"
+                            android:textSize="@dimen/notif_btn_no_textSize"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -74,9 +103,38 @@
 
                     <TextView
                         android:id="@+id/textView_notif_question2"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Was the notification accurate?" />
+                        android:text="@string/notifications_question2"
+                        android:textSize="@dimen/notif_textview_q_textsize" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/btn_notif_q2_yes"
+                            android:layout_width="@dimen/notif_btn_yes_layout_width"
+                            android:layout_height="@dimen/notif_btn_yes_layout_height"
+                            android:layout_marginBottom="@dimen/notif_btn_yes_layout_marginBottom"
+                            android:layout_marginTop="@dimen/notif_btn_yes_layout_marginTop"
+                            android:layout_marginLeft="@dimen/notif_btn_yes_layout_marginLeft"
+                            android:background="@drawable/buttonanimate"
+                            android:text="@string/notifications_btn_yes"
+                            android:textSize="@dimen/notif_btn_yes_textSize"
+                            android:textStyle="bold" />
+                        <Button
+                            android:id="@+id/btn_notif_q2_no"
+                            android:layout_width="@dimen/notif_btn_no_layout_width"
+                            android:layout_height="@dimen/notif_btn_no_layout_height"
+                            android:layout_marginBottom="@dimen/notif_btn_no_layout_marginBottom"
+                            android:layout_marginTop="@dimen/notif_btn_no_layout_marginTop"
+                            android:layout_marginLeft="@dimen/notif_btn_no_layout_marginLeft"
+                            android:background="@drawable/buttonanimate"
+                            android:text="@string/notifications_btn_no"
+                            android:textSize="@dimen/notif_btn_no_textSize"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -91,9 +149,39 @@
 
                     <TextView
                         android:id="@+id/textView_notif_question3"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Was the notification helpful?" />
+                        android:text="@string/notifications_question3"
+                        android:textSize="@dimen/notif_textview_q_textsize" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/btn_notif_q3_yes"
+                            android:layout_width="@dimen/notif_btn_yes_layout_width"
+                            android:layout_height="@dimen/notif_btn_yes_layout_height"
+                            android:layout_marginBottom="@dimen/notif_btn_yes_layout_marginBottom"
+                            android:layout_marginTop="@dimen/notif_btn_yes_layout_marginTop"
+                            android:layout_marginLeft="@dimen/notif_btn_yes_layout_marginLeft"
+                            android:background="@drawable/buttonanimate"
+                            android:text="@string/notifications_btn_yes"
+                            android:textSize="@dimen/notif_btn_yes_textSize"
+                            android:textStyle="bold" />
+                        <Button
+                            android:id="@+id/btn_notif_q3_no"
+                            android:layout_width="@dimen/notif_btn_no_layout_width"
+                            android:layout_height="@dimen/notif_btn_no_layout_height"
+                            android:layout_marginBottom="@dimen/notif_btn_no_layout_marginBottom"
+                            android:layout_marginTop="@dimen/notif_btn_no_layout_marginTop"
+                            android:layout_marginLeft="@dimen/notif_btn_no_layout_marginLeft"
+                            android:background="@drawable/buttonanimate"
+                            android:text="@string/notifications_btn_no"
+                            android:textSize="@dimen/notif_btn_no_textSize"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
             </LinearLayout>
@@ -106,7 +194,7 @@
             android:layout_height="wrap_content"
             android:rowCount="1"
             android:columnCount="2"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="0dp"
             >
 
             <Button
@@ -117,7 +205,7 @@
                 android:layout_height="75dp"
                 android:layout_gravity="left|top"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginLeft="120dp"
                 android:background="@drawable/buttonanimate"
                 android:text="Back"
@@ -134,7 +222,7 @@
                 android:layout_height="75dp"
                 android:layout_gravity="right|top"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginRight="120dp"
                 android:background="@drawable/loginbtnanimate"
                 android:text="Submit"
@@ -142,7 +230,7 @@
                 android:textSize="36dp"
                 android:textStyle="bold" />
         </GridLayout>
-
+<!--android:layout_marginTop="40dp"-->
         <!--android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"-->
