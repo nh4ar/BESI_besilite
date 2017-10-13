@@ -34,6 +34,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 
     SharedPreferences sharedPref;
 
+    Button backBtn, confirmBtn;
 //    boolean[] questionAnswers;
     Question[] questions;
 //    HashMap<Button, String> questionAnswers;\
@@ -69,7 +70,13 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     {
         for(Button button : listOfButtons)  {
             button.setEnabled(enabled);
+            button.setSelected(false);
         }
+    }
+
+    private void setButtonSelected(Button button, boolean selected)
+    {
+
     }
 
     private void setQuestionState(Question question, boolean enabled)
@@ -77,6 +84,22 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
         Log.v("jjp5nw", "setQuestionState(" + question + ", " + enabled + ") called");
         setButtonState(question.getButtons(), enabled);
         question.getTextView().setTextColor(getResources().getColor((enabled) ? (R.color.question_textview_enabled) : (R.color.question_textview_disabled)));
+        question.setUnanswered();
+    }
+
+    private boolean allQuestionsAnswered()
+    {
+        if(questions[0].isAnswered())   {
+            if(!questions[0].getAnswer())   {
+                return true;
+            }
+        }
+        for(int i = 1; i < questions.length; i++)  {
+            if(!questions[i].isAnswered())  {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -88,100 +111,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        ////////////////////////////////////////////////////////////////
-        Button btnQ1Yes, btnQ1No, btnQ2Yes, btnQ2No, btnQ3Yes, btnQ3No;
-
-        btnQ1Yes = (Button) rootView.findViewById(R.id.btn_notif_q1_yes);
-        btnQ1No = (Button) rootView.findViewById(R.id.btn_notif_q1_no);
-        btnQ2Yes = (Button) rootView.findViewById(R.id.btn_notif_q2_yes);
-        btnQ2No = (Button) rootView.findViewById(R.id.btn_notif_q2_no);
-        btnQ3Yes = (Button) rootView.findViewById(R.id.btn_notif_q3_yes);
-        btnQ3No = (Button) rootView.findViewById(R.id.btn_notif_q3_no);
-
-
-        questions = new Question[NUMBER_OF_QUESTIONS];
-
-        questions[0] = new Question(1, "event", (new ArrayList<Button>()), (TextView)rootView.findViewById(R.id.textView_notif_question1));
-        questions[1] = new Question(2, "accurate", (new ArrayList<Button>()), (TextView)rootView.findViewById(R.id.textView_notif_question2));
-        questions[2] = new Question(3, "helpful", (new ArrayList<Button>()), (TextView)rootView.findViewById(R.id.textView_notif_question3));
-
-        questions[0].addButton(btnQ1Yes);
-        questions[0].addButton(btnQ1No);
-        questions[1].addButton(btnQ2Yes);
-        questions[1].addButton(btnQ2No);
-        questions[2].addButton(btnQ3Yes);
-        questions[2].addButton(btnQ3No);
-
-
-        btnQ1Yes.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v)
-            {
-                Log.v("jjp5nw", "btnQ1Yes clicked");
-                questions[0].setAnswer(true);
-                setQuestionState(questions[1], true);
-                setQuestionState(questions[2], true);
-            }
-        });
-
-        btnQ1No.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v)
-            {
-                Log.v("jjp5nw", "btnQ1No clicked");
-                questions[0].setAnswer(false);
-                setQuestionState(questions[1], false);
-                setQuestionState(questions[2], false);
-            }
-        });
-
-        btnQ2Yes.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v)
-            {
-                Log.v("jjp5nw", "btnQ2Yes clicked");
-                questions[1].setAnswer(true);
-            }
-        });
-
-        btnQ2No.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v)
-            {
-                Log.v("jjp5nw", "btnQ2No clicked");
-                questions[1].setAnswer(false);
-            }
-        });
-
-        btnQ3Yes.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v)
-            {
-                Log.v("jjp5nw", "btnQ3Yes clicked");
-                questions[2].setAnswer(true);
-            }
-        });
-
-        btnQ3No.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v)
-            {
-                Log.v("jjp5nw", "btnQ3No clicked");
-                questions[2].setAnswer(false);
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-
-///*
+        ///*
 
         ////////////////////////Android Analytics Tracking Code////////////////////////////////////
         // Create an Emitter
@@ -210,7 +140,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
-        Button backBtn = (Button) rootView.findViewById(R.id.backFromNotifs);
+        backBtn = (Button) rootView.findViewById(R.id.backFromNotifs);
 
         backBtn.setOnClickListener(new View.OnClickListener()   {
             @Override
@@ -244,7 +174,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
             }
         });
 
-        Button confirmBtn = (Button) rootView.findViewById(R.id.submitOnNotifs);
+        confirmBtn = (Button) rootView.findViewById(R.id.submitOnNotifs);
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,7 +206,148 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 mListener.OnConfirmClicked();
             }
         });
+
+        confirmBtn.setEnabled(false);
 //*/
+
+
+
+        //////////////////////////////////////////////////////////////////
+        Button btnQ1Yes, btnQ1No, btnQ2Yes, btnQ2No, btnQ3Yes, btnQ3No;
+
+        btnQ1Yes = (Button) rootView.findViewById(R.id.btn_notif_q1_yes);
+        btnQ1No = (Button) rootView.findViewById(R.id.btn_notif_q1_no);
+        btnQ2Yes = (Button) rootView.findViewById(R.id.btn_notif_q2_yes);
+        btnQ2No = (Button) rootView.findViewById(R.id.btn_notif_q2_no);
+        btnQ3Yes = (Button) rootView.findViewById(R.id.btn_notif_q3_yes);
+        btnQ3No = (Button) rootView.findViewById(R.id.btn_notif_q3_no);
+
+
+        questions = new Question[NUMBER_OF_QUESTIONS];
+
+        questions[0] = new Question(1, "event", (new ArrayList<Button>()), (TextView)rootView.findViewById(R.id.textView_notif_question1));
+        questions[1] = new Question(2, "accurate", (new ArrayList<Button>()), (TextView)rootView.findViewById(R.id.textView_notif_question2));
+        questions[2] = new Question(3, "helpful", (new ArrayList<Button>()), (TextView)rootView.findViewById(R.id.textView_notif_question3));
+
+        questions[0].addButton(btnQ1Yes);
+        questions[0].addButton(btnQ1No);
+        questions[1].addButton(btnQ2Yes);
+        questions[1].addButton(btnQ2No);
+        questions[2].addButton(btnQ3Yes);
+        questions[2].addButton(btnQ3No);
+
+        for(int i = 1; i < questions.length; i++)   {
+            setQuestionState(questions[i], false);
+        }
+
+
+        btnQ1Yes.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ1Yes clicked");
+                questions[0].setAnswer(true);
+                setQuestionState(questions[1], true);
+                setQuestionState(questions[2], true);
+
+                ((Button)v).setSelected(true);
+                questions[0].getButtons().get(1).setSelected(false);
+
+
+                // for submit button enabled
+                confirmBtn.setEnabled(allQuestionsAnswered());
+            }
+        });
+
+        btnQ1No.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ1No clicked");
+                questions[0].setAnswer(false);
+                setQuestionState(questions[1], false);
+                setQuestionState(questions[2], false);
+
+                ((Button)v).setSelected(true);
+                questions[0].getButtons().get(0).setSelected(false);
+
+                // for submit button enabled
+                confirmBtn.setEnabled(allQuestionsAnswered());
+            }
+        });
+
+        btnQ2Yes.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ2Yes clicked");
+                questions[1].setAnswer(true);
+
+//                ((Button)v).setPressed(true);
+                ((Button)v).setSelected(true);
+                questions[1].getButtons().get(1).setSelected(false);
+
+                // for submit button enabled
+                confirmBtn.setEnabled(allQuestionsAnswered());
+            }
+        });
+
+        btnQ2No.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ2No clicked");
+                questions[1].setAnswer(false);
+
+                ((Button)v).setSelected(true);
+                questions[1].getButtons().get(0).setSelected(false);
+
+                // for submit button enabled
+                confirmBtn.setEnabled(allQuestionsAnswered());
+            }
+        });
+
+        btnQ3Yes.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ3Yes clicked");
+                questions[2].setAnswer(true);
+
+                ((Button)v).setSelected(true);
+                questions[2].getButtons().get(1).setSelected(false);
+
+                // for submit button enabled
+                confirmBtn.setEnabled(allQuestionsAnswered());
+            }
+        });
+
+        btnQ3No.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("jjp5nw", "btnQ3No clicked");
+                questions[2].setAnswer(false);
+
+                ((Button)v).setSelected(true);
+                questions[2].getButtons().get(0).setSelected(false);
+
+                // for submit button enabled
+                confirmBtn.setEnabled(allQuestionsAnswered());
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
 
         return rootView;
     }
@@ -285,7 +356,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 class Question
 {
     private List<Button> buttons;
-    private boolean answer;
+    private boolean answer, answered;
     private int id;
     private String name;
 
@@ -303,6 +374,8 @@ class Question
         this.answer = answer;
         this.buttons = buttons;
         this.textView = textView;
+
+        this.answered = false;
     }
 
     public int getQuestionId()
@@ -314,11 +387,22 @@ class Question
     public void setAnswer(boolean answer)
     {
         this.answer = answer;
+        this.answered = true;
     }
 
     public boolean getAnswer()
     {
         return this.answer;
+    }
+
+    public void setUnanswered()
+    {
+        this.answered = false;
+    }
+
+    public boolean isAnswered()
+    {
+        return this.answered;
     }
 
     public boolean addButton(Button button)
