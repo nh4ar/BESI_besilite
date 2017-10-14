@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -24,8 +25,13 @@ import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,6 +54,8 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     private String deploy_id, base_url, api_token, notificationsEndpoint, endpoint;
 
     private ArrayList<String> notifEventsFromServer, notifEventsFromCache;
+
+    private ArrayAdapter<String> notifEventsAdapter;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -78,23 +86,18 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
             @Override
             public void onResponse(JSONArray resp) {
                 Log.v("jjp5nw", "onResponse notifications = " + resp.toString());
-//                buildCheckBoxList(resp);
-//                Log.v("onResponse jjp5nw", "before calling getMementoEventsArray");
-//                notifEventsFromServer = getMementoEventsArray(resp);
-//                Log.v("onResponse jjp5nw", "after calling getMementoEventsArray");
-//                Log.v("onResponse jjp5nw", "ArrayList events = " + mementoEventsFromServer);
+                notifEventsFromServer = getNotifEventsArray(resp);
+                Log.v("jjp5nw", "after calling getNotifEventsArray(resp)");
+                Log.v("jjp5nw", "ArrayList events = " + notifEventsFromServer);
 
                 // dynamically add the events to the adapter that is attached to the listview.
-//                adapter1.clear();
-//                for(String event : mementoEventsFromServer) {
-//                    adapter1.add(event);
-//                    Log.v("adapter1 jjp5nw", event + " added to adapter1");
-//                }
+                notifEventsAdapter.clear();
+                for(String event : notifEventsFromServer)   {
+                    notifEventsAdapter.add(event);
+                    Log.v("jjp5nw", "notifEventsAdapter: " + event + " added to notifEventsAdapter");
+                }
 
-//                FileHelpers.writeStringToInternalStorage(resp.toString(), "cache", "mementoCache", getContext());
-
-
-//                notifEventsFromServer = get
+                FileHelpers.writeStringToInternalStorage(resp.toString(), "cache", "notificationsCache", getContext());
             }
 
 
@@ -102,23 +105,67 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.v("jjp5nw", "onErrorResponse " + error.toString());
-//                String cachedJson = FileHelpers.readStringFromInternalStorage("cache", "mementoCache", getContext());
-//                try {
-//                    JSONArray cacheArray = new JSONArray(cachedJson);
-//
-//                    mementoEventsFromCache = getMementoEventsArray(cacheArray);
-//                    adapter1.clear();
-//                    for(String event : mementoEventsFromCache) {
-//                        adapter1.add(event);
-//                        Log.v("adapter1 jjp5nw", event + " added to adapter1");
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+
+                String cachedJson = FileHelpers.readStringFromInternalStorage("cache", "notificationsCache", getContext());
+
+                try {
+                    JSONArray cacheArray = new JSONArray(cachedJson);
+
+                    notifEventsFromCache = getNotifEventsArray(cacheArray);
+                    notifEventsAdapter.clear();
+                    for(String event : notifEventsFromCache)    {
+                        notifEventsAdapter.add(event);
+                        Log.v("jjp5nw", "notifEventsAdapter: " + event + " added to notifEventsAdapter from cache");
+                    }
+                }   catch(JSONException e)  {
+                    e.printStackTrace();
+                }
             }
         });
         this.netQueue.add(eventsListRequestArray);
 
+    }
+
+    private ArrayList<String> getNotifEventsArray(JSONArray jArray)
+    {
+        Log.v("jjp5nw", "NotificationsFragment getNotifEventsArray called");
+
+        ArrayList<String> ret = new ArrayList<String>();
+
+        // sample entry: {"pk":1,"deployment":"testuser","event_time":"2017-08-17T21:44:08Z","time_created":"2017-08-18T21:44:38.046548Z","ack_time":null,"nottype":1}
+        SimpleDateFormat fileSDF;   // = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
+        SimpleDateFormat viewSDF = new SimpleDateFormat("M/dd/yyyy h:mm a EEE");
+
+        String[] sdfArgs = {
+                "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'",
+                "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        };
+
+        for(int i = 0; i < jArray.length(); i++)    {
+            for(int j = 0; j < sdfArgs.length; j++) {
+                try {
+                    fileSDF = new SimpleDateFormat(sdfArgs[j]);
+//                    Log.v("jjp5nw", "getNEArray created fileSDF with sdfArgs[" + j + "] = " + sdfArgs[j]);
+                    JSONObject event = (JSONObject) (jArray.get(i));
+//                    Log.v("jjp5nw", "getNEArray event.getString(\"event_time\") = " + event.getString("event_time"));
+                    Date eventTime = fileSDF.parse(event.getString("event_time"));
+                    String formattedEventTime = viewSDF.format(eventTime);
+//                    Log.v("jjp5nw", "getNEArray " + formattedEventTime);
+                    ret.add(formattedEventTime);
+                    break;
+                } catch (JSONException e) {
+                    Log.e("jjp5nw", "ERROR: Server responded with incorrect JSON");
+                    e.printStackTrace();
+                    break;
+                } catch (ParseException e) {
+//                    Log.e("jjp5nw", "ERROR: ParseEception in parse call.");
+                }
+            }
+        }
+
+        Collections.sort(ret, String.CASE_INSENSITIVE_ORDER);
+        Collections.reverse(ret);
+        return ret;
     }
 
     public NotificationsFragment()
@@ -148,6 +195,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
         pwdNotif = ar.pwdNotif;
 
 
+        notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1);
 
         ///*
 
