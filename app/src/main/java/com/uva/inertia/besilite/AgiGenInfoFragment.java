@@ -202,7 +202,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         api_token = sharedPref.getString("pref_key_api_token","");
 //        activityEndpoint="/api/v1/survey/fields/smart/a/";
         activityEndpoint="/api/v1/memento/e/smart/";    //from C:/Users/John/Dropbox/Documents/RESEARCH/INERTIA/ben/api_v1/urls.py
-
+//        activityEndpoint = "/api/v1/athena/notify/smart/";
 //        adapter.clear();
 //        tempList.clear();
 //        ConvertedList.clear();

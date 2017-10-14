@@ -12,12 +12,18 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.snowplowanalytics.snowplow.tracker.Emitter;
 import com.snowplowanalytics.snowplow.tracker.Subject;
 import com.snowplowanalytics.snowplow.tracker.Tracker;
 import com.snowplowanalytics.snowplow.tracker.emitter.BufferOption;
 import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
 import com.snowplowanalytics.snowplow.tracker.events.ScreenView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,18 +35,19 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     final int NUMBER_OF_QUESTIONS = 3;
 
     AgitationReports ar;
-
     ConfirmFragment.OnConfirmClickedListener mListener;
 
     SharedPreferences sharedPref;
 
     Button backBtn, confirmBtn;
-//    boolean[] questionAnswers;
     Question[] questions;
-//    HashMap<Button, String> questionAnswers;\
-
     HashMap<Integer, Boolean> pwdNotif;
 
+    RequestQueue netQueue;
+
+    private String deploy_id, base_url, api_token, notificationsEndpoint, endpoint;
+
+    private ArrayList<String> notifEventsFromServer, notifEventsFromCache;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -55,62 +62,92 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
         return fragment;
     }
 
+    private void pullNotificationsEventListFromServer()
+    {
+        Log.v("jjp5nw", "NotificationsFragment pullNotificationsEventListFromServer() called");
+        ArrayList<String> ret = new ArrayList<String>();
+        ArrayList<String> events;
+
+        deploy_id = sharedPref.getString("pref_key_deploy_id", "");
+        base_url = sharedPref.getString("pref_key_base_url", "");
+        api_token = sharedPref.getString("pref_key_api_token", "");
+        notificationsEndpoint = "/api/v1/athena/notify/smart/";
+
+        JsonArrayRequestWithToken eventsListRequestArray = new JsonArrayRequestWithToken(base_url + notificationsEndpoint, api_token, new Response.Listener<JSONArray>()    {
+
+            @Override
+            public void onResponse(JSONArray resp) {
+                Log.v("jjp5nw", "onResponse notifications = " + resp.toString());
+//                buildCheckBoxList(resp);
+//                Log.v("onResponse jjp5nw", "before calling getMementoEventsArray");
+//                notifEventsFromServer = getMementoEventsArray(resp);
+//                Log.v("onResponse jjp5nw", "after calling getMementoEventsArray");
+//                Log.v("onResponse jjp5nw", "ArrayList events = " + mementoEventsFromServer);
+
+                // dynamically add the events to the adapter that is attached to the listview.
+//                adapter1.clear();
+//                for(String event : mementoEventsFromServer) {
+//                    adapter1.add(event);
+//                    Log.v("adapter1 jjp5nw", event + " added to adapter1");
+//                }
+
+//                FileHelpers.writeStringToInternalStorage(resp.toString(), "cache", "mementoCache", getContext());
+
+
+//                notifEventsFromServer = get
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.v("jjp5nw", "onErrorResponse " + error.toString());
+//                String cachedJson = FileHelpers.readStringFromInternalStorage("cache", "mementoCache", getContext());
+//                try {
+//                    JSONArray cacheArray = new JSONArray(cachedJson);
+//
+//                    mementoEventsFromCache = getMementoEventsArray(cacheArray);
+//                    adapter1.clear();
+//                    for(String event : mementoEventsFromCache) {
+//                        adapter1.add(event);
+//                        Log.v("adapter1 jjp5nw", event + " added to adapter1");
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+            }
+        });
+        this.netQueue.add(eventsListRequestArray);
+
+    }
+
     public NotificationsFragment()
     {
         Log.v("jjp5nw", "NotificationsFragment constructor called");
     }
 
-
-    private void setButtonState(Button button, boolean enabled)
+    @Override
+    public void onCreate(Bundle savedInstanceState)
     {
-        button.setEnabled(enabled);
+        super.onCreate(savedInstanceState);
+        Log.v("jjp5nw", "onCreate(" + savedInstanceState + ") called.");
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        netQueue = NetworkSingleton.getInstance(this.getContext()).getRequestQueue();
+
+        pullNotificationsEventListFromServer();
     }
 
-    private void setButtonState(List<Button> listOfButtons, boolean enabled)
-    {
-        for(Button button : listOfButtons)  {
-            button.setEnabled(enabled);
-            button.setSelected(false);
-        }
-    }
-
-    private void setButtonSelected(Button button, boolean selected)
-    {
-
-    }
-
-    private void setQuestionState(Question question, boolean enabled)
-    {
-        Log.v("jjp5nw", "setQuestionState(" + question + ", " + enabled + ") called");
-        setButtonState(question.getButtons(), enabled);
-        question.getTextView().setTextColor(getResources().getColor((enabled) ? (R.color.question_textview_enabled) : (R.color.question_textview_disabled)));
-        question.setUnanswered();
-    }
-
-    private boolean allQuestionsAnswered()
-    {
-        if(questions[0].isAnswered())   {
-            if(!questions[0].getAnswer())   {
-                return true;
-            }
-        }
-        for(int i = 1; i < questions.length; i++)  {
-            if(!questions[i].isAnswered())  {
-                return false;
-            }
-        }
-        return true;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.v("jjp5nw", "NotificationsFragment onCreateView() called");
         final View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
-        ar = (AgitationReports) getActivity();
+        ar = (AgitationReports)getActivity();
         pwdNotif = ar.pwdNotif;
 
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
 
         ///*
 
@@ -367,6 +404,51 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 
         return rootView;
     }
+
+
+    private void setButtonState(Button button, boolean enabled)
+    {
+        button.setEnabled(enabled);
+    }
+
+    private void setButtonState(List<Button> listOfButtons, boolean enabled)
+    {
+        for(Button button : listOfButtons)  {
+            button.setEnabled(enabled);
+            button.setSelected(false);
+        }
+    }
+
+    private void setButtonSelected(Button button, boolean selected)
+    {
+
+    }
+
+    private void setQuestionState(Question question, boolean enabled)
+    {
+        Log.v("jjp5nw", "setQuestionState(" + question + ", " + enabled + ") called");
+        setButtonState(question.getButtons(), enabled);
+        question.getTextView().setTextColor(getResources().getColor((enabled) ? (R.color.question_textview_enabled) : (R.color.question_textview_disabled)));
+        question.setUnanswered();
+    }
+
+    private boolean allQuestionsAnswered()
+    {
+        if(questions[0].isAnswered())   {
+            if(!questions[0].getAnswer())   {
+                return true;
+            }
+        }
+        for(int i = 1; i < questions.length; i++)  {
+            if(!questions[i].isAnswered())  {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
 }
 
 class Question
