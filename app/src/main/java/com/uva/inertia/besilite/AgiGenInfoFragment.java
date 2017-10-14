@@ -113,8 +113,8 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
     private ArrayList<String> mementoAL;
 
     private int customListItem1Height = 44;     //in pixels
-    private int scrollTime = 300;               //in milliseconds
-    private int fastScrollTime = 200;           //in milliseconds
+    private int scrollTime = 250;               //in milliseconds
+    private int fastScrollTime = 150;           //in milliseconds
 
     private String deploy_id, base_url, api_token, activityEndpoint, endpoint;
     RequestQueue netQueue;
@@ -608,7 +608,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             public void onClick(View v) {
 //                listView1.smoothScrollByOffset(-1);
 //                listView1.smoothScrollToPosition(listView1.getSelectedItemPosition() - 1);
-                listView1.smoothScrollBy(-1 * customListItem1Height, scrollTime);
+                listView1.smoothScrollBy(-1 * customListItem1Height - 1, scrollTime);
                 listView1.smoothScrollToPosition(listView1.getFirstVisiblePosition());
                 //the smoothScrollToPosition is used to make the elements "snap" to the top & bottom edges
 
@@ -686,7 +686,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
             @Override
             public void onClick(View v) {
 //                listView1.smoothScrollByOffset(1);
-                listView1.smoothScrollBy(customListItem1Height, scrollTime);
+                listView1.smoothScrollBy(customListItem1Height + 1, scrollTime);
                 listView1.smoothScrollToPosition(listView1.getLastVisiblePosition());
                 //the smoothScrollToPosition is used to make the elements "snap" to the top & bottom edges
 

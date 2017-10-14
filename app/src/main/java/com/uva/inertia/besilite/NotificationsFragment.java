@@ -2,15 +2,20 @@ package com.uva.inertia.besilite;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -40,11 +45,17 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 {
     final int NUMBER_OF_QUESTIONS = 3;
 
+    final private int customListItem1Height = 44;     //in pixels
+    final private int scrollTime = 250;               //in milliseconds
+    final private int fastScrollTime = 100;           //in milliseconds
+
+
     AgitationReports ar;
     ConfirmFragment.OnConfirmClickedListener mListener;
 
     SharedPreferences sharedPref;
 
+    Button scrollup, scrolldown;
     Button backBtn, confirmBtn;
     Question[] questions;
     HashMap<Integer, Boolean> pwdNotif;
@@ -56,6 +67,10 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     private ArrayList<String> notifEventsFromServer, notifEventsFromCache;
 
     private ArrayAdapter<String> notifEventsAdapter;
+
+    ListView listViewNotif;
+
+
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -450,6 +465,256 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
             }
         });
 
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Start of ListVIew
+
+
+        ///CODE TO VIEW NOTIFICATION EVENTS
+        listViewNotif = (ListView)( rootView.findViewById(R.id.listViewNotif) );
+
+        //DISABLE SCROLLING BY TOUCH
+        listViewNotif.setFastScrollEnabled(false);
+        listViewNotif.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return (event.getAction() == MotionEvent.ACTION_MOVE);
+            }
+            //http://stackoverflow.com/questions/4338185/how-to-get-a-non-scrollable-listview
+        });
+        listViewNotif.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                view.setSelected(true);       // UNCOMMENT THIS LINE IN ORDER TO SELECT ITEMS AGAIN.
+                // relevant files: customlistitem1_bg_key.xml, custom_list_item_1.xml
+
+                // http://stackoverflow.com/questions/16189651/android-listview-selected-item-stay-highlighted
+            }
+        });
+
+        // NEXT 33 LINES FROM http://stackoverflow.com/questions/4432261/list-view-snap-to-item
+        // SCROLLING WITH SNAPPING TO NEAREST ITEM
+        listViewNotif.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    View itemView = view.getChildAt(0);
+                    int top = Math.abs(itemView.getTop());
+                    int bottom = Math.abs(itemView.getBottom());
+                    int scrollBy = top >= bottom ? bottom : -top;
+                    if (scrollBy == 0) {
+                        return;
+                    }
+                    smoothScrollDeferred(scrollBy, (ListView)view);
+                }
+            }
+
+            private void smoothScrollDeferred(final int scrollByF, final ListView viewF) {
+                final Handler h = new Handler();
+                h.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        viewF.smoothScrollBy(scrollByF, 200);
+                    }
+                });
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+
+//
+//        ArrayList<String> mementoData1 = new ArrayList<String>();
+////        LinkedList<String> inListView = new LinkedList<String>();
+//        int listViewPos = 0;
+//        for(int test = 0; test < 20; test++) {
+//            mementoData1.add("sample data " + test);
+//        }
+//
+////        Log.v("inListView", .toArray().toString());
+//        //SET POSITION VARIABLES
+//        int lvposition = 0;
+//        int maxposition = mementoData1.size();
+//
+//
+//        String test = FileHelpers.readStringFromInternalStorage("Download/", "memento.txt", rootView.getContext());
+//        Log.v("T3st", "read test: " + test);
+
+        //create adapter for listViewNotif
+//        final ArrayAdapter<String> notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
+//        final ArrayAdapter<String> notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1, mementoAL);
+        notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1);//, mementoEventsFromServer);
+//        ArrayAdapter<String> notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, inListView);
+
+        listViewNotif.setAdapter(notifEventsAdapter);
+        // http://stackoverflow.com/questions/8215308/using-context-in-a-fragment
+
+        scrollup = (Button)rootView.findViewById(R.id.button_scrollup_notifs);
+        scrollup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                listViewNotif.smoothScrollByOffset(-1);
+//                listViewNotif.smoothScrollToPosition(listViewNotif.getSelectedItemPosition() - 1);
+                listViewNotif.smoothScrollBy(-1 * customListItem1Height - 1, scrollTime);
+                listViewNotif.smoothScrollToPosition(listViewNotif.getFirstVisiblePosition());
+                //the smoothScrollToPosition is used to make the elements "snap" to the top & bottom edges
+
+//                listViewNotif.smoothScrollToPositionFromTop((lvposition <= 0) ? lvposition : (--lvposition), 150, 250);
+
+//                listViewNotif.scroll
+
+//                lvposition = (lvposition <= 0) ? lvposition : lvposition - 1;
+//                listViewNotif.scroll
+//                scrollListView(listViewNotif, mementoData1, inListView, lvposition, -1);
+
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Memento -> Scroll Up onClick()")
+                        .id("agitationReportMementoScrollUpOnClick")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
+            }
+
+        });
+        scrollup.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+//                listViewNotif.smoothScrollToPosition(0);
+                listViewNotif.smoothScrollBy(-1 * customListItem1Height * notifEventsAdapter.getCount(), fastScrollTime * notifEventsAdapter.getCount());
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Memento -> Scroll Up onLongClick()")
+                        .id("agitationReportMementoScrollUpLongClick")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
+                return true;
+            }
+        });
+
+        scrolldown = (Button)rootView.findViewById(R.id.button_scrolldown_notifs);
+        scrolldown.setOnClickListener(new View.OnClickListener()    {
+            @Override
+            public void onClick(View v) {
+//                listViewNotif.smoothScrollByOffset(1);
+                listViewNotif.smoothScrollBy(customListItem1Height + 1, scrollTime);
+                listViewNotif.smoothScrollToPosition(listViewNotif.getLastVisiblePosition());
+                //the smoothScrollToPosition is used to make the elements "snap" to the top & bottom edges
+
+//                listViewNotif.smoothScrollToPositionFromTop((lvposition >= maxposition - 1) ? lvposition : (++lvposition), 150, 250);
+
+//                listViewNotif.smoothScrollToPosition(listViewNotif.getSelectedItemPosition() + 1);
+//                scrollListView(listViewNotif, mementoData1, inListView, lvposition, 1);
+
+//                listViewNotif.smoothScrollToPosition(lvposition + 1, lvposition);
+
+//                lvposition++;
+
+//                Log.v("inListView", "before removeFirst: " + inListView.toArray().toString());
+//                inListView.removeFirst();
+//                Log.v("inListView", "after removeFirst: " + inListView.toArray().toString());
+//                inListView.addLast("testADD");
+//                Log.v("inListView", "after addLast: " + inListView.toArray().toString());
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Memento -> Scroll Down onClick()")
+                        .id("agitationReportMementoScrollDownOnClick")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
+            }
+        });
+        scrolldown.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+//                listViewNotif.smoothScrollToPosition(notifEventsAdapter.getCount());
+                listViewNotif.smoothScrollBy(customListItem1Height * notifEventsAdapter.getCount(), fastScrollTime * notifEventsAdapter.getCount());
+
+                ////////////////////////Android Analytics Tracking Code////////////////////////////////////
+                // Create an Emitter
+                Emitter e1 = new Emitter.EmitterBuilder("besisnowplow.us-east-1.elasticbeanstalk.com", getContext())
+                        .method(HttpMethod.POST) // Optional - Defines how we send the request
+                        .option(BufferOption.Single) // Optional - Defines how many events we bundle in a POST\
+                        .build();
+
+                Subject s1 = new Subject.SubjectBuilder().build();
+                s1.setUserId(sharedPref.getString("pref_key_api_token", ""));
+
+                // Make and return the Tracker object
+                Tracker t1 = Tracker.init(new Tracker.TrackerBuilder(e1, "addAgiReportGenInfo", "com.uva.inertia.besilite", getContext())
+                        .base64(false) // Optional - Defines what protocol used to send events
+                        .subject(s1)
+                        .build()
+                );
+
+                t1.track(ScreenView.builder()
+                        .name("Agitation Report -> Memento -> Scroll Down onLongClick()")
+                        .id("agitationReportMementoScrollDownLongClick")
+                        .build());
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
+                return true;
+            }
+        });
+
+
+        ////////////////////////////////////////////////////////////////////////////////////
         return rootView;
     }
 
@@ -463,6 +728,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     {
         for(Button button : listOfButtons)  {
             button.setEnabled(enabled);
+            button.setVisibility((enabled) ? (View.VISIBLE) : (View.INVISIBLE));
             button.setSelected(false);
         }
     }
@@ -477,6 +743,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
         Log.v("jjp5nw", "setQuestionState(" + question + ", " + enabled + ") called");
         setButtonState(question.getButtons(), enabled);
         question.getTextView().setTextColor(getResources().getColor((enabled) ? (R.color.question_textview_enabled) : (R.color.question_textview_disabled)));
+        question.getTextView().setVisibility((enabled) ? (View.VISIBLE) : (View.INVISIBLE));
         question.setUnanswered();
     }
 
