@@ -63,6 +63,7 @@
     </string-array>
 
     <string-array name="room_names">
+        <item>SELECT ONE</item>
         <item>Kitchen</item>
         <item>Bedroom</item>
         <item>Living Room</item>
@@ -89,20 +90,21 @@
     <string name="OBS_Communication">Difficulty with language</string>
     -->
 
-    <string name="OBS_Frustration">Restlessness</string>
-    <string name="OBS_Ambulation">Wandering</string>
+    <string name="OBS_Frustration">Fidgety / Jittery</string>
+    <string name="OBS_Ambulation">Pacing / Wandering</string>
     <string name="OBS_Touching">Destroys things</string>
     <string name="OBS_Clothing">Wearing clothes wrong</string>
     <string name="OBS_Physical1">Hitting</string>
     <string name="OBS_Physical2">Scratching</string>
-    <string name="OBS_OralFixation">Chews on things</string>
-    <string name="OBS_Repetition">Obsessed/Preoccupied</string>
-    <string name="OBS_Vocal1">Frustrated</string>
-    <string name="OBS_Vocal2">Raised his voice</string>
+    <string name="OBS_OralFixation">Anxious</string>
+    <string name="OBS_Repetition">Obsessive / Same question</string>
+    <string name="OBS_Vocal1">Complaining</string>
+    <string name="OBS_Vocal2">Shouting</string>
     <string name="OBS_Lost">Getting lost at home</string>
-    <string name="OBS_Withdrawn">Withdrawn</string>
-    <string name="OBS_Shadowing">Imitating</string>
-    <string name="OBS_Communication">Communication</string>
+    <string name="OBS_Withdrawn">Bored</string>
+    <string name="OBS_Shadowing">Copying, Imitating, Shadowing</string>
+    <string name="OBS_Communication">Nonsense / No attention</string>
+    <string name="OBS_Other">Other</string>
 
     <!--<string name="OBS_Annoying">_Annoying</string> Removed in updated list-->
 </resources>

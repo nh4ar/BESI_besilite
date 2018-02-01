@@ -42,7 +42,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
-    final int NUMBER_OF_TABS = 3;
+    final int NUMBER_OF_TABS = 4;       //CHANGE THIS VALUE WHEN YOU ADD OR DELETE TABS
 
     String base_url;
     String api_token;
@@ -372,12 +372,15 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
             Log.v("jjp5nw", "AgitationReports getItem(" + position + ")");
             switch (position) {
                 case 0:
-                    return AgiGenInfoFragment.newInstance();
+//                    return AgiGenInfoFragment.newInstance();
+                    return AgiGenTimeFragment.newInstance();
 //                case 1:
 //                    return RadioPWDEmotionSubsurveyFragment.newInstance();
                 case 1:
-                    return ObservationSubsurveyFragment.newInstance();
+                    return AgiGenLvlLocFragment.newInstance();
                 case 2:
+                    return ObservationSubsurveyFragment.newInstance();
+                case 3:
 //                    return ConfirmFragment.newInstance(position + 1);
 //                    return RadioPWDEmotionSubsurveyFragment.newInstance();
                     return NotificationsFragment.newInstance();
@@ -387,22 +390,27 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return NUMBER_OF_TABS;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Agitation Time";
+//                    return "Agitation Time";
+                    return "Time";
                 //case 1:
                   //  return "EMOTION";
                 case 1:
+//                    return "Agitation Location";
+                    return "Location";
+                case 2:
                     return "Observations";
 //                    return "Anything I want";
-                case 2:
+                case 3:
                     return "Notifications";
+
+                    // ALSO CHANGE NUMBER_OF_TABS int variable to your new value at the top
             }
             return null;
         }

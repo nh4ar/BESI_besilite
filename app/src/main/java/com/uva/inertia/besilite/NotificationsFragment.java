@@ -271,7 +271,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 ///////////////////////////////////////////////////////////////////////////////////////////
 
                 //
-                ((AgitationReports) getActivity()).selectPage(1);
+                ((AgitationReports) getActivity()).selectPage(2);
             }
         });
 

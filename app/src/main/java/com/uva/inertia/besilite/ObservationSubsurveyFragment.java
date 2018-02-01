@@ -1,14 +1,20 @@
 package com.uva.inertia.besilite;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.snowplowanalytics.snowplow.tracker.Emitter;
 import com.snowplowanalytics.snowplow.tracker.Subject;
@@ -40,6 +46,9 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
     CheckBox Annoying;
     CheckBox Shadowing;
     CheckBox Communication;
+    CheckBox Other;
+
+    String otherText;
 
     ConfirmFragment.OnConfirmClickedListener mListener;
 
@@ -128,7 +137,7 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
                 ///////////////////////////////////////////////////////////////////////////////////////////
 
                 //
-                ((AgitationReports) getActivity()).selectPage(0);
+                ((AgitationReports) getActivity()).selectPage(1);
             }
         });
 
@@ -162,7 +171,7 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
 
 //                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
 //                mListener.OnConfirmClicked();
-                ((AgitationReports) getActivity()).selectPage(2);
+                ((AgitationReports) getActivity()).selectPage(3);
 
                 Log.v("101117", "jjp5nw nextBtn pressed");
             }
@@ -231,13 +240,87 @@ public class ObservationSubsurveyFragment extends android.support.v4.app.Fragmen
         Lost.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Lost"));
         Withdrawn = (CheckBox) rootView.findViewById(R.id.checkWithdrawn);
         Withdrawn.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Withdrawn"));
-        //Annoying = (CheckBox) rootView.findViewById(R.id.checkAnnoying);
-        //Annoying.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Annoying"));
+//        Annoying = (CheckBox) rootView.findViewById(R.id.checkAnnoying);
+//        Annoying.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Annoying"));
         Shadowing = (CheckBox) rootView.findViewById(R.id.checkShadowing);
         Shadowing.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Shadowing"));
         Communication = (CheckBox) rootView.findViewById(R.id.checkCommunication);
         Communication.setOnClickListener(CustomClickHandlers.updateMapOnClick(pwdObs, "Communication"));
 
+        Other = (CheckBox) rootView.findViewById(R.id.checkOther);
+        Other.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Log.v("jjp5nw", "checkOther clicked");
+                 Log.v("jjp5nw", "checkOther = " + ((CheckBox)v).isChecked());
+                 // only bring up the dialog when it is checked
+                 if(((CheckBox)v).isChecked())  {
+//                     AddNewActivityDialogFrag newAct = AddNewActivityDialogFrag.newInstance("newAct2");
+//                     newAct.show(android.support.v4.app.FragmentgetFragmentManager(), "fragment_add_activity");
+                    Log.v("jjp5nw", "checkbox is checked case launched");
+
+                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                     builder.setTitle("Other observation: ");
+
+                    // Set up the input
+                     final EditText input = new EditText(getContext());
+                    // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                     input.setInputType(InputType.TYPE_CLASS_TEXT);// | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                     input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(10) });
+                     builder.setView(input);
+                     //.setCanceledOnTouchOutside(false);
+                     builder.setCancelable(false);
+                    Log.v("jjp5nw", "EditText made, builder view set to input");
+                    // Set up the buttons
+                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                         @Override
+                         public void onClick(DialogInterface dialog, int which) {
+                             Log.v("jjp5nw", "onClick of builder setPositiveButton");
+                             otherText = input.getText().toString();
+                             Log.v("jjp5nw", "otherText = " + otherText);
+                             if(otherText.length() > 0) {
+                                 Other.setText("Other (" + otherText + ")");
+                             }  else    {
+                                 Other.setText("Other");
+                                 Other.setChecked(false);
+                             }
+//                             Other.setText((otherText.length() > 0) ? "Other (" + otherText + ")" : "Other");
+                         }
+                     });
+                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                         @Override
+                         public void onClick(DialogInterface dialog, int which) {
+                             Log.v("jjp5nw", "onClick of builder setNegativeButton");
+                             Other.setChecked(false);
+                             otherText = "";
+                             Log.v("jjp5nw", "otherText = " + otherText);
+                             Other.setText("Other");
+                             dialog.cancel();
+                         }
+                     });
+
+                     builder.show();
+
+
+
+                 }  else    {
+                     Other.setText("Other");
+                 }
+             }
+        });
+
         return rootView;
     }
 }
+/*
+public static View.OnClickListener updateMapOnClick(final HashMap<String, Boolean> hm, final String key){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox c = (CheckBox)v;
+                hm.put(key,c.isChecked());
+                Log.v("DAILYSURVEY", "Click handler called from: " + c.toString());
+            }
+        };
+    }
+ */

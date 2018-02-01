@@ -290,7 +290,23 @@
                         android:layout_marginBottom="10dp"
                         android:paddingLeft="10dp" />
 
-
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/OBS_Other"
+                        android:id="@+id/checkOther"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:button="@drawable/customcheckbox"
+                        android:checked="false"
+                        android:layout_column="6"
+                        android:textSize="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="10dp" />
 
                 </LinearLayout>
             </LinearLayout>
