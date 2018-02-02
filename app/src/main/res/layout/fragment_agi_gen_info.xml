@@ -286,7 +286,7 @@
             android:id="@+id/mementoLayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignBottom="@+id/relativeLayout5"
+            android:layout_alignBottom="@+id/relativeLayout2"
             android:layout_alignEnd="@+id/relativeLayout2"
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@+id/relativeLayout2"
