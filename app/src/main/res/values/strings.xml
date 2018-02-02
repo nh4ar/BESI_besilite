@@ -58,39 +58,21 @@
         <item>Entryway</item>
         <item>Other</item>
     </string-array>
-    <!-- Need to write something because need to update commit-->
-    <!--Strings for OBServation check boxes-->
-    <!--
-    <string name="OBS_Frustration">Frustrated</string>
-    <string name="OBS_Ambulation">Pacing/Restless</string>
-    <string name="OBS_Touching">Handling things inappropriately</string>
-    <string name="OBS_Clothing">Inappropriate dressing/undressing</string>
-    <string name="OBS_Physical1">Pushing/Hitting</string>
-    <string name="OBS_Physical2">Biting/Scratching</string>
-    <string name="OBS_OralFixation">Eating/Drinking inappropriate substances</string>
-    <string name="OBS_Repetition">Repetitiveness</string>
-    <string name="OBS_Vocal1">Complaining/Whining</string>
-    <string name="OBS_Vocal2">Cursing/Shouting</string>
-    <string name="OBS_Lost">Wandering/Getting Lost</string>
-    <string name="OBS_Withdrawn">Quiet/Withdrawn</string>
-    <string name="OBS_Shadowing">Imitating/Shadowing</string>
-    <string name="OBS_Communication">Difficulty with language</string>
-    -->
-
-    <string name="OBS_Frustration">Restlessness</string>
-    <string name="OBS_Ambulation">Wandering</string>
+k
+    <string name="OBS_Frustration">Fidgety / Jittery</string>
+    <string name="OBS_Ambulation">Pacing / Wandering</string>
     <string name="OBS_Touching">Destroys things</string>
     <string name="OBS_Clothing">Wearing clothes wrong</string>
     <string name="OBS_Physical1">Hitting</string>
     <string name="OBS_Physical2">Scratching</string>
-    <string name="OBS_OralFixation">Chews on things</string>
-    <string name="OBS_Repetition">Obsessed/Preoccupied</string>
-    <string name="OBS_Vocal1">Frustrated</string>
-    <string name="OBS_Vocal2">Raised his voice</string>
+    <string name="OBS_OralFixation">Anxious</string>
+    <string name="OBS_Repetition">Obsessive / Same question</string>
+    <string name="OBS_Vocal1">Complaining</string>
+    <string name="OBS_Vocal2">Shouting</string>
     <string name="OBS_Lost">Getting lost at home</string>
-    <string name="OBS_Withdrawn">Withdrawn</string>
-    <string name="OBS_Shadowing">Imitating</string>
-    <string name="OBS_Communication">Communication</string>
+    <string name="OBS_Withdrawn">Bored</string>
+    <string name="OBS_Shadowing">Copying, Imitating, Shadowing</string>
+    <string name="OBS_Communication">Nonsense / No attention</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
