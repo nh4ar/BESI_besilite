@@ -523,7 +523,7 @@ public class AgiGenInfoFragment extends Fragment implements passBackInterface{
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                view.setSelected(true);       // UNCOMMENT THIS LINE IN ORDER TO SELECT ITEMS AGAIN.
+//                view.setSelected(true);       // UNCOMMENT THIS LINE wwwwwIN ORDER TO SELECT ITEMS AGAIN.
                 // relevant files: customlistitem1_bg_key.xml, custom_list_item_1.xml
 
                 // http://stackoverflow.com/questions/16189651/android-listview-selected-item-stay-highlighted
