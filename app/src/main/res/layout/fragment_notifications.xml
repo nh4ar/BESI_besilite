@@ -85,13 +85,14 @@
                             android:text="@string/notifications_btn_yes"
                             android:textSize="@dimen/notif_btn_yes_textSize"
                             android:textStyle="bold" />
+
                         <Button
                             android:id="@+id/btn_notif_q1_no"
                             android:layout_width="@dimen/notif_btn_no_layout_width"
                             android:layout_height="@dimen/notif_btn_no_layout_height"
                             android:layout_marginBottom="@dimen/notif_btn_no_layout_marginBottom"
-                            android:layout_marginTop="@dimen/notif_btn_no_layout_marginTop"
                             android:layout_marginLeft="@dimen/notif_btn_no_layout_marginLeft"
+                            android:layout_marginTop="@dimen/notif_btn_no_layout_marginTop"
                             android:background="@drawable/buttonanimate"
                             android:text="@string/notifications_btn_no"
                             android:textSize="@dimen/notif_btn_no_textSize"
@@ -221,10 +222,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <ListView
                         android:id="@+id/listViewNotif"
                         android:layout_width="300dp"
-                        android:layout_height="136dp"
+                        android:layout_height="208dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:fadingEdgeLength="3dp"
@@ -236,23 +238,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp">
+
                         <Button
                             android:id="@+id/button_scrollup_notifs"
                             android:layout_width="50dp"
-                            android:layout_height="65dp"
+                            android:layout_height="101dp"
                             android:background="@drawable/buttonanimate"
                             android:text="▲"
-                            android:textSize="20dp"
-                            />
+                            android:textSize="20dp" />
 
                         <Button
                             android:id="@+id/button_scrolldown_notifs"
                             android:layout_width="50dp"
-                            android:layout_height="65dp"
+                            android:layout_height="101dp"
+                            android:layout_marginTop="10dp"
                             android:background="@drawable/buttonanimate"
                             android:text="▼"
-                            android:textSize="20dp"
-                            android:layout_marginTop="10dp"/>
+                            android:textSize="20dp" />
                     </LinearLayout>
 
                 </LinearLayout>

@@ -36,16 +36,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class NotificationsFragment extends android.support.v4.app.Fragment
 {
     final int NUMBER_OF_QUESTIONS = 3;
 
-    final private int customListItem1Height = 44;     //in pixels
+//    final private int customListItem1Height = 44;     //in pixels
+    final private int customListItem1Height = 68;     //in pixels
     final private int scrollTime = 250;               //in milliseconds
     final private int fastScrollTime = 100;           //in milliseconds
 
@@ -146,6 +150,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
         Log.v("jjp5nw", "NotificationsFragment getNotifEventsArray called");
 
         ArrayList<String> ret = new ArrayList<String>();
+        TreeMap<Date, JSONObject> map = new TreeMap<Date, JSONObject>();
 
         // sample entry: {"pk":1,"deployment":"testuser","event_time":"2017-08-17T21:44:08Z","time_created":"2017-08-18T21:44:38.046548Z","ack_time":null,"nottype":1}
         SimpleDateFormat fileSDF;   // = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
@@ -156,7 +161,9 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 "yyyy-MM-dd'T'HH:mm:ss'Z'"
         };
 
+
         for(int i = 0; i < jArray.length(); i++)    {
+            // this loop tries all of the formats above in sdfArgs. if one doesn't work, it catches an exception and tries the next format.
             for(int j = 0; j < sdfArgs.length; j++) {
                 try {
                     fileSDF = new SimpleDateFormat(sdfArgs[j]);
@@ -164,9 +171,10 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                     JSONObject event = (JSONObject) (jArray.get(i));
 //                    Log.v("jjp5nw", "getNEArray event.getString(\"event_time\") = " + event.getString("event_time"));
                     Date eventTime = fileSDF.parse(event.getString("event_time"));
-                    String formattedEventTime = viewSDF.format(eventTime);
+//                    String formattedEventTime = viewSDF.format(eventTime);
 //                    Log.v("jjp5nw", "getNEArray " + formattedEventTime);
-                    ret.add(formattedEventTime);
+                    map.put(eventTime, event);
+//                    ret.add(formattedEventTime + event.getString("nottype"));
                     break;
                 } catch (JSONException e) {
                     Log.e("jjp5nw", "ERROR: Server responded with incorrect JSON");
@@ -178,7 +186,32 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
             }
         }
 
-        Collections.sort(ret, String.CASE_INSENSITIVE_ORDER);
+        for(Map.Entry<Date, JSONObject> entry : map.entrySet()) {
+            String formattedEventTime = viewSDF.format(entry.getKey());
+            try {
+                String agiType;
+                switch(Integer.parseInt(entry.getValue().getString("nottype")))
+                {
+                    case 1:
+                        agiType = "Physical";
+                        break;
+                    case 2:
+                        agiType = "Physical and Aggressive";
+                        break;
+                    case 3:
+                        agiType = "Verbal and Non-Aggressive";
+                        break;
+                    default:
+                        agiType = "";
+                        break;
+                }
+                ret.add(formattedEventTime + " " + agiType);
+            }   catch(JSONException e)  {
+                break;
+            }
+        }
+
+//        Collections.sort(ret, String.CASE_INSENSITIVE_ORDER);
         Collections.reverse(ret);
         return ret;
     }
@@ -210,7 +243,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
         pwdNotif = ar.pwdNotif;
 
 
-        notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1);
+        notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_2);
 
         ///*
 
@@ -545,7 +578,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
         //create adapter for listViewNotif
 //        final ArrayAdapter<String> notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, mementoData1);
 //        final ArrayAdapter<String> notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1, mementoAL);
-        notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_1);//, mementoEventsFromServer);
+        notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.custom_list_item_2);//, mementoEventsFromServer);
 //        ArrayAdapter<String> notifEventsAdapter = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_list_item_1, inListView);
 
         listViewNotif.setAdapter(notifEventsAdapter);
