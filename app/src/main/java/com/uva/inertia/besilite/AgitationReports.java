@@ -59,7 +59,8 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     HashMap<String, Boolean> pwdObs;
     HashMap<String, Boolean> pwdEmo;
     HashMap<String, String> pwdGen;
-    HashMap<Integer, Boolean> pwdNotif;
+//    HashMap<Integer, Boolean> pwdNotif;
+    HashMap<String, Boolean> pwdNotif;
 
     java.text.DateFormat df;
     TimeZone tz;
@@ -269,9 +270,9 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                     {
                         try {
                             notifSurveyPK = response.getInt("id");
-                            Log.v("jjp5nw", "created notif subsurvey");
+                            Log.v("jjp5nw", "created notif subsurvey, notifSurveyPK = " + notifSurveyPK);
                         }   catch(org.json.JSONException e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for obs", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for notif", Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     }
@@ -282,8 +283,9 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
     }
 
     private void createSubsurveys_Obs(final String file_uuid){
+        Log.v("jjp5nw", "createSubsurveys_Obs(" + file_uuid + ") called");
         JSONObject subsurveyObject = new JSONObject(pwdObs);
-        Log.v("TEST",subsurveyObject.toString());
+        Log.v("jjp5nw TEST",subsurveyObject.toString());
         JsonObjectRequestWithToken requestNewPWDSleepSub = new JsonObjectRequestWithToken(
                 Request.Method.POST, base_url+ObservationEndpoint,subsurveyObject, api_token,
                 new Response.Listener<JSONObject>() {
@@ -292,7 +294,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                     public void onResponse(JSONObject response) {
                         try{
                             obsSurveyPK = response.getInt("id");
-                            Log.v("TEST","woo created obs subsurvey");
+                             Log.v("jjp5nw obs response","woo created obs subsurvey");
                             createCompleteSurvey(file_uuid);
                         } catch (org.json.JSONException e){
                             Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return a PK for obs", Toast.LENGTH_SHORT);
@@ -310,15 +312,17 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
             try {
                 JSONObject surveyObject = new JSONObject();
 
-                Log.v("MAPS", pwdGen.toString());
+                Log.v("jjp5nw MAPS", pwdGen.toString());
 
+                surveyObject.put("notifications", notifSurveyPK);        // added 5/18/2018 jjp5nw
                 surveyObject.put("timestamp", df.format(new Date()));
                 surveyObject.put("observations", obsSurveyPK);
                 surveyObject.put("agitimestamp", pwdGen.get("agitimestamp"));
                 surveyObject.put("level", pwdGen.get("level"));
                 surveyObject.put("agiloc",pwdGen.get("agiloc"));
 
-                Log.v("TEST", surveyObject.toString());
+
+                Log.v("jjp5nw surveyObject", surveyObject.toString());
                 JsonObjectRequestWithToken postNewAgiSurvey = new JsonObjectRequestWithToken(
                         Request.Method.POST, base_url + AgitationEndpoint, surveyObject, api_token,
                         new Response.Listener<JSONObject>() {
@@ -328,7 +332,7 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
                                     Toast toast = Toast.makeText(getApplicationContext(),
                                             "Agitation Report Submitted", Toast.LENGTH_SHORT);
                                     toast.show();
-                                    Log.v("TEST", "full survey made");
+                                    Log.v("jjp5nw complete resp", "full survey made");
 
                                     FileHelpers.deleteFileFromInternalStorage("offline",file_uuid,getApplicationContext());
 

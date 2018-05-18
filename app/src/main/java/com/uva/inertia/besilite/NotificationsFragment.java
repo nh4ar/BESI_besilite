@@ -62,7 +62,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     Button scrollup, scrolldown;
     Button backBtn, confirmBtn;
     Question[] questions;
-    HashMap<Integer, Boolean> pwdNotif;
+    HashMap<String, Boolean> pwdNotif;
 
     RequestQueue netQueue;
 
@@ -390,7 +390,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 //                Log.v("jjp5nw", questions[0].getQuestionId() + "");
 //                Log.v("jjp5nw", questions[0].getAnswer() + "");
                 for(int i = 0; i < questions.length; i++)   {
-                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                    pwdNotif.put("Question" + Integer.toString(questions[i].getQuestionId()), questions[i].getAnswer());
                 }
 
 
@@ -413,7 +413,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 
                 for(int i = 0; i < questions.length; i++)   {
 //                    Log.v("jjp5nw", "pwdNotif putting " + questions[i] + " at i = " + i + " into the map.");
-                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                    pwdNotif.put("Question" + Integer.toString(questions[i].getQuestionId()), questions[i].getAnswer());
 //                    Log.v("jjp5nw", "pwdNotif put successful.");
                 }
 
@@ -433,7 +433,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 questions[1].getButtons().get(1).setSelected(false);
 
                 for(int i = 0; i < questions.length; i++)   {
-                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                    pwdNotif.put("Question" + Integer.toString(questions[i].getQuestionId()), questions[i].getAnswer());
                 }
 
                 // for submit button enabled
@@ -452,7 +452,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 questions[1].getButtons().get(0).setSelected(false);
 
                 for(int i = 0; i < questions.length; i++)   {
-                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                    pwdNotif.put("Question" + Integer.toString(questions[i].getQuestionId()), questions[i].getAnswer());
                 }
 
                 // for submit button enabled
@@ -471,7 +471,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 questions[2].getButtons().get(1).setSelected(false);
 
                 for(int i = 0; i < questions.length; i++)   {
-                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                    pwdNotif.put("Question" + Integer.toString(questions[i].getQuestionId()), questions[i].getAnswer());
                 }
 
                 // for submit button enabled
@@ -490,7 +490,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 questions[2].getButtons().get(0).setSelected(false);
 
                 for(int i = 0; i < questions.length; i++)   {
-                    pwdNotif.put(questions[i].getQuestionId(), questions[i].getAnswer());
+                    pwdNotif.put("Question" + Integer.toString(questions[i].getQuestionId()), questions[i].getAnswer());
                 }
 
                 // for submit button enabled

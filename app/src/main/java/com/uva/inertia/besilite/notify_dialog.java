@@ -29,6 +29,7 @@ public class notify_dialog extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v("jjp5nw", "notify_dialog onCreate() called");
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         Bundle b = getIntent().getExtras();
         alertDialog.setTitle(b.getString("Title"));
