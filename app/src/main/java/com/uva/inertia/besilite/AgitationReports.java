@@ -42,7 +42,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 public class AgitationReports extends AppCompatActivity implements ConfirmFragment.OnConfirmClickedListener{
-    final int NUMBER_OF_TABS = 4;       //CHANGE THIS VALUE WHEN YOU ADD OR DELETE TABS
+    final int NUMBER_OF_TABS = 5;       //CHANGE THIS VALUE WHEN YOU ADD OR DELETE TABS
 
     String base_url;
     String api_token;
@@ -388,6 +388,8 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 //                    return ConfirmFragment.newInstance(position + 1);
 //                    return RadioPWDEmotionSubsurveyFragment.newInstance();
                     return NotificationsFragment.newInstance();
+                case 4:
+                    return InterventionFragment.newInstance();
             }
             return null;
         }
@@ -413,6 +415,8 @@ public class AgitationReports extends AppCompatActivity implements ConfirmFragme
 //                    return "Anything I want";
                 case 3:
                     return "Notifications";
+                case 4:
+                    return "Intervention";
 
                     // ALSO CHANGE NUMBER_OF_TABS int variable to your new value at the top
             }
