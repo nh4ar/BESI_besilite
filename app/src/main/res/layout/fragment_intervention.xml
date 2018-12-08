@@ -36,7 +36,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="0dp"
-                android:text="Select all interventions you have tried"
+                android:text="Which one have you tried?"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="36dp"
                 android:textStyle="bold" />

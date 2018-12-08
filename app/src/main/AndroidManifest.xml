@@ -129,6 +129,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.uva.inertia.besilite.Home" />
         </activity>
+        <activity android:name=".RatingActivity"></activity>
     </application>
 
 </manifest>

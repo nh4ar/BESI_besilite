@@ -197,6 +197,11 @@ public class Home extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_rate) {
+            Intent intent = new Intent(this.getApplicationContext(), RatingActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

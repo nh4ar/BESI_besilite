@@ -60,7 +60,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
     SharedPreferences sharedPref;
 
     Button scrollup, scrolldown;
-    Button backBtn, confirmBtn;
+    Button backBtn, nextBtn;
     Question[] questions;
     HashMap<String, Boolean> pwdNotif;
 
@@ -308,9 +308,9 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
             }
         });
 
-        confirmBtn = (Button) rootView.findViewById(R.id.submitOnNotifs);
+        nextBtn = (Button) rootView.findViewById(R.id.submitOnNotifs);
 
-        confirmBtn.setOnClickListener(new View.OnClickListener() {
+        nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ////////////////////////Android Analytics Tracking Code////////////////////////////////////
@@ -335,13 +335,13 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                         .id("agitationReportNotifsSubmitButton")
                         .build());
                 ///////////////////////////////////////////////////////////////////////////////////////////
-
-                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
-                mListener.OnConfirmClicked();
+                ((AgitationReports) getActivity()).selectPage(4);
+//                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
+//                mListener.OnConfirmClicked();
             }
         });
 
-        confirmBtn.setEnabled(false);
+        nextBtn.setEnabled(false);
 //*/
 
 
@@ -395,7 +395,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
 
 
                 // for submit button enabled
-                confirmBtn.setEnabled(allQuestionsAnswered());
+                nextBtn.setEnabled(allQuestionsAnswered());
             }
         });
 
@@ -418,7 +418,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 }
 
                 // for submit button enabled
-                confirmBtn.setEnabled(allQuestionsAnswered());
+                nextBtn.setEnabled(allQuestionsAnswered());
             }
         });
 
@@ -437,7 +437,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 }
 
                 // for submit button enabled
-                confirmBtn.setEnabled(allQuestionsAnswered());
+                nextBtn.setEnabled(allQuestionsAnswered());
             }
         });
 
@@ -456,7 +456,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 }
 
                 // for submit button enabled
-                confirmBtn.setEnabled(allQuestionsAnswered());
+                nextBtn.setEnabled(allQuestionsAnswered());
             }
         });
 
@@ -475,7 +475,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 }
 
                 // for submit button enabled
-                confirmBtn.setEnabled(allQuestionsAnswered());
+                nextBtn.setEnabled(allQuestionsAnswered());
             }
         });
 
@@ -494,7 +494,7 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                 }
 
                 // for submit button enabled
-                confirmBtn.setEnabled(allQuestionsAnswered());
+                nextBtn.setEnabled(allQuestionsAnswered());
             }
         });
 

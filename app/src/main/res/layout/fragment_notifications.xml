@@ -297,17 +297,17 @@
 
 
             <Button
-                android:layout_row="0"
-                android:layout_column="1"
                 android:id="@+id/submitOnNotifs"
                 android:layout_width="400dp"
                 android:layout_height="75dp"
+                android:layout_row="0"
+                android:layout_column="1"
                 android:layout_gravity="right|top"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginRight="120dp"
-                android:background="@drawable/loginbtnanimate"
-                android:text="Submit"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/buttonanimate"
+                android:text="Next"
                 android:textAllCaps="false"
                 android:textSize="36dp"
                 android:textStyle="bold" />
