@@ -43,6 +43,9 @@ public class BesiFireMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
+            Intent intent2 = new Intent(this.getApplicationContext(), Firebase_ThingsToTry.class);
+            startActivity(intent2);
+
             Intent intent = new Intent(getApplicationContext(), notify_dialog.class);
             intent.putExtra("Title", remoteMessage.getNotification().getTitle());
             intent.putExtra("Message", remoteMessage.getNotification().getBody());
