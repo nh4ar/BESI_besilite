@@ -58,7 +58,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/checkBox"
+                        android:id="@+id/checkBox_inter1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
@@ -68,7 +68,7 @@
                         android:button="@drawable/customcheckbox"
                         android:checked="false"
                         android:paddingLeft="10dp"
-                        android:text='Listen patiently. Even to gibberish. Smile and nod or participate: "Oh really? Was that okay with you?"'
+                        android:text="default1"
                         android:textSize="25dp" />
                 </LinearLayout>
 
@@ -88,7 +88,7 @@
                         android:button="@drawable/customcheckbox"
                         android:checked="false"
                         android:paddingLeft="10dp"
-                        android:text="Offer distracting activity during personal hygiene care e.g. hand them a washcloth to clean face"
+                        android:text="default2"
                         android:textSize="25dp" />
                 </LinearLayout>
 
@@ -108,7 +108,7 @@
                         android:button="@drawable/customcheckbox"
                         android:checked="false"
                         android:paddingLeft="10dp"
-                        android:text="Turn off the TV/radio before you start talking to minimize background noise and distraction"
+                        android:text="default3"
                         android:textSize="25dp" />
                 </LinearLayout>
 
@@ -128,7 +128,7 @@
                         android:button="@drawable/customcheckbox"
                         android:checked="false"
                         android:paddingLeft="10dp"
-                        android:text="When cooking a meal that freezes easily, go ahead and double the recipe. It may come in handy on a busy/stressful day"
+                        android:text="default4"
                         android:textSize="25dp" />
                 </LinearLayout>
             </LinearLayout>

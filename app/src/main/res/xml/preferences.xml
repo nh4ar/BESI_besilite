@@ -21,5 +21,11 @@
     <Preference android:title="Export Data"
         android:key="pref_export_data"
         android:summary="Export offline data to sd card"/>
+    <EditTextPreference
+        android:key="pref_key_firebase_id"
+        android:summary="@string/pref_summary_firebase_id"
+        android:title="@string/pref_title_firebase_id"
+        android:defaultValue="@string/pref_default_firebase_id"
+        />
 
 </PreferenceScreen>

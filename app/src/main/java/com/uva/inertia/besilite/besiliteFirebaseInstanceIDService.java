@@ -32,6 +32,10 @@ public class besiliteFirebaseInstanceIDService extends FirebaseInstanceIdService
    boolean updateFireID(String new_token){
 
        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+       SharedPreferences.Editor editor = sharedPref.edit();
+       editor.putString("pref_key_firebase_id", new_token);
+       editor.commit();
+
        RequestQueue netQueue = NetworkSingleton.getInstance(getApplicationContext()).getRequestQueue();
 
        String base_url = sharedPref.getString("pref_key_base_url", "");

@@ -135,7 +135,7 @@
                                 android:layout_marginRight="20dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_weight="1"
-                                android:text='Listen patiently. Even to gibberish. Smile and nod or participate: "Oh really? Was that okay with you?"'
+                                android:text="default1"
                                 android:textSize="25dp" />
                         </LinearLayout>
 
@@ -220,7 +220,7 @@
                                 android:layout_marginRight="20dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_weight="1"
-                                android:text='Offer distracting activity during personal hygiene care e.g. hand them a washcloth to clean face'
+                                android:text="default2"
                                 android:textSize="25dp" />
                         </LinearLayout>
 
@@ -305,7 +305,7 @@
                                 android:layout_marginRight="20dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_weight="1"
-                                android:text='Turn off the TV/radio before you start talking to minimize background noise and distraction'
+                                android:text="default3"
                                 android:textSize="25dp" />
                         </LinearLayout>
 
@@ -390,7 +390,7 @@
                                 android:layout_marginRight="20dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_weight="1"
-                                android:text='When cooking a meal that freezes easily, go ahead and double the recipe. It may come in handy on a busy/stressful day'
+                                android:text="default4"
                                 android:textSize="25dp" />
                         </LinearLayout>
 

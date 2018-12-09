@@ -7,16 +7,20 @@
 
 
     <string name="pref_title_base_url">Base URL</string>
-    <string name="pref_default_base_url">https://besistudy.org</string>
+    <string name="pref_default_base_url">https://besiserver.org</string>
     <string name="pref_summary_base_url">Set base url to query</string>
 
     <string name="pref_title_api_token">API Token</string>
-    <string name="pref_default_api_token">1a79ee75e7328538f9df96bdc7e22f9d17ae398e</string>
+    <string name="pref_default_api_token">398d179a69f5ad1b7b1f9c3f224fae9f9286c555</string>
     <string name="pref_summary_api_token">Set API access token</string>
 
     <string name="pref_title_deploy_id">Deploy ID</string>
     <string name="pref_default_deploy_id">0</string>
     <string name="pref_summary_deploy_id">Set deployment ID</string>
+
+    <string name="pref_title_firebase_id">Firebase ID</string>
+    <string name="pref_default_firebase_id">0</string>
+    <string name="pref_summary_firebase_id">Show current Firebase ID</string>
 
     <string name="title_activity_get_emotions">Get Emotions</string>
     <string name="title_activity_get_activities">Get Activities</string>
@@ -41,6 +45,14 @@
     <string name="notifications_btn_yes">Yes</string>
     <string name="notifications_btn_no">No</string>
     <!-- END Strings for NotificationsFragment -->
+
+
+    <!-- START Strings for InterventionList -->
+    <string name="intervention1">Listen patiently. Even to gibberish. Smile and nod or participate: "Oh really? Was that okay with you?"</string>
+    <string name="intervention2">Offer distracting activity during personal hygiene care e.g. hand them a washcloth to clean face</string>
+    <string name="intervention3">Turn off the TV/radio before you start talking to minimize background noise and distraction</string>
+    <string name="intervention4">When cooking a meal that freezes easily, go ahead and double the recipe. It may come in handy on a busy/stressful day</string>
+    <!-- END Strings for InterventionList -->
 
 
     <!--Why are these here @neeraj-->
