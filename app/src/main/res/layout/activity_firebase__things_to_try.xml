@@ -57,13 +57,15 @@
                     <TextView
                         android:id="@+id/thingstotry1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:gravity="center_vertical"
                         android:layout_column="0"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:paddingLeft="10dp"
-                        android:text='\u2022 Listen patiently. Even to gibberish. Smile and nod or participate: "Oh really? Was that okay with you?"'
+                        android:text='default'
                         android:textSize="30dp" />
                 </LinearLayout>
 
@@ -75,13 +77,15 @@
                     <TextView
                         android:id="@+id/thingstotry2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:gravity="center_vertical"
                         android:layout_column="0"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:paddingLeft="10dp"
-                        android:text='\u2022 Offer distracting activity during personal hygiene care e.g. hand them a washcloth to clean face'
+                        android:text='default'
                         android:textSize="30dp" />
                 </LinearLayout>
 
@@ -93,13 +97,15 @@
                     <TextView
                         android:id="@+id/thingstotry3"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:gravity="center_vertical"
                         android:layout_column="0"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:paddingLeft="10dp"
-                        android:text='\u2022 Turn off the TV/radio before you start talking to minimize background noise and distraction'
+                        android:text='default'
                         android:textSize="30dp" />
                 </LinearLayout>
 
@@ -111,13 +117,15 @@
                     <TextView
                         android:id="@+id/thingstotry4"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:gravity="center_vertical"
                         android:layout_column="0"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:paddingLeft="10dp"
-                        android:text='\u2022 When cooking a meal that freezes easily, go ahead and double the recipe. It may come in handy on a busy/stressful day'
+                        android:text='default'
                         android:textSize="30dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -137,6 +145,7 @@
                     android:layout_width="400dp"
                     android:layout_height="75dp"
                     android:layout_weight="1"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/loginbtnanimate"
                     android:text="OK" />
 

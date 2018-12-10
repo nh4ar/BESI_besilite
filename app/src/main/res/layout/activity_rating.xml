@@ -45,6 +45,13 @@
                     android:textSize="36dp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="(0 = Not helpful,   10 = Very helpful)"
+                    android:textSize="25dp" />
+
             </LinearLayout>
 
             <android.support.v7.widget.GridLayout
@@ -129,7 +136,9 @@
                             <TextView
                                 android:id="@+id/interventionview1"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textColor="@color/black"
+                                android:gravity="center_vertical"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"
@@ -214,7 +223,9 @@
                             <TextView
                                 android:id="@+id/interventionview2"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textColor="@color/black"
+                                android:gravity="center_vertical"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"
@@ -299,7 +310,9 @@
                             <TextView
                                 android:id="@+id/interventionview3"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textColor="@color/black"
+                                android:gravity="center_vertical"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"
@@ -384,7 +397,9 @@
                             <TextView
                                 android:id="@+id/interventionview4"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textColor="@color/black"
+                                android:gravity="center_vertical"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"

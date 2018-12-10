@@ -334,6 +334,7 @@ public class AddActivityBundle extends AppCompatActivity{
             surveyObject.put("timestamp", timestamp);
             surveyObject.put("value", newActivity);
 
+            Log.v("nh4ar","ACTIVITY = "+surveyObject.toString());
             JsonObjectRequestWithToken requestNewActivitySurvey =
                     new JsonObjectRequestWithToken(
                             Request.Method.POST,

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -17,9 +18,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class RatingActivity extends AppCompatActivity {
 
-    String base_url, intervention_endpoint, api_token;
+    String base_url, intervention_rating_endpoint, api_token, intervention_endpoint;
     SharedPreferences sharedPref;
     RequestQueue netQueue;
 
@@ -28,13 +33,64 @@ public class RatingActivity extends AppCompatActivity {
     String[] answer = {"0","1","2","3","4","5","6","7","8","9","10"};
     TextView intervText1,intervText2,intervText3,intervText4;
 
+
+    private void submitInterventionRating() {
+
+        base_url = sharedPref.getString("pref_key_base_url", "");
+        api_token = sharedPref.getString("pref_key_api_token", "");
+        intervention_rating_endpoint = "/api/v1/interventions/intervention-rating/create/";
+
+        JSONObject interventionObject = new JSONObject();
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+        df.setTimeZone(tz);
+        String timestamp = df.format(new Date());
+        try {
+            interventionObject.put("timestamp",timestamp);
+            interventionObject.put("Rating1",r1);
+            interventionObject.put("value1",intervention_string[0]);
+            interventionObject.put("Rating2",r2);
+            interventionObject.put("value2",intervention_string[1]);
+            interventionObject.put("Rating3",r3);
+            interventionObject.put("value3",intervention_string[2]);
+            interventionObject.put("Rating4",r4);
+            interventionObject.put("value4",intervention_string[3]);
+
+            Log.v("nh4ar",interventionObject.toString());
+            JsonObjectRequestWithToken requestNewInterventionUsage =
+                    new JsonObjectRequestWithToken(
+                            Request.Method.POST,
+                            base_url + intervention_rating_endpoint,
+                            interventionObject, api_token, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+//                            try{
+//                                Log.v("nh4ar","***intervention usage PK = "+ response.getInt("id"));
+//                            } catch (org.json.JSONException e){
+//
+//                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.v("nh4ar","Intervention rating "+ error.toString());
+                        }
+                    }); this.netQueue.add(requestNewInterventionUsage);
+
+        } catch (JSONException e) {
+            Log.e("ERROR", e.getMessage());
+        }
+
+    }
+
     String[] intervention_string = new String[4];
     private void pullInterventionListFromServer(){
         Log.v("nh4ar", "InterventionFragment pullInterventionListFromServer() called");
 
         base_url = sharedPref.getString("pref_key_base_url", "");
         api_token = sharedPref.getString("pref_key_api_token", "");
-        intervention_endpoint = "/api/v1/survey/intervention/create/";
+        intervention_endpoint = "/api/v1/interventions/intervention/create/";
 
 
         JsonArrayRequestWithToken interventionListRequestArray = new JsonArrayRequestWithToken(base_url + intervention_endpoint, api_token, new Response.Listener<JSONArray>() {
@@ -167,6 +223,7 @@ public class RatingActivity extends AppCompatActivity {
     public void submitClick(View v){
 //        Intent intent = new Intent(this.getApplicationContext(), Home.class);
 //        startActivity(intent);
+        submitInterventionRating();
         finish();
 
     }

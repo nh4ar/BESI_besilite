@@ -11,7 +11,7 @@
     <string name="pref_summary_base_url">Set base url to query</string>
 
     <string name="pref_title_api_token">API Token</string>
-    <string name="pref_default_api_token">398d179a69f5ad1b7b1f9c3f224fae9f9286c555</string>
+    <string name="pref_default_api_token">99a39188ba299b51e97106a4d19b38e9085bf26d</string>
     <string name="pref_summary_api_token">Set API access token</string>
 
     <string name="pref_title_deploy_id">Deploy ID</string>
