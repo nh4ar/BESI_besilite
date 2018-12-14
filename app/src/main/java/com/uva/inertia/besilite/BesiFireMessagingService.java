@@ -37,6 +37,14 @@ public class BesiFireMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Intent intent2 = new Intent(this.getApplicationContext(), Firebase_ThingsToTry.class);
+            startActivity(intent2);
+
+            Intent intent = new Intent(getApplicationContext(), notify_dialog.class);
+            intent.putExtra("Title", remoteMessage.getData().get("title"));
+            intent.putExtra("Message", remoteMessage.getData().get("body"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
 
         // Check if message contains a notification payload.
