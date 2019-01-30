@@ -306,8 +306,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginRight="120dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/buttonanimate"
-                android:text="Next"
+                android:background="@drawable/loginbtnanimate"
+                android:text="Submit"
                 android:textAllCaps="false"
                 android:textSize="36dp"
                 android:textStyle="bold" />

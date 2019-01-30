@@ -335,9 +335,9 @@ public class NotificationsFragment extends android.support.v4.app.Fragment
                         .id("agitationReportNotifsSubmitButton")
                         .build());
                 ///////////////////////////////////////////////////////////////////////////////////////////
-                ((AgitationReports) getActivity()).selectPage(4);
-//                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
-//                mListener.OnConfirmClicked();
+//                ((AgitationReports) getActivity()).selectPage(4);
+                mListener = (ConfirmFragment.OnConfirmClickedListener) getActivity();
+                mListener.OnConfirmClicked();
             }
         });
 
