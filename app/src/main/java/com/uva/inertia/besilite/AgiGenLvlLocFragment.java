@@ -116,6 +116,9 @@ public class AgiGenLvlLocFragment extends Fragment implements passBackInterface{
     private int scrollTime = 250;               //in milliseconds
     private int fastScrollTime = 150;           //in milliseconds
 
+    private boolean locationSelected = false;
+    private boolean levelSelected = false;
+
     private String deploy_id, base_url, api_token, activityEndpoint, endpoint;
     RequestQueue netQueue;
 
@@ -337,6 +340,9 @@ public class AgiGenLvlLocFragment extends Fragment implements passBackInterface{
         ar = (AgitationReports) getActivity();
         pwdGen = ar.pwdGen;
 
+        locationSelected = false;
+        levelSelected = false;
+
 //        dater.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -410,6 +416,7 @@ public class AgiGenLvlLocFragment extends Fragment implements passBackInterface{
         loc_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 pwdGen.put("agiloc", spinner_adapter.getItem(position).toString());
 
                 ////////////////////////Android Analytics Tracking Code////////////////////////////////////
@@ -434,6 +441,16 @@ public class AgiGenLvlLocFragment extends Fragment implements passBackInterface{
                         .id("agitationReportLocationSpinner")
                         .build());
 
+                if (position != 0)
+                {
+                    locationSelected = true;
+                    next.setEnabled(allQuestionsAnswered());
+                    Log.v("nh4ar", "Select Location "+spinner_adapter.getItem(position).toString());
+                    Log.v("nh4ar", String.valueOf(locationSelected)+String.valueOf(levelSelected));
+                } else {
+                    locationSelected = false;
+                    next.setEnabled(allQuestionsAnswered());
+                }
 
 //        t1.getSubject().setUserId(sharedPref.getString("pref_key_api_token", ""));
                 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -831,6 +848,7 @@ public class AgiGenLvlLocFragment extends Fragment implements passBackInterface{
                 ///////////////////////////////////////////////////////////////////////////////////////////
             }
         });
+        next.setEnabled(false);
 
         agiLevelGroup = (RadioGroup)rootView.findViewById(R.id.agiLevelGrp);
 
@@ -871,7 +889,12 @@ public class AgiGenLvlLocFragment extends Fragment implements passBackInterface{
                         break;
                 }
                 pwdGen.put("level", "" + (level));
+
                 agiLevelViewer.setText("" + level);
+                levelSelected = true;
+                Log.v("nh4ar", "Select Level "+level);
+                Log.v("nh4ar", String.valueOf(locationSelected)+String.valueOf(levelSelected));
+                next.setEnabled(allQuestionsAnswered());
 
 
                 ////////////////////////Android Analytics Tracking Code////////////////////////////////////
@@ -911,6 +934,11 @@ public class AgiGenLvlLocFragment extends Fragment implements passBackInterface{
     }
 
     /////
+
+    private boolean allQuestionsAnswered()
+    {
+        return locationSelected && levelSelected;
+    }
 
     public void scrollListView(ListView lv, List<String> masterList, LinkedList<String> viewList, int position, int offset)
     {

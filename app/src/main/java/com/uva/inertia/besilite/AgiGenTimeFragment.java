@@ -830,6 +830,7 @@ public class AgiGenTimeFragment extends Fragment implements passBackInterface{
                 ///////////////////////////////////////////////////////////////////////////////////////////
             }
         });
+        next.setEnabled(false);
 
 //        agiLevelGroup = (RadioGroup)rootView.findViewById(R.id.agiLevelGrp);
 //
@@ -970,6 +971,8 @@ public class AgiGenTimeFragment extends Fragment implements passBackInterface{
         Log.v("PICKER", agidate.toString());
         selTime.setText(dateFormats[1].format(agidate));
         updateMapDatetime();
+
+        next.setEnabled(true);
     }
 
 
